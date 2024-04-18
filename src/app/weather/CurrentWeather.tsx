@@ -4,7 +4,7 @@ import { WEATHER_API_ENDPOINTS } from "./constant";
 async function getCurrentWeather() {
   try {
     const response = await fetch(
-      `${WEATHER_API_ENDPOINTS}/O-A0003-001?StationName=嘉義&Authorization=${process.env.WEATHER_API_KEY}`
+      `${WEATHER_API_ENDPOINTS}/O-A0003-001?StationName=嘉義`
     );
 
     if (!response.ok) {
@@ -15,7 +15,7 @@ async function getCurrentWeather() {
 
     return data;
   } catch (error: any) {
-    throw new Error("Failed to fetch current weather data");
+    throw error;
   }
 }
 

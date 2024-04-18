@@ -15,7 +15,8 @@ async function getThirtySixHoursWeather() {
 
     return data;
   } catch (error: any) {
-    throw new Error("Failed to fetch 36 hours weather data");
+    console.log({ error });
+    throw error;
   }
 }
 
