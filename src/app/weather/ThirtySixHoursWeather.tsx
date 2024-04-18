@@ -5,7 +5,8 @@ async function getThirtySixHoursWeather() {
   try {
     const endpoint = getWeatherApiEndpoint("THIRTY_SIX_HOURS_WEATHER");
     const response = await fetch(
-      `${endpoint}?locationName=新北市&Authorization=${process.env.WEATHER_API_KEY}`
+      `${endpoint}?locationName=新北市&Authorization=${process.env.WEATHER_API_KEY}`,
+      { cache: "no-store" }
     );
 
     if (!response.ok) {
@@ -22,9 +23,9 @@ async function getThirtySixHoursWeather() {
 }
 
 export default async function ThirtySixHoursWeather() {
-  const thirtySixHoursWeatherData = await getThirtySixHoursWeather();
+  // const thirtySixHoursWeatherData = await getThirtySixHoursWeather();
 
-  console.log(thirtySixHoursWeatherData);
+  // console.log(thirtySixHoursWeatherData);
 
-  return <main>Thirty Three Hours Weather</main>;
+  return <main>This is Thirty Three Hours Weather</main>;
 }
