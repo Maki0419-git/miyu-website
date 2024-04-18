@@ -1,11 +1,11 @@
 import errorHandler from "@/utils/errorHandler";
-import { WEATHER_API_ENDPOINTS } from "./constant";
-import { WeatherAPI } from "./types";
+import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint";
 
 async function getThirtySixHoursWeather() {
   try {
+    const endpoint = getWeatherApiEndpoint("THIRTY_SIX_HOURS_WEATHER");
     const response = await fetch(
-      `${WEATHER_API_ENDPOINTS}/${WeatherAPI.THIRTY_SIX_HOURS_WEATHER}?locationName=新北市&Authorization=${process.env.WEATHER_API_KEY}`
+      `${endpoint}?locationName=新北市&Authorization=${process.env.WEATHER_API_KEY}`
     );
 
     if (!response.ok) {

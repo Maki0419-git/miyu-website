@@ -1,11 +1,11 @@
 import errorHandler from "@/utils/errorHandler";
-import { WEATHER_API_ENDPOINTS } from "./constant";
-import { WeatherAPI } from "./types";
+import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint";
 
 async function getCurrentWeather() {
   try {
+    const endpoint = getWeatherApiEndpoint("CURRENT_WEATHER");
     const response = await fetch(
-      `${WEATHER_API_ENDPOINTS}/${WeatherAPI.CURRENT_WEATHER}?StationName=嘉義`
+      `${endpoint}?StationName=嘉義&Authorization=${process.env.WEATHER_API_KEY}`
     );
 
     if (!response.ok) {
