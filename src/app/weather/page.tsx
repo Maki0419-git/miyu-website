@@ -2,8 +2,9 @@ import { Suspense } from "react";
 import CurrentWeather from "./CurrentWeather";
 import ThirtySixHoursWeather from "./ThirtySixHoursWeather";
 import { styled } from "@pigment-css/react";
+import SearchBar from "./SearchBar";
 
-const Container = styled("div")({
+const TopSection = styled("div")({
   display: "flex",
   width: "100%",
   justifyContent: "space-between",
@@ -16,17 +17,30 @@ const Container = styled("div")({
   backgroundColor: "#252746",
 });
 
+const BottomSection = styled("div")({
+  display: "flex",
+  width: "100%",
+  justifyContent: "space-between",
+  padding: "60px 80px",
+  //   height: "40vh",
+  //   backgroundColor: "#252746",
+  border: "1px solid red",
+});
+
 export default function WeatherPage() {
   return (
     <>
-      <Container>
+      <TopSection>
         <Suspense fallback={<div>Loading...</div>}>
           <CurrentWeather />
         </Suspense>
         <Suspense fallback={<div>Loading...</div>}>
           <ThirtySixHoursWeather />
         </Suspense>
-      </Container>
+      </TopSection>
+      <BottomSection>
+        <SearchBar />
+      </BottomSection>
     </>
   );
 }
