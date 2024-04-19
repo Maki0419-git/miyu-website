@@ -3,6 +3,7 @@ import Image from "next/image";
 
 const Container = styled("div")({
   border: "1px solid red",
+  flex: 3,
   "h1, h2": {
     color: "white",
     margin: 0,
