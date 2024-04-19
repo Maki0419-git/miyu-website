@@ -1,38 +1,85 @@
-import errorHandler from "@/utils/errorHandler";
-import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint";
 import { styled } from "@pigment-css/react";
+import Image from "next/image";
 
 const Container = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  gap: "10px",
-  justifyContent: "center",
+  border: "1px solid red",
+  "h1, h2": {
+    color: "white",
+    margin: 0,
+  },
+  "> h1,h2": {
+    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+  },
 });
 
-async function getCurrentWeather() {
-  try {
-    const endpoint = getWeatherApiEndpoint("CURRENT_WEATHER");
-    const response = await fetch(
-      `${endpoint}?StationName=嘉義&Authorization=${process.env.WEATHER_API_KEY}`,
-      { cache: "no-store" }
-    );
+const WeatherInfo = styled("div")({
+  border: "1px solid yellow",
+  display: "flex",
+  gap: "10px",
+  margin: "20px 0",
+});
 
-    if (!response.ok) {
-      errorHandler("CURRENT_WEATHER", response.status);
-    }
+const Temperature = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+  fontSize: "1.5rem",
+});
 
-    const data = await response.json();
+const Divider = styled("div")({
+  borderLeft: "1px solid white",
+  margin: "0 10px",
+});
 
-    return data;
-  } catch (error: any) {
-    throw error;
-  }
-}
+const RainPossibility = styled("div")({
+  border: "1px solid red",
+  "h1 , h2": {
+    fontWeight: "normal",
+  },
+});
+
+const RainPossibilityInner = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "10px",
+});
 
 export default async function CurrentWeather() {
   //   const currentWeatherData = await getCurrentWeather();
 
   //   console.log(currentWeatherData);
 
-  return <main>This is Current Weather</main>;
+  return (
+    <Container>
+      <h1>San Francisco</h1>
+      <h2>06:25PM</h2>
+      <WeatherInfo>
+        <Temperature>
+          <Image
+            src="https://picsum.photos/200"
+            alt="Weather Icon"
+            width={100}
+            height={100}
+            priority
+          />
+          <h1>25°C</h1>
+        </Temperature>
+        <Divider />
+        <RainPossibility>
+          <h2>Rain</h2>
+          <RainPossibilityInner>
+            <Image
+              src="https://picsum.photos/200"
+              alt="Rain Icon"
+              width={80}
+              height={80}
+              priority
+            />
+            <h1>60%</h1>
+          </RainPossibilityInner>
+        </RainPossibility>
+      </WeatherInfo>
+    </Container>
+  );
 }
