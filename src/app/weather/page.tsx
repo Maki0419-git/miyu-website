@@ -22,8 +22,6 @@ const BottomSection = styled("div")({
   width: "100%",
   justifyContent: "space-between",
   padding: "60px 80px",
-  //   height: "40vh",
-  //   backgroundColor: "#252746",
   border: "1px solid red",
 });
 

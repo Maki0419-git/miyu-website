@@ -6,14 +6,17 @@ import Image from "next/image";
 const Container = styled("div")({
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
   justifyContent: "center",
   gap: "10px",
+  h4: {
+    fontWeight: "normal",
+    color: "rgb(135, 135, 135)",
+  },
 });
 
 const SearchBarContainer = styled("form")({
   position: "relative",
-  marginTop: "10px",
+  marginTop: "15px",
   width: "350px",
   height: "40px",
   borderRadius: "40px",
@@ -46,7 +49,7 @@ const SearchButton = styled("button")({
   borderRadius: "50%",
   border: "none",
   outline: "none",
-  background: "#fff",
+  background: "#f3f3f3",
   cursor: "pointer",
   transition: "all 0.3s ease",
   "&:hover": {
@@ -61,7 +64,7 @@ export default function SearchBar() {
   return (
     <Container>
       <h2>Where are you searching for...</h2>
-      <h3></h3>
+      <h4>Enter city name which you want to know</h4>
       <SearchBarContainer>
         <Input type="text" placeholder="Search for a city" />
         <SearchButton type="submit">
