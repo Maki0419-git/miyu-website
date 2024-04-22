@@ -4,6 +4,7 @@ import { styled } from "@pigment-css/react";
 import Image from "next/image";
 
 const Container = styled("div")({
+  border: "1px solid red",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -17,7 +18,7 @@ const Container = styled("div")({
 const SearchBarContainer = styled("form")({
   position: "relative",
   marginTop: "15px",
-  width: "350px",
+  minWidth: "430px",
   height: "40px",
   borderRadius: "40px",
   boxShadow: " 0 6px 8px rgba(0, 0, 0, 0.15)",

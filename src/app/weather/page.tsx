@@ -3,6 +3,7 @@ import CurrentWeather from "./CurrentWeather";
 import ThirtySixHoursWeather from "./ThirtySixHoursWeather";
 import { styled } from "@pigment-css/react";
 import SearchBar from "./SearchBar";
+import RecentPlace from "./RecentPlace";
 
 const TopSection = styled("div")({
   display: "flex",
@@ -21,6 +22,7 @@ const BottomSection = styled("div")({
   display: "flex",
   width: "100%",
   justifyContent: "space-between",
+  alignItems: "flex-start",
   padding: "60px 80px",
   border: "1px solid red",
 });
@@ -38,6 +40,7 @@ export default function WeatherPage() {
       </TopSection>
       <BottomSection>
         <SearchBar />
+        <RecentPlace />
       </BottomSection>
     </>
   );

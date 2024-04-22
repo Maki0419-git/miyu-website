@@ -4,3 +4,12 @@ export enum WeatherAPI {
 }
 
 export type WeatherApiAlias = keyof typeof WeatherAPI;
+
+export enum Weather {
+  CLEAR = "晴",
+  CLOUDY = "多雲",
+  RAINY = "雨",
+  THUNDER = "雷雨",
+  SNOWY = "雪",
+  FOGGY = "霧",
+}
