@@ -1,13 +1,15 @@
 "use client";
 
 import { styled } from "@pigment-css/react";
+import { forwardRef } from "react";
 
 const Container = styled("div")({
   border: "1px solid #f3f3f3",
   borderRadius: "8px",
   padding: "10px",
   marginTop: "10px",
-  boxShadow: "4px 6px 8px rgba(0, 0, 0, 0.15)",
+
+  boxShadow: "0 6px 8px rgba(0, 0, 0, 0.15)",
   "&:focus": {
     outline: "none",
   },
@@ -15,6 +17,8 @@ const Container = styled("div")({
 
 const List = styled("ul")({
   listStyle: "none",
+  maxHeight: "200px",
+  overflowY: "auto",
   padding: 0,
   margin: 0,
 });
@@ -36,19 +40,25 @@ type SuggestionListProps = {
   selectedIndex: number | undefined;
 };
 
-export default function SuggestionList({
-  suggestions,
-  selectedIndex,
-}: SuggestionListProps) {
-  return (
-    <Container>
-      <List>
-        {suggestions.map((suggestion, index) => (
-          <ListItem key={suggestion} isSelected={index === selectedIndex}>
-            {suggestion}
-          </ListItem>
-        ))}
-      </List>
-    </Container>
-  );
-}
+const SuggestionList = forwardRef<HTMLUListElement, SuggestionListProps>(
+  (props, ref) => {
+    return (
+      <Container>
+        <List ref={ref}>
+          {props.suggestions.map((suggestion, index) => (
+            <ListItem
+              key={suggestion}
+              isSelected={props.selectedIndex === index}
+            >
+              {suggestion}
+            </ListItem>
+          ))}
+        </List>
+      </Container>
+    );
+  }
+);
+
+SuggestionList.displayName = "SuggestionList"; // Add display name
+
+export default SuggestionList;

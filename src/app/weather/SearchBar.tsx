@@ -3,30 +3,29 @@
 import { styled } from "@pigment-css/react";
 import Image from "next/image";
 import useCity from "./hooks/useCity";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SuggestionList from "./SuggestionList";
 
 const Container = styled("div")({
   // border: "1px solid red",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  gap: "10px",
-  h4: {
+  height: "30vh",
+  span: {
     fontWeight: "normal",
     color: "rgb(135, 135, 135)",
+    margin: "10px 0",
   },
 });
 
 const SearchBarContainer = styled("form")({
   position: "relative",
-  marginTop: "15px",
+  marginTop: "5px",
   minWidth: "430px",
   height: "40px",
   borderRadius: "40px",
   boxShadow: " 0 6px 8px rgba(0, 0, 0, 0.15)",
   background: "#fff",
   transition: "all 0.3s ease",
+  border: "1px solid red",
   "&:hover": {
     boxShadow: "0 6px 8px rgba(0, 0, 0, 0.3)",
   },
@@ -71,6 +70,7 @@ export default function SearchBar() {
   );
   const [shouldFetch, setShouldFetch] = useState<boolean>(false);
   const { cities, isError, isLoading } = useCity(shouldFetch, query);
+  const suggestionListRef = useRef<HTMLUListElement>(null);
   let debounceTimeout: NodeJS.Timeout;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("handleChange");
@@ -94,9 +94,16 @@ export default function SearchBar() {
       if (selectedIndex === undefined || selectedIndex === cities.length - 1) {
         setSelectedIndex(0);
         setQuery(cities[0]);
+        if (suggestionListRef.current) {
+          suggestionListRef.current.scrollTo(0, 0);
+        }
       } else {
         setSelectedIndex(selectedIndex + 1);
         setQuery(cities[selectedIndex + 1]);
+        if (suggestionListRef.current) {
+          console.log({ scrollTop: suggestionListRef.current.scrollTop });
+          suggestionListRef.current.scrollTop += 40;
+        }
       }
     }
     if (event.key === "ArrowUp") {
@@ -104,9 +111,18 @@ export default function SearchBar() {
       if (selectedIndex === undefined || selectedIndex === 0) {
         setSelectedIndex(cities.length - 1);
         setQuery(cities[cities.length - 1]);
+        if (suggestionListRef.current) {
+          suggestionListRef.current.scrollTo(
+            0,
+            suggestionListRef.current.scrollHeight
+          );
+        }
       } else {
         setSelectedIndex(selectedIndex - 1);
         setQuery(cities[selectedIndex - 1]);
+        if (suggestionListRef.current) {
+          suggestionListRef.current.scrollTop -= 40;
+        }
       }
     }
     if (event.key === "Enter" && selectedIndex !== undefined) {
@@ -121,10 +137,13 @@ export default function SearchBar() {
   }, [cities.length]);
 
   console.log(cities, isError, isLoading);
+
+  console.log({ suggestionRef: suggestionListRef.current });
+
   return (
     <Container>
       <h2>Where are you searching for...</h2>
-      <h4>Enter city name which you want to know</h4>
+      <span>Enter city name which you want to know</span>
       <SearchBarContainer>
         <Input
           type="text"
@@ -138,7 +157,11 @@ export default function SearchBar() {
         </SearchButton>
       </SearchBarContainer>
       {cities.length !== 0 && (
-        <SuggestionList suggestions={cities} selectedIndex={selectedIndex} />
+        <SuggestionList
+          suggestions={cities}
+          selectedIndex={selectedIndex}
+          ref={suggestionListRef}
+        />
       )}
     </Container>
   );
