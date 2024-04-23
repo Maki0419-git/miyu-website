@@ -65,12 +65,74 @@ const SearchButton = styled("button")({
 });
 
 export default function SearchBar() {
+  const [query, setQuery] = useState<string>("");
+  const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
+    undefined
+  );
+  const [shouldFetch, setShouldFetch] = useState<boolean>(false);
+  const { cities, isError, isLoading } = useCity(shouldFetch, query);
+  let debounceTimeout: NodeJS.Timeout;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("handleChange");
+    e.preventDefault();
+    setQuery(e.target.value);
+    setShouldFetch(false);
+
+    clearTimeout(debounceTimeout);
+
+    debounceTimeout = setTimeout(() => {
+      const query = e.target.value;
+      setShouldFetch(true);
+    }, 1000);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    // event.preventDefault();
+    setShouldFetch(false);
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      if (selectedIndex === undefined || selectedIndex === cities.length - 1) {
+        setSelectedIndex(0);
+        setQuery(cities[0]);
+      } else {
+        setSelectedIndex(selectedIndex + 1);
+        setQuery(cities[selectedIndex + 1]);
+      }
+    }
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      if (selectedIndex === undefined || selectedIndex === 0) {
+        setSelectedIndex(cities.length - 1);
+        setQuery(cities[cities.length - 1]);
+      } else {
+        setSelectedIndex(selectedIndex - 1);
+        setQuery(cities[selectedIndex - 1]);
+      }
+    }
+    if (event.key === "Enter" && selectedIndex !== undefined) {
+      event.preventDefault();
+      console.log("enter");
+    }
+  };
+
+  // redefined the selectedIndex when the cities array changes
+  useEffect(() => {
+    setSelectedIndex(undefined);
+  }, [cities.length]);
+
+  console.log(cities, isError, isLoading);
   return (
     <Container>
       <h2>Where are you searching for...</h2>
       <h4>Enter city name which you want to know</h4>
       <SearchBarContainer>
-        <Input type="text" placeholder="Search for a city" />
+        <Input
+          type="text"
+          placeholder="Search for a city"
+          value={query}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
         <SearchButton type="submit">
           <Image src="/search.svg" alt="Search Icon" width={20} height={20} />
         </SearchButton>

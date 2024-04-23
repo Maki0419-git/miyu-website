@@ -5,6 +5,8 @@ export enum WeatherAPI {
 
 export type WeatherApiAlias = keyof typeof WeatherAPI;
 
+export type CityResponseType = Record<"cities", string[]>;
+
 export enum Weather {
   CLEAR = "晴",
   CLOUDY = "多雲",
