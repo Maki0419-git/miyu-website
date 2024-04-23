@@ -6,6 +6,7 @@ import { Weather } from "./types";
 const Container = styled("div")({
   width: "1200px",
   display: "flex",
+  height: "30vh",
   flexDirection: "column",
   padding: "0 20px",
   border: "1px solid red",
@@ -14,6 +15,7 @@ const Container = styled("div")({
 
 const CityCardContainer = styled("div")({
   display: "flex",
+  height: "100%",
   justifyContent: "space-between",
   gap: "20px",
   overflowX: "auto",
@@ -30,8 +32,8 @@ const CityCard = styled("div")({
   overflow: "hidden",
   gap: "20px",
   width: "100%",
+  height: "100%",
   minWidth: "150px",
-  height: "25vh",
   padding: "30px 20px",
   borderRadius: "8px",
   backgroundPosition: "center",
