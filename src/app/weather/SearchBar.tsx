@@ -5,6 +5,7 @@ import Image from "next/image";
 import useCity from "./hooks/useCity";
 import { useEffect, useRef, useState } from "react";
 import SuggestionList from "./SuggestionList";
+import useDebounceValue from "./hooks/useDebounceValue";
 
 const Container = styled("div")({
   // border: "1px solid red",
@@ -68,27 +69,16 @@ export default function SearchBar() {
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
     undefined
   );
-  const [shouldFetch, setShouldFetch] = useState<boolean>(false);
-  const { cities, isError, isLoading } = useCity(shouldFetch, query);
+  const debouncedQuery = useDebounceValue<string>(query, 1000);
+  const { cities } = useCity(debouncedQuery);
   const suggestionListRef = useRef<HTMLUListElement>(null);
-  let debounceTimeout: NodeJS.Timeout;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("handleChange");
     e.preventDefault();
     setQuery(e.target.value);
-    setShouldFetch(false);
-
-    clearTimeout(debounceTimeout);
-
-    debounceTimeout = setTimeout(() => {
-      const query = e.target.value;
-      setShouldFetch(true);
-    }, 1000);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    // event.preventDefault();
-    setShouldFetch(false);
     if (event.key === "ArrowDown") {
       event.preventDefault();
       if (selectedIndex === undefined || selectedIndex === cities.length - 1) {
@@ -135,10 +125,6 @@ export default function SearchBar() {
   useEffect(() => {
     setSelectedIndex(undefined);
   }, [cities.length]);
-
-  console.log(cities, isError, isLoading);
-
-  console.log({ suggestionRef: suggestionListRef.current });
 
   return (
     <Container>
