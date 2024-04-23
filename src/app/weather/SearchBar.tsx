@@ -2,9 +2,12 @@
 
 import { styled } from "@pigment-css/react";
 import Image from "next/image";
+import useCity from "./hooks/useCity";
+import { useEffect, useState } from "react";
+import SuggestionList from "./SuggestionList";
 
 const Container = styled("div")({
-  border: "1px solid red",
+  // border: "1px solid red",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -72,6 +75,9 @@ export default function SearchBar() {
           <Image src="/search.svg" alt="Search Icon" width={20} height={20} />
         </SearchButton>
       </SearchBarContainer>
+      {cities.length !== 0 && (
+        <SuggestionList suggestions={cities} selectedIndex={selectedIndex} />
+      )}
     </Container>
   );
 }
