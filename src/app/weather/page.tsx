@@ -1,9 +1,9 @@
 import { Suspense } from "react";
-import CurrentWeather from "./CurrentWeather";
-import ThirtySixHoursWeather from "./ThirtySixHoursWeather";
+import CurrentWeather from "./components/CurrentWeather";
+import ThirtySixHoursWeather from "./components/ThirtySixHoursWeather";
 import { styled } from "@pigment-css/react";
-import SearchBar from "./SearchBar";
-import RecentPlace from "./RecentPlace";
+import SearchBar from "./components/searchbar/SearchBar";
+import RecentPlace from "./components/RecentPlace";
 
 const TopSection = styled("div")({
   display: "flex",

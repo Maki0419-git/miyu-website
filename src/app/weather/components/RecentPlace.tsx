@@ -1,7 +1,7 @@
 "use client";
 import { styled } from "@pigment-css/react";
 import WeatherAnimation from "./WeatherAnimation";
-import { Weather } from "./types";
+import { Weather } from "../types";
 
 const Container = styled("div")({
   width: "1200px",

@@ -1,5 +1,5 @@
 import errorHandler from "@/utils/errorHandler";
-import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint";
+import { getWeatherApiEndpoint } from "../utils/getWeatherApiEndpoint";
 import { styled } from "@pigment-css/react";
 import Image from "next/image";
 

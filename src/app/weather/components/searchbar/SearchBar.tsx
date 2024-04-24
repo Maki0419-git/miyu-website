@@ -2,10 +2,10 @@
 
 import { styled } from "@pigment-css/react";
 import Image from "next/image";
-import useCity from "./hooks/useCity";
+import useCity from "../../hooks/useCity";
 import { useEffect, useRef, useState } from "react";
 import SuggestionList from "./SuggestionList";
-import useDebounceValue from "./hooks/useDebounceValue";
+import useDebounceValue from "../../hooks/useDebounceValue";
 
 const Container = styled("div")({
   // border: "1px solid red",
