@@ -1,12 +1,12 @@
 import { styled } from "@pigment-css/react";
-import Image from "next/image";
 import { getWeatherApiEndpoint } from "../utils/getWeatherApiEndpoint";
 import errorHandler from "@/utils/errorHandler";
-import { CurrentWeatherResponse } from "../types";
+import { WeatherAPIResponse } from "../types";
 import dayjs from "dayjs";
 import { WEATHER_DETAIL } from "../constant";
 import { getWeatherType } from "../utils/getWeatherType";
 import { WEATHER_ICON } from "./WeatherIcon";
+import Thermometer from "../../../assets/weather/thermometer.svg";
 
 const Container = styled("div")({
   border: "1px solid red",
@@ -14,8 +14,6 @@ const Container = styled("div")({
   "h1, h2": {
     color: "white",
     margin: 0,
-  },
-  "> h1,h2": {
     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
   },
 });
@@ -46,7 +44,9 @@ const WeatherDescription = styled("div")({
   gap: "10px",
 });
 
-async function getCurrentWeather(): Promise<CurrentWeatherResponse> {
+async function getCurrentWeather(): Promise<
+  WeatherAPIResponse<"CURRENT_WEATHER">
+> {
   try {
     const endpoint = getWeatherApiEndpoint("CURRENT_WEATHER");
     const response = await fetch(
@@ -78,8 +78,7 @@ export default async function CurrentWeather() {
   const time = dayjs(dateTime).format("hh:mm A");
   const { Weather: weather, AirTemperature: temperature } =
     targetStation.WeatherElement;
-  const weatherIconSrc =
-    WEATHER_ICON.day[getWeatherType(WEATHER_DETAIL, weather)];
+  const weatherIcon = WEATHER_ICON.day[getWeatherType(WEATHER_DETAIL, weather)];
 
   console.log({ weather });
 
@@ -89,18 +88,12 @@ export default async function CurrentWeather() {
       <h2>{time}</h2>
       <WeatherInfo>
         <Temperature>
-          <Image
-            src="https://picsum.photos/200"
-            alt="Weather Icon"
-            width={100}
-            height={100}
-            priority
-          />
+          <Thermometer width={100} height={100} />
           <h1>{temperature}°C</h1>
         </Temperature>
         <Divider />
         <WeatherDescription>
-          {weatherIconSrc}
+          {weatherIcon}
           <h2>{weather}</h2>
         </WeatherDescription>
       </WeatherInfo>
