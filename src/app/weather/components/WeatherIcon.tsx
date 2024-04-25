@@ -12,19 +12,19 @@ import NightFoggy from "../../../assets/weather/nightFoggy.svg";
 
 export const WEATHER_ICON = {
   night: {
-    THUNDER: <NightThunder width={80} height={80} />,
-    CLEAR: <NightClear width={80} height={80} />,
-    FOGGY: <NightFoggy width={80} height={80} />,
-    CLOUDY: <NightCloudy width={80} height={80} />,
-    RAINY: <NightRainy width={80} height={80} />,
-    SNOWY: <NightCloudy width={80} height={80} />,
+    THUNDER: <NightThunder width={80} height={80} viewBox={"0 0 512 512"} />,
+    CLEAR: <NightClear width={80} height={80} viewBox={"0 0 512 512"} />,
+    FOGGY: <NightFoggy width={80} height={80} viewBox={"0 0 512 512"} />,
+    CLOUDY: <NightCloudy width={80} height={80} viewBox={"0 0 512 512"} />,
+    RAINY: <NightRainy width={80} height={80} viewBox={"0 0 512 512"} />,
+    SNOWY: <NightCloudy width={80} height={80} viewBox={"0 0 512 512"} />,
   },
   day: {
-    THUNDER: <DayThunder width={80} height={80} />,
-    CLEAR: <DayClear width={80} height={80} />,
-    FOGGY: <DayFoggy width={80} height={80} />,
-    CLOUDY: <DayCloudy width={80} height={80} />,
-    RAINY: <DayRainy width={80} height={80} />,
-    SNOWY: <DaySnowy width={80} height={80} />,
+    THUNDER: <DayThunder width={80} height={80} viewBox={"0 0 512 512"} />,
+    CLEAR: <DayClear width={80} height={80} viewBox={"0 0 512 512"} />,
+    FOGGY: <DayFoggy width={80} height={80} viewBox={"0 0 512 512"} />,
+    CLOUDY: <DayCloudy width={80} height={80} viewBox={"0 0 512 512"} />,
+    RAINY: <DayRainy width={80} height={80} viewBox={"0 0 512 512"} />,
+    SNOWY: <DaySnowy width={80} height={80} viewBox={"0 0 512 512"} />,
   },
 };
