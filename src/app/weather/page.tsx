@@ -12,7 +12,7 @@ const TopSection = styled("div")({
   padding: "60px 80px",
   height: "60vh",
   backgroundImage:
-    "linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1609147110653-4b8bc700ed30?ixid=M3w1OTIxODF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTM1MTM5OTV8&ixlib=rb-4.0.3')",
+    "linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1561105111-d592363f0472?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1OTIxODF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTQwNTc1MTd8&ixlib=rb-4.0.3&q=80&w=2000')",
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundColor: "#252746",
