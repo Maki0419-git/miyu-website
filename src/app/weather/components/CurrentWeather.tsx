@@ -1,5 +1,12 @@
 import { styled } from "@pigment-css/react";
 import Image from "next/image";
+import { getWeatherApiEndpoint } from "../utils/getWeatherApiEndpoint";
+import errorHandler from "@/utils/errorHandler";
+import { CurrentWeatherResponse } from "../types";
+import dayjs from "dayjs";
+import { WEATHER_DETAIL } from "../constant";
+import { getWeatherType } from "../utils/getWeatherType";
+import { WEATHER_ICON } from "./WeatherIcon";
 
 const Container = styled("div")({
   border: "1px solid red",
@@ -32,29 +39,54 @@ const Divider = styled("div")({
   margin: "0 10px",
 });
 
-const RainPossibility = styled("div")({
-  border: "1px solid red",
-  "h1 , h2": {
-    fontWeight: "normal",
-  },
-});
-
-const RainPossibilityInner = styled("div")({
+const WeatherDescription = styled("div")({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   gap: "10px",
 });
 
-export default async function CurrentWeather() {
-  //   const currentWeatherData = await getCurrentWeather();
+async function getCurrentWeather(): Promise<CurrentWeatherResponse> {
+  try {
+    const endpoint = getWeatherApiEndpoint("CURRENT_WEATHER");
+    const response = await fetch(
+      `${endpoint}?StationName=臺北&Authorization=${process.env.WEATHER_API_KEY}`,
+      { cache: "no-store" }
+    );
 
-  //   console.log(currentWeatherData);
+    if (!response.ok) {
+      errorHandler("CURRENT_WEATHER", response.status);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error: any) {
+    console.log({ error });
+    throw error;
+  }
+}
+
+export default async function CurrentWeather() {
+  console.log("CurrentWeather");
+  const currentWeatherData = await getCurrentWeather();
+  const targetStation = currentWeatherData.records.Station[0];
+  const {
+    ObsTime: { DateTime: dateTime },
+    GeoInfo: { CountyName: countyName },
+  } = targetStation;
+  const time = dayjs(dateTime).format("hh:mm A");
+  const { Weather: weather, AirTemperature: temperature } =
+    targetStation.WeatherElement;
+  const weatherIconSrc =
+    WEATHER_ICON.day[getWeatherType(WEATHER_DETAIL, weather)];
+
+  console.log({ weather });
 
   return (
     <Container>
-      <h1>San Francisco</h1>
-      <h2>06:25PM</h2>
+      <h1>{countyName}</h1>
+      <h2>{time}</h2>
       <WeatherInfo>
         <Temperature>
           <Image
@@ -64,22 +96,13 @@ export default async function CurrentWeather() {
             height={100}
             priority
           />
-          <h1>25°C</h1>
+          <h1>{temperature}°C</h1>
         </Temperature>
         <Divider />
-        <RainPossibility>
-          <h2>Rain</h2>
-          <RainPossibilityInner>
-            <Image
-              src="https://picsum.photos/200"
-              alt="Rain Icon"
-              width={80}
-              height={80}
-              priority
-            />
-            <h1>60%</h1>
-          </RainPossibilityInner>
-        </RainPossibility>
+        <WeatherDescription>
+          {weatherIconSrc}
+          <h2>{weather}</h2>
+        </WeatherDescription>
       </WeatherInfo>
     </Container>
   );
