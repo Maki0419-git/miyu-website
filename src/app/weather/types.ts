@@ -3,8 +3,6 @@ export enum WeatherAPI {
   THIRTY_SIX_HOURS_WEATHER = "F-C0032-001",
 }
 
-export type WeatherApiAlias = keyof typeof WeatherAPI;
-
 export type CityResponseType = Record<"cities", string[]>;
 
 export enum Weather {
@@ -17,7 +15,6 @@ export enum Weather {
 }
 
 export type WeatherType = keyof typeof Weather;
-
 export type WeatherCodeType = Record<WeatherType, number[]>;
 export type WeatherDetailType = Record<WeatherType, string[]>;
 export type WeatherTypeData = WeatherCodeType | WeatherDetailType;
@@ -26,10 +23,19 @@ export type WeatherIconType = {
   day: Record<WeatherType, any>;
 };
 
-export interface CurrentWeatherResponse {
+export type WeatherApiAlias = keyof typeof WeatherAPI;
+type WeatherApiRecordTypes = {
+  [k in WeatherApiAlias]: k extends "CURRENT_WEATHER"
+    ? CurrentWeatherRecords
+    : k extends "THIRTY_SIX_HOURS_WEATHER"
+    ? ThreeSixHoursWeatherRecords
+    : never;
+};
+
+export interface WeatherAPIResponse<T extends keyof WeatherApiRecordTypes> {
   success: string;
   result: Result;
-  records: Records;
+  records: WeatherApiRecordTypes[T];
 }
 
 export interface Result {
@@ -42,7 +48,7 @@ export interface Field {
   type: string;
 }
 
-export interface Records {
+export interface CurrentWeatherRecords {
   Station: Station[];
 }
 
@@ -143,4 +149,31 @@ export interface TemperatureInfo2 {
 
 export interface OccurredAt4 {
   DateTime: string;
+}
+
+export interface ThreeSixHoursWeatherRecords {
+  datasetDescription: string;
+  location: Location[];
+}
+
+export interface Location {
+  locationName: string;
+  weatherElement: WeatherElement[];
+}
+
+export interface WeatherElement {
+  elementName: string;
+  time: Time[];
+}
+
+export interface Time {
+  startTime: string;
+  endTime: string;
+  parameter: Parameter;
+}
+
+export interface Parameter {
+  parameterName: string;
+  parameterValue?: string;
+  parameterUnit?: string;
 }
