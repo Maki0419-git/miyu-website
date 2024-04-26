@@ -4,6 +4,10 @@ import ThirtySixHoursWeather from "./components/ThirtySixHoursWeather";
 import { styled } from "@pigment-css/react";
 import SearchBar from "./components/searchbar/SearchBar";
 import RecentPlace from "./components/RecentPlace";
+import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint";
+import errorHandler from "@/utils/errorHandler";
+import { WeatherAPIResponse } from "./types";
+import { getIsDayOrNight } from "./utils/getIsDayOrNight";
 
 const TopSection = styled("div")({
   display: "flex",
@@ -27,15 +31,42 @@ const BottomSection = styled("div")({
   border: "1px solid red",
 });
 
-export default function WeatherPage() {
+async function getSunriseSunsetTime(): Promise<
+  WeatherAPIResponse<"SUNRISE_SUNSET_TIME">
+> {
+  try {
+    const endpoint = getWeatherApiEndpoint("SUNRISE_SUNSET_TIME");
+    const response = await fetch(
+      `${endpoint}?CountyName=臺北市&Date=2024-04-26&Authorization=${process.env.WEATHER_API_KEY}`,
+      { cache: "no-store" }
+    );
+    if (!response.ok) {
+      errorHandler("SUNRISE_SUNSET_TIME", response.status);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    console.log({ error });
+    throw error;
+  }
+}
+
+export default async function WeatherPage() {
+  const sunriseSunsetTime = await getSunriseSunsetTime();
+  const isDayOrNight = getIsDayOrNight(
+    sunriseSunsetTime.records.locations.location[0].time[0]
+  );
+  console.log({ sunriseSunsetTime });
+  console.log({ isDayOrNight });
   return (
     <>
       <TopSection>
         <Suspense fallback={<div>Loading...</div>}>
-          <CurrentWeather />
+          <CurrentWeather isDayOrNight={isDayOrNight} />
         </Suspense>
         <Suspense fallback={<div>Loading...</div>}>
-          <ThirtySixHoursWeather />
+          <ThirtySixHoursWeather isDayOrNight={isDayOrNight} />
         </Suspense>
       </TopSection>
       <BottomSection>

@@ -67,8 +67,13 @@ async function getCurrentWeather(): Promise<
   }
 }
 
-export default async function CurrentWeather() {
-  console.log("CurrentWeather");
+type CurrentWeatherProps = {
+  isDayOrNight: "day" | "night";
+};
+
+export default async function CurrentWeather({
+  isDayOrNight,
+}: CurrentWeatherProps) {
   const currentWeatherData = await getCurrentWeather();
   const targetStation = currentWeatherData.records.Station[0];
   const {
@@ -78,7 +83,8 @@ export default async function CurrentWeather() {
   const time = dayjs(dateTime).format("hh:mm A");
   const { Weather: weather, AirTemperature: temperature } =
     targetStation.WeatherElement;
-  const weatherIcon = WEATHER_ICON.day[getWeatherType(WEATHER_DETAIL, weather)];
+  const weatherIcon =
+    WEATHER_ICON[isDayOrNight][getWeatherType(WEATHER_DETAIL, weather)];
 
   console.log({ weather });
 

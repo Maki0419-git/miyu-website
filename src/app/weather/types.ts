@@ -1,6 +1,7 @@
 export enum WeatherAPI {
   CURRENT_WEATHER = "O-A0003-001",
   THIRTY_SIX_HOURS_WEATHER = "F-C0032-001",
+  SUNRISE_SUNSET_TIME = "A-B0062-001",
 }
 
 export type CityResponseType = Record<"cities", string[]>;
@@ -29,6 +30,8 @@ type WeatherApiRecordTypes = {
     ? CurrentWeatherRecords
     : k extends "THIRTY_SIX_HOURS_WEATHER"
     ? ThreeSixHoursWeatherRecords
+    : k extends "SUNRISE_SUNSET_TIME"
+    ? SunriseSunsetTimeRecords
     : never;
 };
 
@@ -153,20 +156,20 @@ export interface OccurredAt4 {
 
 export interface ThreeSixHoursWeatherRecords {
   datasetDescription: string;
-  location: Location[];
+  location: ThreeSixHoursWeatherLocation[];
 }
 
-export interface Location {
+export interface ThreeSixHoursWeatherLocation {
   locationName: string;
   weatherElement: WeatherElement[];
 }
 
 export interface WeatherElement {
   elementName: string;
-  time: Time[];
+  time: ThreeSixHoursWeatherTime[];
 }
 
-export interface Time {
+export interface ThreeSixHoursWeatherTime {
   startTime: string;
   endTime: string;
   parameter: Parameter;
@@ -176,4 +179,31 @@ export interface Parameter {
   parameterName: string;
   parameterValue?: string;
   parameterUnit?: string;
+}
+
+export interface SunriseSunsetTimeRecords {
+  dataid: string;
+  note: string;
+  locations: SunriseSunsetTimeLocations;
+}
+
+export interface SunriseSunsetTimeLocations {
+  location: SunriseSunsetTimeLocation[];
+}
+
+export interface SunriseSunsetTimeLocation {
+  time: SunriseSunsetTime[];
+  CountyName: string;
+}
+
+export interface SunriseSunsetTime {
+  Date: string;
+  BeginCivilTwilightTime: string;
+  SunRiseTime: string;
+  SunRiseAZ: string;
+  SunTransitTime: string;
+  SunTransitAlt: string;
+  SunSetTime: string;
+  SunSetAZ: string;
+  EndCivilTwilightTime: string;
 }

@@ -102,7 +102,13 @@ type WeatherCard = {
   };
 };
 
-export default async function ThirtySixHoursWeather() {
+type ThirtySixHoursWeatherProps = {
+  isDayOrNight: "day" | "night";
+};
+
+export default async function ThirtySixHoursWeather({
+  isDayOrNight,
+}: ThirtySixHoursWeatherProps) {
   const thirtySixHoursWeatherData = await getThirtySixHoursWeather();
   const weatherElement =
     thirtySixHoursWeatherData.records.location[0].weatherElement;
@@ -159,7 +165,7 @@ export default async function ThirtySixHoursWeather() {
               : dayjs(weatherCard.startTime).format("hh:mm A")}
           </h3>
           {
-            WEATHER_ICON.day[
+            WEATHER_ICON[isDayOrNight][
               getWeatherType(WEATHER_CODE, weatherCard.weatherElement.Wx.code)
             ]
           }
