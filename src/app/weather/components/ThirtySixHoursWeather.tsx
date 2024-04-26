@@ -34,10 +34,23 @@ async function getThirtySixHoursWeather(): Promise<
 const Container = styled("div")({
   flex: 7,
   display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-end",
+  border: "1px solid red",
+  h5: {
+    color: "white",
+    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+    margin: "10px 20px",
+  },
+});
+
+const WeatherCardContainer = styled("div")({
+  display: "flex",
   justifyContent: "flex-end",
   gap: "30px",
   padding: "0 20px",
-  border: "1px solid red",
+  height: "60%",
+  border: "1px solid yellow",
 });
 
 const WeatherCard = styled("div")({
@@ -52,7 +65,7 @@ const WeatherCard = styled("div")({
   minWidth: "250px",
   maxWidth: "300px",
   width: "30%",
-  height: "60%",
+  height: "100%",
   "h2,h3,h4": { fontWeight: "normal", color: "white" },
   svg: {
     width: "100px",
@@ -79,7 +92,7 @@ const RainPossibility = styled("div")({
   alignItems: "center",
   justifyContent: "center",
   width: "100%",
-  height: "25%",
+  height: "23%",
   gap: "5px",
   backgroundColor: "rgba(0, 0, 0, 0.3)",
   borderRadius: "0 0 10px 10px",
@@ -89,7 +102,7 @@ const RainPossibility = styled("div")({
   },
 });
 
-type WeatherCard = {
+type WeatherCardType = {
   startTime: string;
   weatherElement: {
     Wx: {
@@ -112,7 +125,7 @@ export default async function ThirtySixHoursWeather({
   const thirtySixHoursWeatherData = await getThirtySixHoursWeather();
   const weatherElement =
     thirtySixHoursWeatherData.records.location[0].weatherElement;
-  const weatherCardList: WeatherCard[] = weatherElement.reduce(
+  const weatherCardList: WeatherCardType[] = weatherElement.reduce(
     (acc, current) => {
       const { elementName, time } = current;
       if (elementName === "CI") return acc;
@@ -121,7 +134,7 @@ export default async function ThirtySixHoursWeather({
           acc[index] = {
             startTime: time.startTime,
             weatherElement: {},
-          } as WeatherCard;
+          } as WeatherCardType;
         switch (elementName) {
           case "Wx":
             acc[index].weatherElement.Wx = {
@@ -149,7 +162,7 @@ export default async function ThirtySixHoursWeather({
 
       return acc;
     },
-    [] as WeatherCard[]
+    [] as WeatherCardType[]
   );
 
   console.log(thirtySixHoursWeatherData);
@@ -157,33 +170,36 @@ export default async function ThirtySixHoursWeather({
 
   return (
     <Container>
-      {weatherCardList.map((weatherCard, index) => (
-        <WeatherCard key={index}>
-          <h3>
-            {dayjs(weatherCard.startTime).valueOf() < dayjs().valueOf()
-              ? "Now"
-              : dayjs(weatherCard.startTime).format("hh:mm A")}
-          </h3>
-          {
-            WEATHER_ICON[isDayOrNight][
-              getWeatherType(WEATHER_CODE, weatherCard.weatherElement.Wx.code)
-            ]
-          }
-          <h4>{weatherCard.weatherElement.Wx.description}</h4>
-          <MinMaxTemperature>
-            <h3>{weatherCard.weatherElement.MinT}</h3>
-            <h3>/</h3>
-            <h2>{weatherCard.weatherElement.MaxT}°C</h2>
-          </MinMaxTemperature>
-          <RainPossibility>
-            <Humidity />
-            <div>
-              <h2>{weatherCard.weatherElement.PoP}%</h2>
-              <h4>降雨機率</h4>
-            </div>
-          </RainPossibility>
-        </WeatherCard>
-      ))}
+      <WeatherCardContainer>
+        {weatherCardList.map((weatherCard, index) => (
+          <WeatherCard key={index}>
+            <h3>
+              {dayjs(weatherCard.startTime).valueOf() < dayjs().valueOf()
+                ? "Now"
+                : dayjs(weatherCard.startTime).format("hh:mm A")}
+            </h3>
+            {
+              WEATHER_ICON[isDayOrNight][
+                getWeatherType(WEATHER_CODE, weatherCard.weatherElement.Wx.code)
+              ]
+            }
+            <h4>{weatherCard.weatherElement.Wx.description}</h4>
+            <MinMaxTemperature>
+              <h3>{weatherCard.weatherElement.MinT}</h3>
+              <h3>/</h3>
+              <h2>{weatherCard.weatherElement.MaxT}°C</h2>
+            </MinMaxTemperature>
+            <RainPossibility>
+              <Humidity />
+              <div>
+                <h2>{weatherCard.weatherElement.PoP}%</h2>
+                <h4>降雨機率</h4>
+              </div>
+            </RainPossibility>
+          </WeatherCard>
+        ))}
+      </WeatherCardContainer>
+      <h5>{thirtySixHoursWeatherData.records.datasetDescription}</h5>
     </Container>
   );
 }
