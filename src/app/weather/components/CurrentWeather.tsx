@@ -11,7 +11,7 @@ import Thermometer from "../../../assets/weather/thermometer.svg";
 const Container = styled("div")({
   border: "1px solid red",
   flex: 3,
-  "h1, h2": {
+  "h1, h2,h3": {
     color: "white",
     margin: 0,
     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
@@ -105,6 +105,7 @@ export default async function CurrentWeather({
           <h2>{weather}</h2>
         </WeatherDescription>
       </WeatherInfo>
+      <h3>測站：{station}</h3>
     </Container>
   );
 }
