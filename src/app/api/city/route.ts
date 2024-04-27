@@ -1,5 +1,5 @@
+import { CityCountyData } from "@/app/weather/data/CityCountyData";
 import { NextRequest } from "next/server";
-import { CityCountyData } from "@/data/CityCountyData";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

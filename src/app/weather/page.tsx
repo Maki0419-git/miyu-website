@@ -8,6 +8,7 @@ import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint";
 import errorHandler from "@/utils/errorHandler";
 import { WeatherAPIResponse } from "./types";
 import { getIsDayOrNight } from "./utils/getIsDayOrNight";
+import { getStationInfo } from "./utils/getStationInfo";
 
 const TopSection = styled("div")({
   display: "flex",
@@ -52,7 +53,13 @@ async function getSunriseSunsetTime(): Promise<
   }
 }
 
-export default async function WeatherPage() {
+export default async function WeatherPage({
+  searchParams: { city = "臺北市" },
+}: {
+  searchParams: { [key: string]: string };
+}) {
+  console.log({ city });
+  const { station } = getStationInfo(city);
   const sunriseSunsetTime = await getSunriseSunsetTime();
   const isDayOrNight = getIsDayOrNight(
     sunriseSunsetTime.records.locations.location[0].time[0]
@@ -63,10 +70,10 @@ export default async function WeatherPage() {
     <>
       <TopSection>
         <Suspense fallback={<div>Loading...</div>}>
-          <CurrentWeather isDayOrNight={isDayOrNight} />
+          <CurrentWeather isDayOrNight={isDayOrNight} station={station} />
         </Suspense>
         <Suspense fallback={<div>Loading...</div>}>
-          <ThirtySixHoursWeather isDayOrNight={isDayOrNight} />
+          <ThirtySixHoursWeather isDayOrNight={isDayOrNight} city={city} />
         </Suspense>
       </TopSection>
       <BottomSection>

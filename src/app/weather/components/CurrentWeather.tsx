@@ -44,13 +44,13 @@ const WeatherDescription = styled("div")({
   gap: "10px",
 });
 
-async function getCurrentWeather(): Promise<
-  WeatherAPIResponse<"CURRENT_WEATHER">
-> {
+async function getCurrentWeather(
+  station: string
+): Promise<WeatherAPIResponse<"CURRENT_WEATHER">> {
   try {
     const endpoint = getWeatherApiEndpoint("CURRENT_WEATHER");
     const response = await fetch(
-      `${endpoint}?StationName=臺北&Authorization=${process.env.WEATHER_API_KEY}`,
+      `${endpoint}?StationName=${station}&Authorization=${process.env.WEATHER_API_KEY}`,
       { cache: "no-store" }
     );
 
@@ -69,12 +69,14 @@ async function getCurrentWeather(): Promise<
 
 type CurrentWeatherProps = {
   isDayOrNight: "day" | "night";
+  station: string;
 };
 
 export default async function CurrentWeather({
   isDayOrNight,
+  station,
 }: CurrentWeatherProps) {
-  const currentWeatherData = await getCurrentWeather();
+  const currentWeatherData = await getCurrentWeather(station);
   const targetStation = currentWeatherData.records.Station[0];
   const {
     ObsTime: { DateTime: dateTime },

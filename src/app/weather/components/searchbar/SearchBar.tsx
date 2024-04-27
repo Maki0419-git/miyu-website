@@ -6,6 +6,7 @@ import useCity from "../../hooks/useCity";
 import { useEffect, useRef, useState } from "react";
 import SuggestionList from "./SuggestionList";
 import useDebounceValue from "../../hooks/useDebounceValue";
+import { usePathname, useRouter } from "next/navigation";
 
 const Container = styled("div")({
   // border: "1px solid red",
@@ -65,17 +66,33 @@ const SearchButton = styled("button")({
 });
 
 export default function SearchBar() {
+  const [inputValue, setInputValue] = useState<string>("");
   const [query, setQuery] = useState<string>("");
+  const isQueryValueLocked = useRef(false);
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
     undefined
   );
-  const debouncedQuery = useDebounceValue<string>(query, 1000);
+  const debouncedQuery = useDebounceValue<string>(query, 500);
   const { cities } = useCity(debouncedQuery);
+  const router = useRouter();
+  const pathname = usePathname();
   const suggestionListRef = useRef<HTMLUListElement>(null);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("handleChange");
     e.preventDefault();
-    setQuery(e.target.value);
+    setInputValue(e.target.value);
+    if (!isQueryValueLocked.current) setQuery(e.target.value);
+  };
+
+  const handleCompositionStart = () => {
+    console.log("start");
+    isQueryValueLocked.current = true;
+  };
+
+  const handleCompositionEnd = () => {
+    isQueryValueLocked.current = false;
+    console.log("End");
+    setQuery(inputValue);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -83,13 +100,11 @@ export default function SearchBar() {
       event.preventDefault();
       if (selectedIndex === undefined || selectedIndex === cities.length - 1) {
         setSelectedIndex(0);
-        setQuery(cities[0]);
         if (suggestionListRef.current) {
           suggestionListRef.current.scrollTo(0, 0);
         }
       } else {
         setSelectedIndex(selectedIndex + 1);
-        setQuery(cities[selectedIndex + 1]);
         if (suggestionListRef.current) {
           console.log({ scrollTop: suggestionListRef.current.scrollTop });
           suggestionListRef.current.scrollTop += 40;
@@ -100,7 +115,6 @@ export default function SearchBar() {
       event.preventDefault();
       if (selectedIndex === undefined || selectedIndex === 0) {
         setSelectedIndex(cities.length - 1);
-        setQuery(cities[cities.length - 1]);
         if (suggestionListRef.current) {
           suggestionListRef.current.scrollTo(
             0,
@@ -109,7 +123,6 @@ export default function SearchBar() {
         }
       } else {
         setSelectedIndex(selectedIndex - 1);
-        setQuery(cities[selectedIndex - 1]);
         if (suggestionListRef.current) {
           suggestionListRef.current.scrollTop -= 40;
         }
@@ -117,7 +130,9 @@ export default function SearchBar() {
     }
     if (event.key === "Enter" && selectedIndex !== undefined) {
       event.preventDefault();
-      console.log("enter");
+      router.push(`${pathname}?city=${cities[selectedIndex]}`);
+      setInputValue("");
+      setQuery("");
     }
   };
 
@@ -134,8 +149,10 @@ export default function SearchBar() {
         <Input
           type="text"
           placeholder="Search for a city"
-          value={query}
+          value={inputValue}
           onChange={handleChange}
+          onCompositionStart={handleCompositionStart}
+          onCompositionEnd={handleCompositionEnd}
           onKeyDown={handleKeyDown}
         />
         <SearchButton type="submit">

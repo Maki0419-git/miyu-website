@@ -9,29 +9,6 @@ import Humidity from "../../../assets/weather/humidity.svg";
 import dayjs from "dayjs";
 import createWeatherCardList from "../utils/createWeatherCardList";
 
-async function getThirtySixHoursWeather(): Promise<
-  WeatherAPIResponse<"THIRTY_SIX_HOURS_WEATHER">
-> {
-  try {
-    const endpoint = getWeatherApiEndpoint("THIRTY_SIX_HOURS_WEATHER");
-    const response = await fetch(
-      `${endpoint}?locationName=臺北市&Authorization=${process.env.WEATHER_API_KEY}`,
-      { cache: "no-store" }
-    );
-
-    if (!response.ok) {
-      errorHandler("THIRTY_SIX_HOURS_WEATHER", response.status);
-    }
-
-    const data = await response.json();
-
-    return data;
-  } catch (error: any) {
-    console.log({ error });
-    throw error;
-  }
-}
-
 const Container = styled("div")({
   flex: 7,
   display: "flex",
@@ -103,14 +80,38 @@ const RainPossibility = styled("div")({
   },
 });
 
+async function getThirtySixHoursWeather(
+  city: string
+): Promise<WeatherAPIResponse<"THIRTY_SIX_HOURS_WEATHER">> {
+  try {
+    const endpoint = getWeatherApiEndpoint("THIRTY_SIX_HOURS_WEATHER");
+    const response = await fetch(
+      `${endpoint}?locationName=${city}&Authorization=${process.env.WEATHER_API_KEY}`,
+      { cache: "no-store" }
+    );
+
+    if (!response.ok) {
+      errorHandler("THIRTY_SIX_HOURS_WEATHER", response.status);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error: any) {
+    console.log({ error });
+    throw error;
+  }
+}
 type ThirtySixHoursWeatherProps = {
   isDayOrNight: "day" | "night";
+  city: string;
 };
 
 export default async function ThirtySixHoursWeather({
   isDayOrNight,
+  city,
 }: ThirtySixHoursWeatherProps) {
-  const thirtySixHoursWeatherData = await getThirtySixHoursWeather();
+  const thirtySixHoursWeatherData = await getThirtySixHoursWeather(city);
   const weatherElement =
     thirtySixHoursWeatherData.records.location[0].weatherElement;
   const weatherCardList = createWeatherCardList(weatherElement);
