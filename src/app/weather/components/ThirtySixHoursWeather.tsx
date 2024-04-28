@@ -6,8 +6,9 @@ import { WEATHER_ICON } from "./WeatherIcon";
 import { getWeatherType } from "../utils/getWeatherType";
 import { WEATHER_CODE } from "../constant";
 import Humidity from "../../../assets/weather/humidity.svg";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import createWeatherCardList from "../utils/createWeatherCardList";
+import { isTomorrow } from "../utils/isTomorrow";
 
 const Container = styled("div")({
   flex: 7,
@@ -144,13 +145,6 @@ export default async function ThirtySixHoursWeather({
   const weatherCardList = createWeatherCardList(weatherElement);
   console.log(thirtySixHoursWeatherData);
   console.log({ weatherCardList });
-
-  const isTomorrow = (startTime: Dayjs): Boolean => {
-    const today = dayjs();
-    const tomorrow = today.add(1, "day");
-
-    return dayjs(startTime).isSame(tomorrow, "day");
-  };
 
   return (
     <Container>
