@@ -6,7 +6,7 @@ import { WEATHER_ICON } from "./WeatherIcon";
 import { getWeatherType } from "../utils/getWeatherType";
 import { WEATHER_CODE } from "../constant";
 import Humidity from "../../../assets/weather/humidity.svg";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import createWeatherCardList from "../utils/createWeatherCardList";
 
 const Container = styled("div")({
@@ -145,7 +145,7 @@ export default async function ThirtySixHoursWeather({
   console.log(thirtySixHoursWeatherData);
   console.log({ weatherCardList });
 
-  const isTomorrow = (startTime: string): Boolean => {
+  const isTomorrow = (startTime: Dayjs): Boolean => {
     const today = dayjs();
     const tomorrow = today.add(1, "day");
 
@@ -163,9 +163,9 @@ export default async function ThirtySixHoursWeather({
             }
           >
             <h3>
-              {dayjs(weatherCard.startTime).valueOf() < dayjs().valueOf()
+              {weatherCard.startTime.valueOf() < dayjs().valueOf()
                 ? "Now"
-                : dayjs(weatherCard.startTime).format("hh:mm A")}
+                : weatherCard.startTime.format("hh:mm A")}
             </h3>
             {
               WEATHER_ICON[isDayOrNight][
