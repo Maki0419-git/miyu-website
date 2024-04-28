@@ -2,9 +2,6 @@ import errorHandler from "@/utils/errorHandler";
 import { getWeatherApiEndpoint } from "../utils/getWeatherApiEndpoint";
 import { css, styled } from "@pigment-css/react";
 import { WeatherAPIResponse } from "../types";
-import { WEATHER_ICON } from "./WeatherIcon";
-import { getWeatherType } from "../utils/getWeatherType";
-import { WEATHER_CODE } from "../constant";
 import Humidity from "../../../assets/weather/humidity.svg";
 import createWeatherCardList from "../utils/createWeatherCardList";
 import { isTomorrow } from "../utils/isTomorrow";
@@ -142,7 +139,7 @@ export default async function ThirtySixHoursWeather({
   const thirtySixHoursWeatherData = await getThirtySixHoursWeather(city);
   const weatherElement =
     thirtySixHoursWeatherData.records.location[0].weatherElement;
-  const weatherCardList = createWeatherCardList(weatherElement);
+  const weatherCardList = createWeatherCardList(weatherElement, isDayOrNight);
   console.log(thirtySixHoursWeatherData);
   console.log({ weatherCardList });
 
@@ -161,11 +158,7 @@ export default async function ThirtySixHoursWeather({
                 ? "Now"
                 : weatherCard.startTime.format("hh:mm A")}
             </h3>
-            {
-              WEATHER_ICON[isDayOrNight][
-                getWeatherType(WEATHER_CODE, weatherCard.weatherElement.Wx.code)
-              ]
-            }
+            {weatherCard.weatherElement.Wx.img}
             <h4>{weatherCard.weatherElement.Wx.description}</h4>
             <MinMaxTemperature>
               <h3>{weatherCard.weatherElement.MinT}</h3>

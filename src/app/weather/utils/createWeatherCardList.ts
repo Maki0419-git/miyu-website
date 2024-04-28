@@ -1,5 +1,8 @@
 import dayjs, { Dayjs } from "dayjs";
 import { WeatherElement } from "../types";
+import { WEATHER_ICON } from "../components/WeatherIcon";
+import { getWeatherType } from "./getWeatherType";
+import { WEATHER_CODE } from "../constant";
 
 type WeatherCardType = {
   startTime: Dayjs;
@@ -7,6 +10,7 @@ type WeatherCardType = {
     Wx: {
       description: string;
       code: number;
+      img: JSX.Element;
     };
     PoP: number;
     MinT: number;
@@ -15,7 +19,8 @@ type WeatherCardType = {
 };
 
 export default function createWeatherCardList(
-  weatherElement: WeatherElement[]
+  weatherElement: WeatherElement[],
+  isDayOrNight: "day" | "night"
 ): WeatherCardType[] {
   const weatherCardList: WeatherCardType[] = weatherElement.reduce(
     (acc, current) => {
@@ -32,6 +37,12 @@ export default function createWeatherCardList(
             acc[index].weatherElement.Wx = {
               description: time.parameter.parameterName,
               code: Number(time.parameter.parameterValue as string),
+              img: WEATHER_ICON[isDayOrNight][
+                getWeatherType(
+                  WEATHER_CODE,
+                  Number(time.parameter.parameterValue as string)
+                )
+              ],
             };
             break;
           case "PoP":
