@@ -6,9 +6,9 @@ import { WEATHER_ICON } from "./WeatherIcon";
 import { getWeatherType } from "../utils/getWeatherType";
 import { WEATHER_CODE } from "../constant";
 import Humidity from "../../../assets/weather/humidity.svg";
-import dayjs from "dayjs";
 import createWeatherCardList from "../utils/createWeatherCardList";
 import { isTomorrow } from "../utils/isTomorrow";
+import { isPast } from "../utils/isPast";
 
 const Container = styled("div")({
   flex: 7,
@@ -157,7 +157,7 @@ export default async function ThirtySixHoursWeather({
             }
           >
             <h3>
-              {weatherCard.startTime.valueOf() < dayjs().valueOf()
+              {isPast(weatherCard.startTime)
                 ? "Now"
                 : weatherCard.startTime.format("hh:mm A")}
             </h3>
