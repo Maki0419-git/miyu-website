@@ -92,6 +92,17 @@ const foggyLeft = keyframes({
   },
 });
 
+const SunnyAnimation = styled("div")({
+  position: "absolute",
+  top: "0",
+  left: "0",
+  width: "100%",
+  height: "100%",
+  backgroundImage: "url(/sunny.png)",
+  backgroundSize: "contain",
+  backgroundRepeat: "no-repeat",
+});
+
 const RainyAnimation = styled("div")({
   position: "absolute",
   top: "0",
@@ -99,7 +110,7 @@ const RainyAnimation = styled("div")({
   width: "100%",
   height: "100%",
   backgroundImage: "url(https://i.postimg.cc/XvR6CjbY/rain.png)",
-  animation: `${rainy} 0.2s linear infinite`,
+  animation: `${rainy} 0.5s linear infinite`,
 });
 
 const CloudyAnimation = styled("div")({
@@ -148,17 +159,12 @@ const FoggyAnimation = styled("div")({
   height: "100%",
   zIndex: "2",
   background: "linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3))",
-  // backgroundImage: "url(/foggy.png)",
-  // backgroundSize: "100%",
-  // backgroundRepeat: "repeat-x",
-  // animation: `${snowing} 2.5s linear infinite`,
 });
 
 const Fog1 = styled("div")({
   border: "1px solid red",
   height: "50%",
   backgroundImage: "url(/fog.png)",
-  //   backgroundRepeat: "round",
   rotate: "180deg",
   backgroundSize: "cover",
   animation: `${foggyRight} 10s  linear infinite`,
@@ -178,6 +184,8 @@ export default function WeatherAnimation({
   weatherType: WeatherType;
 }) {
   switch (weatherType) {
+    case "CLEAR":
+      return <SunnyAnimation />;
     case "RAINY":
       return <RainyAnimation />;
     case "CLOUDY":
