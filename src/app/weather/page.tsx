@@ -8,6 +8,7 @@ import { WeatherAPIResponse } from "./types";
 import { getIsDayOrNight } from "./utils/getIsDayOrNight";
 import { getStationInfo } from "./utils/getStationInfo";
 import BottomSection from "./components/searchbar/bottomSection";
+import dayjs from "dayjs";
 
 const TopSection = styled("div")({
   display: "flex",
@@ -26,9 +27,10 @@ async function getSunriseSunsetTime(): Promise<
   WeatherAPIResponse<"SUNRISE_SUNSET_TIME">
 > {
   try {
+    const date = dayjs().format("YYYY-MM-DD");
     const endpoint = getWeatherApiEndpoint("SUNRISE_SUNSET_TIME");
     const response = await fetch(
-      `${endpoint}?CountyName=臺北市&Date=2024-04-26&Authorization=${process.env.WEATHER_API_KEY}`,
+      `${endpoint}?CountyName=臺北市&Date=${date}&Authorization=${process.env.WEATHER_API_KEY}`,
       { cache: "no-store" }
     );
     if (!response.ok) {
