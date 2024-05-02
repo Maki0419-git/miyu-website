@@ -2,13 +2,12 @@ import { Suspense } from "react";
 import CurrentWeather from "./components/CurrentWeather";
 import ThirtySixHoursWeather from "./components/ThirtySixHoursWeather";
 import { styled } from "@pigment-css/react";
-import SearchBar from "./components/searchbar/SearchBar";
-import RecentPlace from "./components/RecentPlace";
 import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint";
 import errorHandler from "@/utils/errorHandler";
 import { WeatherAPIResponse } from "./types";
 import { getIsDayOrNight } from "./utils/getIsDayOrNight";
 import { getStationInfo } from "./utils/getStationInfo";
+import BottomSection from "./components/searchbar/bottomSection";
 
 const TopSection = styled("div")({
   display: "flex",
@@ -21,15 +20,6 @@ const TopSection = styled("div")({
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundColor: "#252746",
-});
-
-const BottomSection = styled("div")({
-  display: "flex",
-  width: "100%",
-  justifyContent: "space-between",
-  alignItems: "flex-start",
-  padding: "60px 80px",
-  border: "1px solid red",
 });
 
 async function getSunriseSunsetTime(): Promise<
@@ -76,10 +66,7 @@ export default async function WeatherPage({
           <ThirtySixHoursWeather isDayOrNight={isDayOrNight} city={city} />
         </Suspense>
       </TopSection>
-      <BottomSection>
-        <SearchBar />
-        <RecentPlace />
-      </BottomSection>
+      <BottomSection />
     </>
   );
 }
