@@ -6,6 +6,7 @@ import { CityCardType, getCityCardList } from "../utils/getCityCardList";
 import WeatherAnimation from "./WeatherAnimation";
 import { getWeatherType } from "../utils/getWeatherType";
 import { WEATHER_DETAIL } from "../constant";
+import { usePathname, useRouter } from "next/navigation";
 
 const pulse = keyframes({
   "0%": { backgroundColor: "#eee" },
@@ -81,6 +82,12 @@ type RecentPlaceProps = {
 export default function RecentPlace({ recentPlace }: RecentPlaceProps) {
   const [isPending, startTransition] = useTransition();
   const [cityCardList, setCityCardList] = useState<CityCardType[]>([]);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleClick = (city: string) => {
+    router.push(`${pathname}?city=${city}`);
+  };
 
   useEffect(() => {
     startTransition(async () => {
@@ -99,7 +106,11 @@ export default function RecentPlace({ recentPlace }: RecentPlaceProps) {
           isPending ? (
             <CityCardSkeleton key={city.cityName} />
           ) : (
-            <CityCard isSkeleton={false} key={city.cityName}>
+            <CityCard
+              isSkeleton={false}
+              key={city.cityName}
+              onClick={() => handleClick(city.cityName)}
+            >
               <h3>{city.cityName}</h3>
               <h2>{city.temperature}°C</h2>
               <h4>{city.weather}</h4>
