@@ -51,7 +51,7 @@ export default async function WeatherPage({
   searchParams: { [key: string]: string };
 }) {
   console.log({ city });
-  const { station } = getStationInfo(city);
+  const station = getStationInfo(city);
   const sunriseSunsetTime = await getSunriseSunsetTime();
   const isDayOrNight = getIsDayOrNight(
     sunriseSunsetTime.records.locations.location[0].time[0]
