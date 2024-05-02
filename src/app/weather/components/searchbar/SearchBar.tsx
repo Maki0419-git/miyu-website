@@ -65,7 +65,11 @@ const SearchButton = styled("button")({
   },
 });
 
-export default function SearchBar() {
+type SearchBarProps = {
+  handlePlaceChange: (place: string) => void;
+};
+
+export default function SearchBar({ handlePlaceChange }: SearchBarProps) {
   const [inputValue, setInputValue] = useState<string>("");
   const [query, setQuery] = useState<string>("");
   const isQueryValueLocked = useRef(false);
@@ -131,6 +135,7 @@ export default function SearchBar() {
     if (event.key === "Enter" && selectedIndex !== undefined) {
       event.preventDefault();
       router.push(`${pathname}?city=${cities[selectedIndex]}`);
+      handlePlaceChange(cities[selectedIndex]);
       setInputValue("");
       setQuery("");
     }

@@ -4,7 +4,7 @@ import WeatherAnimation from "./WeatherAnimation";
 import { Weather } from "../types";
 
 const Container = styled("div")({
-  width: "1200px",
+  width: "800px",
   display: "flex",
   height: "30vh",
   flexDirection: "column",
@@ -47,14 +47,18 @@ const CityCard = styled("div")({
   },
 });
 
-export default function RecentPlace() {
+type RecentPlaceProps = {
+  recentPlace: string[];
+};
+
+export default function RecentPlace({ recentPlace }: RecentPlaceProps) {
   return (
     <Container>
       <h2>Recent Place</h2>
       <CityCardContainer>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <CityCard key={index}>
-            <h3>Paris</h3>
+        {recentPlace.map((place, index) => (
+          <CityCard key={place}>
+            <h3>{place}</h3>
             <h4>25°C</h4>
             <h4>🌧️</h4>
             <WeatherAnimation weather={Weather.FOGGY} />
