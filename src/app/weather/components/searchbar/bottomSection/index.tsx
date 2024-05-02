@@ -21,7 +21,7 @@ export default function BottomSection() {
   return (
     <Container>
       <SearchBar handlePlaceChange={handlePlaceChange} />
-      <RecentPlace recentPlace={recentPlace} />
+      {recentPlace.length > 0 && <RecentPlace recentPlace={recentPlace} />}
     </Container>
   );
 }

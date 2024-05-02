@@ -1,22 +1,22 @@
 "use client";
 import { keyframes, styled } from "@pigment-css/react";
-import { Weather } from "../types";
+import { WeatherType } from "../types";
 
 const rainy = keyframes({
   "0%": {
     backgroundPosition: "0% 0%",
   },
   "100%": {
-    backgroundPosition: "10% -110%",
+    backgroundPosition: "5% -110%",
   },
 });
 
 const cloudy = keyframes({
   "0%": {
-    backgroundPosition: "100px 100px",
+    backgroundPosition: "0% 50%",
   },
   "100%": {
-    backgroundPosition: "-1500px 0",
+    backgroundPosition: "100% 50%",
   },
 });
 
@@ -99,7 +99,7 @@ const RainyAnimation = styled("div")({
   width: "100%",
   height: "100%",
   backgroundImage: "url(https://i.postimg.cc/XvR6CjbY/rain.png)",
-  animation: `${rainy} 0.5s linear infinite`,
+  animation: `${rainy} 0.2s linear infinite`,
 });
 
 const CloudyAnimation = styled("div")({
@@ -108,7 +108,7 @@ const CloudyAnimation = styled("div")({
   left: "0",
   width: "100%",
   height: "100%",
-  opacity: "0.5",
+  opacity: "0.9",
 });
 
 const Cloud = styled("div")({
@@ -172,25 +172,29 @@ const Fog2 = styled("div")({
   animation: `${foggyLeft} 10s infinite linear`,
 });
 
-export default function WeatherAnimation({ weather }: { weather: Weather }) {
-  switch (weather) {
-    case Weather.RAINY:
+export default function WeatherAnimation({
+  weatherType,
+}: {
+  weatherType: WeatherType;
+}) {
+  switch (weatherType) {
+    case "RAINY":
       return <RainyAnimation />;
-    case Weather.CLOUDY:
+    case "CLOUDY":
       return (
         <CloudyAnimation>
           <Cloud />
         </CloudyAnimation>
       );
-    case Weather.THUNDER:
+    case "THUNDER":
       return (
         <RainyAnimation>
           <ThunderAnimation />
         </RainyAnimation>
       );
-    case Weather.SNOWY:
+    case "SNOWY":
       return <SnowyAnimation />;
-    case Weather.FOGGY:
+    case "FOGGY":
       return (
         <FoggyAnimation>
           <Fog1 />

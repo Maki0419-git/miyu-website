@@ -1,7 +1,24 @@
 "use client";
-import { styled } from "@pigment-css/react";
+import { keyframes, styled } from "@pigment-css/react";
+import { useEffect, useState, useTransition } from "react";
+import { getMultipleCurrentWeather } from "../action";
+import { CityCardType, getCityCardList } from "../utils/getCityCardList";
 import WeatherAnimation from "./WeatherAnimation";
-import { Weather } from "../types";
+import { getWeatherType } from "../utils/getWeatherType";
+import { WEATHER_DETAIL } from "../constant";
+
+const pulse = keyframes({
+  "0%": { backgroundColor: "#eee" },
+  "50%": { backgroundColor: "#f5f5f5" },
+  "100%": { backgroundColor: "#eee" },
+});
+
+const Skeleton = styled("div")({
+  backgroundColor: "#eee",
+  animation: `${pulse} 1.5s infinite ease-in-out`,
+  width: "100%",
+  height: "100%",
+});
 
 const Container = styled("div")({
   width: "800px",
@@ -23,47 +40,75 @@ const CityCardContainer = styled("div")({
   border: "1px solid blue",
 });
 
-const CityCard = styled("div")({
+const CityCard = styled("div")<{ isSkeleton: Boolean }>({
   position: "relative",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
   alignItems: "center",
+  justifyContent: "center",
+  gap: "10px",
   overflow: "hidden",
-  gap: "20px",
   width: "100%",
   height: "100%",
   minWidth: "150px",
-  padding: "30px 20px",
   borderRadius: "8px",
   backgroundPosition: "center",
-  backgroundImage:
-    "url('https://images.unsplash.com/photo-1574678863094-1cebd3031d75?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1OTIxODF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTM2MjYxMTZ8&ixlib=rb-4.0.3&q=80&w=1080')",
+  backgroundImage: (props) =>
+    props.isSkeleton
+      ? "none"
+      : "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3)),url('https://images.unsplash.com/photo-1574678863094-1cebd3031d75?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1OTIxODF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTM2MjYxMTZ8&ixlib=rb-4.0.3&q=80&w=1080')",
   color: "white",
   cursor: "pointer",
   transition: "all 0.3s ease",
+  "h2, h3, h4": {
+    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)",
+  },
   "&:hover": {
     transform: "scale(1.05)",
   },
 });
+
+const CityCardSkeleton = () => (
+  <CityCard isSkeleton={true}>
+    <Skeleton />
+  </CityCard>
+);
 
 type RecentPlaceProps = {
   recentPlace: string[];
 };
 
 export default function RecentPlace({ recentPlace }: RecentPlaceProps) {
+  const [isPending, startTransition] = useTransition();
+  const [cityCardList, setCityCardList] = useState<CityCardType[]>([]);
+
+  useEffect(() => {
+    startTransition(async () => {
+      const data = await getMultipleCurrentWeather(recentPlace);
+      const records = data.records;
+      setCityCardList(getCityCardList(records, recentPlace));
+      console.log({ data });
+    });
+  }, [recentPlace]);
+
   return (
     <Container>
       <h2>Recent Place</h2>
       <CityCardContainer>
-        {recentPlace.map((place, index) => (
-          <CityCard key={place}>
-            <h3>{place}</h3>
-            <h4>25°C</h4>
-            <h4>🌧️</h4>
-            <WeatherAnimation weather={Weather.FOGGY} />
-          </CityCard>
-        ))}
+        {cityCardList.map((city, index) =>
+          isPending ? (
+            <CityCardSkeleton key={city.cityName} />
+          ) : (
+            <CityCard isSkeleton={false} key={city.cityName}>
+              <h3>{city.cityName}</h3>
+              <h2>{city.temperature}°C</h2>
+              <h4>{city.weather}</h4>
+              <WeatherAnimation
+                weatherType={getWeatherType(WEATHER_DETAIL, city.weather)}
+              />
+            </CityCard>
+          )
+        )}
       </CityCardContainer>
     </Container>
   );
