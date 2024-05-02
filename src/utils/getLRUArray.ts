@@ -9,5 +9,5 @@ export const LRUArray = <T>(array: T[], value: T, maxLength: number) => {
 
   array.unshift(value);
 
-  return array;
+  return [...array];
 };
