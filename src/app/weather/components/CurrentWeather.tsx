@@ -1,12 +1,10 @@
 import { styled } from "@pigment-css/react";
-import { getWeatherApiEndpoint } from "../utils/getWeatherApiEndpoint";
-import errorHandler from "@/utils/errorHandler";
-import { WeatherAPIResponse } from "../types";
 import dayjs from "dayjs";
 import { WEATHER_DETAIL } from "../constant";
 import { getWeatherType } from "../utils/getWeatherType";
 import { WEATHER_ICON } from "./WeatherIcon";
 import Thermometer from "../../../assets/weather/thermometer.svg";
+import { getCurrentWeather } from "../action";
 
 const Container = styled("div")({
   border: "1px solid red",
@@ -44,43 +42,21 @@ const WeatherDescription = styled("div")({
   gap: "10px",
 });
 
-async function getCurrentWeather(
-  station: string
-): Promise<WeatherAPIResponse<"CURRENT_WEATHER">> {
-  try {
-    const endpoint = getWeatherApiEndpoint("CURRENT_WEATHER");
-    const response = await fetch(
-      `${endpoint}?StationName=${station}&Authorization=${process.env.WEATHER_API_KEY}`,
-      { cache: "no-store" }
-    );
-
-    if (!response.ok) {
-      errorHandler("CURRENT_WEATHER", response.status);
-    }
-
-    const data = await response.json();
-
-    return data;
-  } catch (error: any) {
-    console.log({ error });
-    throw error;
-  }
-}
-
 type CurrentWeatherProps = {
   isDayOrNight: "day" | "night";
-  station: string;
+  city: string;
 };
 
 export default async function CurrentWeather({
   isDayOrNight,
-  station,
+  city,
 }: CurrentWeatherProps) {
-  const currentWeatherData = await getCurrentWeather(station);
+  const currentWeatherData = await getCurrentWeather([city]);
   const targetStation = currentWeatherData.records.Station[0];
   const {
     ObsTime: { DateTime: dateTime },
     GeoInfo: { CountyName: countyName },
+    StationName: station,
   } = targetStation;
   const time = dayjs(dateTime).format("hh:mm A");
   const { Weather: weather, AirTemperature: temperature } =

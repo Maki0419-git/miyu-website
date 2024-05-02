@@ -5,7 +5,7 @@ import { WeatherAPIResponse } from "./types";
 import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint";
 import { getStationInfo } from "./utils/getStationInfo";
 
-export async function getMultipleCurrentWeather(
+export async function getCurrentWeather(
   cityName: string[]
 ): Promise<WeatherAPIResponse<"CURRENT_WEATHER">> {
   try {

@@ -6,7 +6,6 @@ import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint";
 import errorHandler from "@/utils/errorHandler";
 import { WeatherAPIResponse } from "./types";
 import { getIsDayOrNight } from "./utils/getIsDayOrNight";
-import { getStationInfo } from "./utils/getStationInfo";
 import BottomSection from "./components/searchbar/bottomSection";
 import dayjs from "dayjs";
 
@@ -51,7 +50,6 @@ export default async function WeatherPage({
   searchParams: { [key: string]: string };
 }) {
   console.log({ city });
-  const station = getStationInfo(city);
   const sunriseSunsetTime = await getSunriseSunsetTime();
   const isDayOrNight = getIsDayOrNight(
     sunriseSunsetTime.records.locations.location[0].time[0]
@@ -62,7 +60,7 @@ export default async function WeatherPage({
     <>
       <TopSection>
         <Suspense fallback={<div>Loading...</div>}>
-          <CurrentWeather isDayOrNight={isDayOrNight} station={station} />
+          <CurrentWeather isDayOrNight={isDayOrNight} city={city} />
         </Suspense>
         <Suspense fallback={<div>Loading...</div>}>
           <ThirtySixHoursWeather isDayOrNight={isDayOrNight} city={city} />

@@ -1,7 +1,7 @@
 "use client";
 import { keyframes, styled } from "@pigment-css/react";
 import { useEffect, useState, useTransition } from "react";
-import { getMultipleCurrentWeather } from "../action";
+import { getCurrentWeather } from "../action";
 import { CityCardType, getCityCardList } from "../utils/getCityCardList";
 import WeatherAnimation from "./WeatherAnimation";
 import { getWeatherType } from "../utils/getWeatherType";
@@ -84,7 +84,7 @@ export default function RecentPlace({ recentPlace }: RecentPlaceProps) {
 
   useEffect(() => {
     startTransition(async () => {
-      const data = await getMultipleCurrentWeather(recentPlace);
+      const data = await getCurrentWeather(recentPlace);
       const records = data.records;
       setCityCardList(getCityCardList(records, recentPlace));
       console.log({ data });
