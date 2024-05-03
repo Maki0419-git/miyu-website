@@ -1,10 +1,10 @@
 import { styled } from "@pigment-css/react";
 import dayjs from "dayjs";
-import { WEATHER_DETAIL } from "../constant";
-import { getWeatherType } from "../utils/getWeatherType";
+import { WEATHER_DETAIL } from "../../constant";
+import { getWeatherType } from "../../utils/getWeatherType";
 import { WEATHER_ICON } from "./WeatherIcon";
-import Thermometer from "../../../assets/weather/thermometer.svg";
-import { getCurrentWeather } from "../action";
+import Thermometer from "../../../../assets/weather/thermometer.svg";
+import { getCurrentWeather } from "../../action";
 
 const Container = styled("div")({
   border: "1px solid red",
@@ -47,7 +47,7 @@ type CurrentWeatherProps = {
   city: string;
 };
 
-export default async function CurrentWeather({
+export async function CurrentWeather({
   isDayOrNight,
   city,
 }: CurrentWeatherProps) {

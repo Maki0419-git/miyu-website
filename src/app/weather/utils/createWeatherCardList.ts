@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import { WeatherElement } from "../types";
-import { WEATHER_ICON } from "../components/WeatherIcon";
+import { WEATHER_ICON } from "../components/server/WeatherIcon";
 import { getWeatherType } from "./getWeatherType";
 import { WEATHER_CODE } from "../constant";
 

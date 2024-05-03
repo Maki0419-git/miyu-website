@@ -1,11 +1,11 @@
 "use client";
 import { keyframes, styled } from "@pigment-css/react";
 import { useEffect, useState, useTransition } from "react";
-import { getCurrentWeather } from "../action";
-import { CityCardType, getCityCardList } from "../utils/getCityCardList";
+import { getCurrentWeather } from "../../../action";
+import { CityCardType, getCityCardList } from "../../../utils/getCityCardList";
 import WeatherAnimation from "./WeatherAnimation";
-import { getWeatherType } from "../utils/getWeatherType";
-import { WEATHER_DETAIL } from "../constant";
+import { getWeatherType } from "../../../utils/getWeatherType";
+import { WEATHER_DETAIL } from "../../../constant";
 import { usePathname, useRouter } from "next/navigation";
 
 const pulse = keyframes({

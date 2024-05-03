@@ -1,6 +1,6 @@
 "use client";
 import { keyframes, styled } from "@pigment-css/react";
-import { WeatherType } from "../types";
+import { WeatherType } from "../../../types";
 
 const rainy = keyframes({
   "0%": {

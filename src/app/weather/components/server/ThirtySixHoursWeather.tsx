@@ -1,11 +1,11 @@
 import errorHandler from "@/utils/errorHandler";
-import { getWeatherApiEndpoint } from "../utils/getWeatherApiEndpoint";
+import { getWeatherApiEndpoint } from "../../utils/getWeatherApiEndpoint";
 import { css, styled } from "@pigment-css/react";
-import { WeatherAPIResponse } from "../types";
-import Humidity from "../../../assets/weather/humidity.svg";
-import createWeatherCardList from "../utils/createWeatherCardList";
-import { isTomorrow } from "../utils/isTomorrow";
-import { isPast } from "../utils/isPast";
+import { WeatherAPIResponse } from "../../types";
+import Humidity from "../../../../assets/weather/humidity.svg";
+import createWeatherCardList from "../../utils/createWeatherCardList";
+import { isTomorrow } from "../../utils/isTomorrow";
+import { isPast } from "../../utils/isPast";
 
 const Container = styled("div")({
   flex: 7,
@@ -132,7 +132,7 @@ type ThirtySixHoursWeatherProps = {
   city: string;
 };
 
-export default async function ThirtySixHoursWeather({
+export async function ThirtySixHoursWeather({
   isDayOrNight,
   city,
 }: ThirtySixHoursWeatherProps) {

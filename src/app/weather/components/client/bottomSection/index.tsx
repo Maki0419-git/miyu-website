@@ -1,8 +1,8 @@
 "use client";
 
 import { styled } from "@pigment-css/react";
-import SearchBar from "../SearchBar";
-import RecentPlace from "../../RecentPlace";
+import SearchBar from "./searchbar";
+import RecentPlace from "./RecentPlace";
 import useRecentPlace from "../../../hooks/useRecentPlace";
 
 const Container = styled("div")({
@@ -14,7 +14,7 @@ const Container = styled("div")({
   border: "1px solid red",
 });
 
-export default function BottomSection() {
+export function BottomSection() {
   const { recentPlace, handlePlaceChange } = useRecentPlace();
   console.log({ recentPlace });
 

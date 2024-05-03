@@ -1,14 +1,12 @@
 import { Suspense } from "react";
-import CurrentWeather from "./components/CurrentWeather";
-import ThirtySixHoursWeather from "./components/ThirtySixHoursWeather";
 import { styled } from "@pigment-css/react";
 import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint";
 import errorHandler from "@/utils/errorHandler";
 import { WeatherAPIResponse } from "./types";
 import { getIsDayOrNight } from "./utils/getIsDayOrNight";
-import BottomSection from "./components/searchbar/bottomSection";
 import dayjs from "dayjs";
-
+import { BottomSection } from "./components/client";
+import { CurrentWeather, ThirtySixHoursWeather } from "./components/server";
 const TopSection = styled("div")({
   display: "flex",
   width: "100%",

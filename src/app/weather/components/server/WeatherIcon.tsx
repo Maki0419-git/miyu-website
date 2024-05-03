@@ -1,14 +1,14 @@
-import DayCloudy from "../../../assets/weather/cloudy.svg";
-import DayRainy from "../../../assets/weather/rainy.svg";
-import DaySnowy from "../../../assets/weather/snowy.svg";
-import DayThunder from "../../../assets/weather/thunder.svg";
-import DayClear from "../../../assets/weather/clear.svg";
-import DayFoggy from "../../../assets/weather/foggy.svg";
-import NightCloudy from "../../../assets/weather/nightCloudy.svg";
-import NightRainy from "../../../assets/weather/nightRainy.svg";
-import NightThunder from "../../../assets/weather/nightThunder.svg";
-import NightClear from "../../../assets/weather/nightClear.svg";
-import NightFoggy from "../../../assets/weather/nightFoggy.svg";
+import DayCloudy from "../../../../assets/weather/cloudy.svg";
+import DayRainy from "../../../../assets/weather/rainy.svg";
+import DaySnowy from "../../../../assets/weather/snowy.svg";
+import DayThunder from "../../../../assets/weather/thunder.svg";
+import DayClear from "../../../../assets/weather/clear.svg";
+import DayFoggy from "../../../../assets/weather/foggy.svg";
+import NightCloudy from "../../../../assets/weather/nightCloudy.svg";
+import NightRainy from "../../../../assets/weather/nightRainy.svg";
+import NightThunder from "../../../../assets/weather/nightThunder.svg";
+import NightClear from "../../../../assets/weather/nightClear.svg";
+import NightFoggy from "../../../../assets/weather/nightFoggy.svg";
 
 export const WEATHER_ICON = {
   night: {
