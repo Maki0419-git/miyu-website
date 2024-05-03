@@ -12,7 +12,6 @@ const Container = styled("div")({
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "flex-end",
-	border: "1px solid red",
 	h5: {
 		color: "white",
 		textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
@@ -29,7 +28,6 @@ const WeatherCardContainer = styled("div")({
 	gap: "30px",
 	padding: "0 20px",
 	height: "70%",
-	border: "1px solid yellow",
 	"@media (max-width: 1440px)": {
 		height: "100%",
 	},
@@ -68,7 +66,6 @@ const WeatherCard = styled("div")({
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "center",
-	border: "1px solid yellow",
 	borderRadius: "10px",
 	backdropFilter: "blur(5px)",
 	minWidth: "250px",

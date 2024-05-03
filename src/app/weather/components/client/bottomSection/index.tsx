@@ -11,7 +11,6 @@ const Container = styled("div")({
 	justifyContent: "space-between",
 	alignItems: "flex-start",
 	padding: "60px 80px",
-	border: "1px solid red",
 	"@media (max-width: 1440px)": {
 		padding: "30px 40px",
 	},
