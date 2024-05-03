@@ -10,21 +10,17 @@ import { usePathname, useRouter } from "next/navigation";
 
 const Container = styled("div")({
 	height: "30vh",
-	span: {
-		fontWeight: "normal",
-		color: "rgb(135, 135, 135)",
-		margin: "10px 0",
-	},
 });
 
 const SearchBarContainer = styled("form")({
 	position: "relative",
-	marginTop: "5px",
+	marginTop: "10px",
 	minWidth: "430px",
 	height: "40px",
 	borderRadius: "40px",
 	boxShadow: " 0 6px 8px rgba(0, 0, 0, 0.15)",
 	background: "#fff",
+	border: "1px solid #f3f3f3",
 	transition: "all 0.3s ease",
 	"&:hover": {
 		boxShadow: "0 6px 8px rgba(0, 0, 0, 0.3)",
@@ -142,7 +138,6 @@ export default function SearchBar({ handlePlaceChange }: SearchBarProps) {
 	return (
 		<Container>
 			<h2>Where are you searching for...</h2>
-			<span>Enter city name which you want to know</span>
 			<SearchBarContainer>
 				<Input
 					type="text"

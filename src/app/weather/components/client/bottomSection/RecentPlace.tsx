@@ -51,6 +51,7 @@ const CityCard = styled("div")<{ isSkeleton: Boolean }>({
 	height: "100%",
 	minWidth: "150px",
 	borderRadius: "8px",
+	border: "1px solid #e2dfdf",
 	backgroundPosition: "center",
 	backgroundImage: (props) =>
 		props.isSkeleton

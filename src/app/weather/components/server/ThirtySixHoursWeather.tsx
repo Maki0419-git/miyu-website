@@ -67,6 +67,7 @@ const WeatherCard = styled("div")({
 	flexDirection: "column",
 	alignItems: "center",
 	borderRadius: "10px",
+	border: "1px solid #efecec",
 	backdropFilter: "blur(5px)",
 	minWidth: "250px",
 	maxWidth: "300px",
