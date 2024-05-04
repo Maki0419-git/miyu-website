@@ -19,8 +19,8 @@ const TopSection = styled("div")({
 	backgroundPosition: "center",
 	backgroundColor: "#252746",
 	"@media (max-width: 1440px)": {
-		flexDirection: "column",
-		height: "70vh",
+		// flexDirection: "column",
+		// height: "70vh",
 		gap: "20px",
 		padding: "30px 40px",
 	},

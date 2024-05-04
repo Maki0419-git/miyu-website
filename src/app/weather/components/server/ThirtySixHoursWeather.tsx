@@ -17,9 +17,9 @@ const Container = styled("div")({
 		textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
 		margin: "10px 20px",
 	},
-	"@media (max-width: 1440px)": {
-		alignItems: "flex-start",
-	},
+	// "@media (max-width: 1440px)": {
+	// 	alignItems: "flex-start",
+	// },
 });
 
 const WeatherCardContainer = styled("div")({
@@ -29,7 +29,7 @@ const WeatherCardContainer = styled("div")({
 	padding: "0 20px",
 	height: "70%",
 	"@media (max-width: 1440px)": {
-		height: "100%",
+		height: "80%",
 	},
 });
 
