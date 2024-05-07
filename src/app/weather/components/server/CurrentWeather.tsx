@@ -4,7 +4,7 @@ import { getWeatherType } from "../../utils/getWeatherType";
 import { WEATHER_ICON } from "./WeatherIcon";
 import Thermometer from "../../../../assets/weather/thermometer.svg";
 import { getCurrentWeather } from "../../action";
-import dayjs from "../../utils/dayjs";
+import { CurrentWeatherTime } from "../client";
 
 const Container = styled("div")({
 	flex: 3,
@@ -54,7 +54,6 @@ export async function CurrentWeather({ isDayOrNight, city }: CurrentWeatherProps
 		StationName: station,
 	} = targetStation;
 	console.log({ currentWeatherDateTime: dateTime });
-	const time = dayjs(dateTime).format("hh:mm A");
 	const { Weather: weather, AirTemperature: temperature } = targetStation.WeatherElement;
 	const weatherIcon = WEATHER_ICON[isDayOrNight][getWeatherType(WEATHER_DETAIL, weather)];
 
@@ -63,7 +62,7 @@ export async function CurrentWeather({ isDayOrNight, city }: CurrentWeatherProps
 	return (
 		<Container>
 			<h1>{countyName}</h1>
-			<h2>{time}</h2>
+			<CurrentWeatherTime dateTime={dateTime} />
 			<WeatherInfo>
 				<Temperature>
 					<Thermometer width={100} height={100} />
