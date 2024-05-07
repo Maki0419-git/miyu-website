@@ -1,12 +1,10 @@
-import { Dayjs } from "dayjs";
-import dayjs from "../utils/dayjs";
 import { WeatherElement } from "../types";
 import { WEATHER_ICON } from "../components/server/WeatherIcon";
 import { getWeatherType } from "./getWeatherType";
 import { WEATHER_CODE } from "../constant";
 
 type WeatherCardType = {
-	startTime: Dayjs;
+	startTime: string;
 	weatherElement: {
 		Wx: {
 			description: string;
@@ -29,7 +27,7 @@ export default function createWeatherCardList(
 		time.forEach((time, index) => {
 			if (!acc[index])
 				acc[index] = {
-					startTime: dayjs(time.startTime),
+					startTime: time.startTime,
 					weatherElement: {},
 				} as WeatherCardType;
 			switch (elementName) {

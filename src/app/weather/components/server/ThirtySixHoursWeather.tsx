@@ -1,11 +1,10 @@
 import errorHandler from "@/utils/errorHandler";
 import { getWeatherApiEndpoint } from "../../utils/getWeatherApiEndpoint";
-import { css, styled } from "@pigment-css/react";
+import { styled } from "@pigment-css/react";
 import { WeatherAPIResponse } from "../../types";
 import Humidity from "../../../../assets/weather/humidity.svg";
 import createWeatherCardList from "../../utils/createWeatherCardList";
-import { isTomorrow } from "../../utils/isTomorrow";
-import { isPast } from "../../utils/isPast";
+import { WeatherCardTime } from "../client";
 
 const Container = styled("div")({
 	flex: 7,
@@ -17,9 +16,6 @@ const Container = styled("div")({
 		textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
 		margin: "10px 20px",
 	},
-	// "@media (max-width: 1440px)": {
-	// 	alignItems: "flex-start",
-	// },
 });
 
 const WeatherCardContainer = styled("div")({
@@ -30,33 +26,6 @@ const WeatherCardContainer = styled("div")({
 	height: "70%",
 	"@media (max-width: 1440px)": {
 		height: "80%",
-	},
-});
-
-const cardRibbonStyles = css({
-	"&:before": {
-		position: "absolute",
-		content: '""',
-		width: 0,
-		height: 0,
-		top: "24px",
-		left: "-18px",
-		borderTop: "16px solid transparent",
-		borderBottom: "16px solid transparent",
-		borderRight: "16px solid #3949ab",
-	},
-	"&:after": {
-		position: "absolute",
-		content: '"明天"',
-		top: "0.6rem",
-		left: "-1.2rem",
-		padding: "0.3rem 0rem",
-		width: "5rem",
-		background: "#3949ab",
-		color: "white",
-		textAlign: "center",
-		fontFamily: "Roboto, sans-serif",
-		boxShadow: "4px 4px 15px rgba(26, 35, 126, 0.2)",
 	},
 });
 
@@ -144,8 +113,8 @@ export async function ThirtySixHoursWeather({ isDayOrNight, city }: ThirtySixHou
 		<Container>
 			<WeatherCardContainer>
 				{weatherCardList.map((weatherCard, index) => (
-					<WeatherCard key={index} className={isTomorrow(weatherCard.startTime) ? cardRibbonStyles : ""}>
-						<h3>{isPast(weatherCard.startTime) ? "Now" : weatherCard.startTime.format("hh:mm A")}</h3>
+					<WeatherCard key={index}>
+						<WeatherCardTime dateTime={weatherCard.startTime} />
 						{weatherCard.weatherElement.Wx.img}
 						<h4>{weatherCard.weatherElement.Wx.description}</h4>
 						<MinMaxTemperature>
