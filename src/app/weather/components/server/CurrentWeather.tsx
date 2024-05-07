@@ -1,10 +1,10 @@
 import { styled } from "@pigment-css/react";
-import dayjs from "dayjs";
 import { WEATHER_DETAIL } from "../../constant";
 import { getWeatherType } from "../../utils/getWeatherType";
 import { WEATHER_ICON } from "./WeatherIcon";
 import Thermometer from "../../../../assets/weather/thermometer.svg";
 import { getCurrentWeather } from "../../action";
+import dayjs from "../../utils/dayjs";
 
 const Container = styled("div")({
 	flex: 3,
@@ -53,6 +53,7 @@ export async function CurrentWeather({ isDayOrNight, city }: CurrentWeatherProps
 		GeoInfo: { CountyName: countyName },
 		StationName: station,
 	} = targetStation;
+	console.log({ currentWeatherDateTime: dateTime });
 	const time = dayjs(dateTime).format("hh:mm A");
 	const { Weather: weather, AirTemperature: temperature } = targetStation.WeatherElement;
 	const weatherIcon = WEATHER_ICON[isDayOrNight][getWeatherType(WEATHER_DETAIL, weather)];
