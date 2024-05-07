@@ -6,7 +6,8 @@ import { WeatherAPIResponse } from "./types";
 import { getIsDayOrNight } from "./utils/getIsDayOrNight";
 import { BottomSection } from "./components/client";
 import { CurrentWeather, ThirtySixHoursWeather } from "./components/server";
-import dayjs from "./utils/dayjs";
+import dayjs from "dayjs";
+
 const TopSection = styled("div")({
 	display: "flex",
 	width: "100%",

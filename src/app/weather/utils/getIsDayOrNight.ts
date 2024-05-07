@@ -1,5 +1,5 @@
+import dayjs from "dayjs";
 import { SunriseSunsetTime } from "../types";
-import dayjs from "./dayjs";
 
 export function getIsDayOrNight(time: SunriseSunsetTime): "day" | "night" {
 	const { Date: date, SunRiseTime: sunriseTime, SunSetTime: sunsetTime } = time;
