@@ -1,27 +1,30 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { WeatherType } from "../../types";
+import { WeatherAPIResponse, WeatherType } from "../../types";
 import { WEATHER_ICON } from "../server/WeatherIcon";
 import { getIsDayOrNight } from "../../utils/getIsDayOrNight";
-import { getSunriseSunsetTime } from "../../action";
-import { keyframes, styled } from "@pigment-css/react";
+import { getWeatherApiEndpoint } from "../../utils/getWeatherApiEndpoint";
+import errorHandler from "@/utils/errorHandler";
 
 dayjs.extend(utc);
 
-const pulse = keyframes({
-	"0%": { backgroundColor: "rgba(238, 238, 238, 0.3)" },
-	"50%": { backgroundColor: "rgba(245, 245, 245, 0.3)" },
-	"100%": { backgroundColor: "rgba(238, 238, 238, 0.3)" },
-});
+async function getSunriseSunsetTime(city: string, date: string): Promise<WeatherAPIResponse<"SUNRISE_SUNSET_TIME">> {
+	try {
+		const endpoint = getWeatherApiEndpoint("SUNRISE_SUNSET_TIME");
+		const response = await fetch(
+			`${endpoint}?CountyName=${city}&Date=${date}&Authorization=${process.env.WEATHER_API_KEY}`,
+		);
+		if (!response.ok) {
+			errorHandler("SUNRISE_SUNSET_TIME", response.status);
+		}
 
-const Skeleton = styled("div")({
-	backgroundColor: "rgba(238, 238, 238, 0.3)",
-	animation: `${pulse} 0.2s infinite ease-in-out`,
-	width: "80px",
-	height: "80px",
-	margin: "15px",
-	borderRadius: "8px",
-});
+		const data = await response.json();
+		return data;
+	} catch (error: any) {
+		console.log({ error });
+		throw error;
+	}
+}
 
 export async function WeatherImage({
 	weather,
