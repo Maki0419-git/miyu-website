@@ -1,12 +1,7 @@
 import { Suspense } from "react";
 import { styled } from "@pigment-css/react";
-import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint";
-import errorHandler from "@/utils/errorHandler";
-import { WeatherAPIResponse } from "./types";
-import { getIsDayOrNight } from "./utils/getIsDayOrNight";
 import { BottomSection } from "./components/client";
 import { CurrentWeather, ThirtySixHoursWeather } from "./components/server";
-import dayjs from "dayjs";
 
 const TopSection = styled("div")({
 	display: "flex",
@@ -27,44 +22,21 @@ const TopSection = styled("div")({
 	},
 });
 
-async function getSunriseSunsetTime(cityName: string): Promise<WeatherAPIResponse<"SUNRISE_SUNSET_TIME">> {
-	try {
-		const date = dayjs().format("YYYY-MM-DD");
-		const endpoint = getWeatherApiEndpoint("SUNRISE_SUNSET_TIME");
-		const response = await fetch(
-			`${endpoint}?CountyName=${cityName}&Date=${date}&Authorization=${process.env.WEATHER_API_KEY}`,
-			{ cache: "no-store" },
-		);
-		if (!response.ok) {
-			errorHandler("SUNRISE_SUNSET_TIME", response.status);
-		}
-
-		const data = await response.json();
-		return data;
-	} catch (error: any) {
-		console.log({ error });
-		throw error;
-	}
-}
-
 export default async function WeatherPage({
 	searchParams: { city = "臺北市" },
 }: {
 	searchParams: { [key: string]: string };
 }) {
 	console.log({ city });
-	const sunriseSunsetTime = await getSunriseSunsetTime(city);
-	const isDayOrNight = getIsDayOrNight(sunriseSunsetTime.records.locations.location[0].time[0]);
-	console.log({ sunriseSunsetTime });
-	console.log({ isDayOrNight });
+
 	return (
 		<>
 			<TopSection>
 				<Suspense fallback={<div>Loading...</div>}>
-					<CurrentWeather isDayOrNight={isDayOrNight} city={city} />
+					<CurrentWeather city={city} />
 				</Suspense>
 				<Suspense fallback={<div>Loading...</div>}>
-					<ThirtySixHoursWeather isDayOrNight={isDayOrNight} city={city} />
+					<ThirtySixHoursWeather city={city} />
 				</Suspense>
 			</TopSection>
 			<BottomSection />

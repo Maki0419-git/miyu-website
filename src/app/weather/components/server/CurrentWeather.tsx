@@ -1,10 +1,9 @@
 import { styled } from "@pigment-css/react";
 import { WEATHER_DETAIL } from "../../constant";
 import { getWeatherType } from "../../utils/getWeatherType";
-import { WEATHER_ICON } from "./WeatherIcon";
 import Thermometer from "../../../../assets/weather/thermometer.svg";
 import { getCurrentWeather } from "../../action";
-import { CurrentWeatherTime } from "../client";
+import { CurrentWeatherTime, WeatherImage } from "../client";
 
 const Container = styled("div")({
 	flex: 3,
@@ -41,11 +40,10 @@ const WeatherDescription = styled("div")({
 });
 
 type CurrentWeatherProps = {
-	isDayOrNight: "day" | "night";
 	city: string;
 };
 
-export async function CurrentWeather({ isDayOrNight, city }: CurrentWeatherProps) {
+export async function CurrentWeather({ city }: CurrentWeatherProps) {
 	const currentWeatherData = await getCurrentWeather([city]);
 	const targetStation = currentWeatherData.records.Station[0];
 	const {
@@ -55,7 +53,6 @@ export async function CurrentWeather({ isDayOrNight, city }: CurrentWeatherProps
 	} = targetStation;
 	console.log({ currentWeatherDateTime: dateTime });
 	const { Weather: weather, AirTemperature: temperature } = targetStation.WeatherElement;
-	const weatherIcon = WEATHER_ICON[isDayOrNight][getWeatherType(WEATHER_DETAIL, weather)];
 
 	console.log({ weather });
 
@@ -70,7 +67,7 @@ export async function CurrentWeather({ isDayOrNight, city }: CurrentWeatherProps
 				</Temperature>
 				<Divider />
 				<WeatherDescription>
-					{weatherIcon}
+					<WeatherImage city={city} weather={getWeatherType(WEATHER_DETAIL, weather)} targetTime={dateTime} />
 					<h2>{weather}</h2>
 				</WeatherDescription>
 			</WeatherInfo>
