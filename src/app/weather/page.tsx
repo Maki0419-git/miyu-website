@@ -26,12 +26,12 @@ const TopSection = styled("div")({
 	},
 });
 
-async function getSunriseSunsetTime(): Promise<WeatherAPIResponse<"SUNRISE_SUNSET_TIME">> {
+async function getSunriseSunsetTime(cityName: string): Promise<WeatherAPIResponse<"SUNRISE_SUNSET_TIME">> {
 	try {
 		const date = dayjs().format("YYYY-MM-DD");
 		const endpoint = getWeatherApiEndpoint("SUNRISE_SUNSET_TIME");
 		const response = await fetch(
-			`${endpoint}?CountyName=臺北市&Date=${date}&Authorization=${process.env.WEATHER_API_KEY}`,
+			`${endpoint}?CountyName=${cityName}&Date=${date}&Authorization=${process.env.WEATHER_API_KEY}`,
 			{ cache: "no-store" },
 		);
 		if (!response.ok) {
@@ -52,7 +52,7 @@ export default async function WeatherPage({
 	searchParams: { [key: string]: string };
 }) {
 	console.log({ city });
-	const sunriseSunsetTime = await getSunriseSunsetTime();
+	const sunriseSunsetTime = await getSunriseSunsetTime(city);
 	const isDayOrNight = getIsDayOrNight(sunriseSunsetTime.records.locations.location[0].time[0]);
 	console.log({ sunriseSunsetTime });
 	console.log({ isDayOrNight });
