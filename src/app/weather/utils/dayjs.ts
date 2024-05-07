@@ -4,6 +4,9 @@ import timezone from "dayjs/plugin/timezone";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-dayjs.tz.setDefault("Asia/Taipei");
 
-export default dayjs.tz;
+function setTimeZoneToTaipei(date?: string) {
+	return dayjs(date).tz("Asia/Taipei");
+}
+
+export default setTimeZoneToTaipei;
