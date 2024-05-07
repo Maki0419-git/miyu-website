@@ -1,5 +1,6 @@
+import { Dayjs } from "dayjs";
 import dayjs from "./dayjs";
-export const isTomorrow = (startTime: string): Boolean => {
+export const isTomorrow = (startTime: Dayjs): Boolean => {
 	const today = dayjs();
 	const tomorrow = today.add(1, "day");
 
