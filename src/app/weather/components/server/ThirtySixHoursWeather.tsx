@@ -4,7 +4,9 @@ import { styled } from "@pigment-css/react";
 import { WeatherAPIResponse } from "../../types";
 import Humidity from "../../../../assets/weather/humidity.svg";
 import createWeatherCardList from "../../utils/createWeatherCardList";
-import { WeatherCardTime } from "../client";
+import { WeatherCardTime, WeatherImage } from "../client";
+import { getWeatherType } from "../../utils/getWeatherType";
+import { WEATHER_CODE } from "../../constant";
 
 const Container = styled("div")({
 	flex: 7,
@@ -98,14 +100,13 @@ async function getThirtySixHoursWeather(city: string): Promise<WeatherAPIRespons
 	}
 }
 type ThirtySixHoursWeatherProps = {
-	isDayOrNight: "day" | "night";
 	city: string;
 };
 
-export async function ThirtySixHoursWeather({ isDayOrNight, city }: ThirtySixHoursWeatherProps) {
+export async function ThirtySixHoursWeather({ city }: ThirtySixHoursWeatherProps) {
 	const thirtySixHoursWeatherData = await getThirtySixHoursWeather(city);
 	const weatherElement = thirtySixHoursWeatherData.records.location[0].weatherElement;
-	const weatherCardList = createWeatherCardList(weatherElement, isDayOrNight);
+	const weatherCardList = createWeatherCardList(weatherElement);
 	console.log(thirtySixHoursWeatherData);
 	console.log({ weatherCardList });
 
@@ -115,7 +116,11 @@ export async function ThirtySixHoursWeather({ isDayOrNight, city }: ThirtySixHou
 				{weatherCardList.map((weatherCard, index) => (
 					<WeatherCard key={index}>
 						<WeatherCardTime dateTime={weatherCard.startTime} />
-						{weatherCard.weatherElement.Wx.img}
+						<WeatherImage
+							city={city}
+							weather={getWeatherType(WEATHER_CODE, weatherCard.weatherElement.Wx.code)}
+							targetTime={weatherCard.startTime}
+						/>
 						<h4>{weatherCard.weatherElement.Wx.description}</h4>
 						<MinMaxTemperature>
 							<h3>{weatherCard.weatherElement.MinT}</h3>
