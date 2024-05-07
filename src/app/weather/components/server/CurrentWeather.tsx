@@ -53,6 +53,7 @@ export async function CurrentWeather({ isDayOrNight, city }: CurrentWeatherProps
 		GeoInfo: { CountyName: countyName },
 		StationName: station,
 	} = targetStation;
+	console.log({ currentWeatherDateTime: dateTime });
 	const time = dayjs(dateTime).format("hh:mm A");
 	const { Weather: weather, AirTemperature: temperature } = targetStation.WeatherElement;
 	const weatherIcon = WEATHER_ICON[isDayOrNight][getWeatherType(WEATHER_DETAIL, weather)];
