@@ -35,8 +35,7 @@ export async function WeatherImage({
 	city: string;
 	targetTime: string;
 }) {
-	const dayRemoveUTCOffset = targetTime.replace(/\+\d{2}:\d{2}$/, "");
-	const day = dayjs.tz(dayRemoveUTCOffset, "Asia/Taipei");
+	const day = dayjs(targetTime).tz("Asia/Taipei");
 	const date = day.format("YYYY-MM-DD");
 	const data = await getSunriseSunsetTime(city, date);
 	const sunriseSunsetTime = data.records.locations.location[0].time[0];
