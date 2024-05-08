@@ -26,24 +26,3 @@ export async function getCurrentWeather(cityName: string[]): Promise<WeatherAPIR
 		throw error;
 	}
 }
-
-export async function getSunriseSunsetTime(
-	city: string,
-	date: string,
-): Promise<WeatherAPIResponse<"SUNRISE_SUNSET_TIME">> {
-	try {
-		const endpoint = getWeatherApiEndpoint("SUNRISE_SUNSET_TIME");
-		const response = await fetch(
-			`${endpoint}?CountyName=${city}&Date=${date}&Authorization=${process.env.WEATHER_API_KEY}`,
-		);
-		if (!response.ok) {
-			errorHandler("SUNRISE_SUNSET_TIME", response.status);
-		}
-
-		const data = await response.json();
-		return data;
-	} catch (error: any) {
-		console.log({ error });
-		throw error;
-	}
-}
