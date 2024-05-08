@@ -40,7 +40,7 @@ export async function WeatherImage({
 	const date = day.format("YYYY-MM-DD");
 	const data = await getSunriseSunsetTime(city, date);
 	const sunriseSunsetTime = data.records.locations.location[0].time[0];
-	const isDayOrNight = getIsDayOrNight(day, sunriseSunsetTime);
+	const isDayOrNight = getIsDayOrNight(dayjs(targetTime), sunriseSunsetTime);
 	const weatherIcon = WEATHER_ICON[isDayOrNight][weather];
 
 	return weatherIcon;
