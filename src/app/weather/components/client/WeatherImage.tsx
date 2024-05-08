@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import { WeatherAPIResponse, WeatherType } from "../../types";
 import { WEATHER_ICON } from "../server/WeatherIcon";
 import { getIsDayOrNight } from "../../utils/getIsDayOrNight";
 import { getWeatherApiEndpoint } from "../../utils/getWeatherApiEndpoint";
 import errorHandler from "@/utils/errorHandler";
 
-dayjs.extend(utc);
+dayjs.extend(timezone);
 
 async function getSunriseSunsetTime(city: string, date: string): Promise<WeatherAPIResponse<"SUNRISE_SUNSET_TIME">> {
 	try {
@@ -35,7 +35,8 @@ export async function WeatherImage({
 	city: string;
 	targetTime: string;
 }) {
-	const day = dayjs(targetTime).utcOffset(8).format("YYYY-MM-DD");
+	const dayRemoveUTCOffset = targetTime.replace(/\+\d{2}:\d{2}$/, "");
+	const day = dayjs.tz(dayRemoveUTCOffset, "Asia/Taipei").format("YYYY-MM-DD");
 	const data = await getSunriseSunsetTime(city, day);
 	const sunriseSunsetTime = data.records.locations.location[0].time[0];
 	const isDayOrNight = getIsDayOrNight(dayjs(targetTime), sunriseSunsetTime);
