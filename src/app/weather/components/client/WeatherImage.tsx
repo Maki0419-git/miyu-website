@@ -1,29 +1,32 @@
-"use client";
-
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
 import { WeatherAPIResponse, WeatherType } from "../../types";
 import { WEATHER_ICON } from "../server/WeatherIcon";
 import { getIsDayOrNight } from "../../utils/getIsDayOrNight";
-import { getSunriseSunsetTime } from "../../action";
-import useSWR from "swr";
-import { keyframes, styled } from "@pigment-css/react";
+import { getWeatherApiEndpoint } from "../../utils/getWeatherApiEndpoint";
+import errorHandler from "@/utils/errorHandler";
 
-const pulse = keyframes({
-	"0%": { backgroundColor: "rgba(238, 238, 238, 0.3)" },
-	"50%": { backgroundColor: "rgba(245, 245, 245, 0.3)" },
-	"100%": { backgroundColor: "rgba(238, 238, 238, 0.3)" },
-});
+dayjs.extend(timezone);
 
-const Skeleton = styled("div")({
-	backgroundColor: "rgba(238, 238, 238, 0.3)",
-	animation: `${pulse} 0.2s infinite ease-in-out`,
-	width: "80px",
-	height: "80px",
-	margin: "15px",
-	borderRadius: "8px",
-});
+async function getSunriseSunsetTime(city: string, date: string): Promise<WeatherAPIResponse<"SUNRISE_SUNSET_TIME">> {
+	try {
+		const endpoint = getWeatherApiEndpoint("SUNRISE_SUNSET_TIME");
+		const response = await fetch(
+			`${endpoint}?CountyName=${city}&Date=${date}&Authorization=${process.env.WEATHER_API_KEY}`,
+		);
+		if (!response.ok) {
+			errorHandler("SUNRISE_SUNSET_TIME", response.status);
+		}
 
-export function WeatherImage({
+		const data = await response.json();
+		return data;
+	} catch (error: any) {
+		console.log({ error });
+		throw error;
+	}
+}
+
+export async function WeatherImage({
 	weather,
 	city,
 	targetTime,
@@ -32,20 +35,10 @@ export function WeatherImage({
 	city: string;
 	targetTime: string;
 }) {
-	const day = dayjs(targetTime).format("YYYY-MM-DD");
-	const { data, isLoading, error } = useSWR<WeatherAPIResponse<"SUNRISE_SUNSET_TIME">>(
-		["sunset-sunrise-time", city, day],
-		() => getSunriseSunsetTime(city, day),
-		{
-			revalidateIfStale: false,
-			revalidateOnFocus: false,
-			revalidateOnReconnect: false,
-		},
-	);
-
-	const sunriseSunsetTime = data?.records.locations.location[0].time[0];
-
-	if (!sunriseSunsetTime || isLoading) return <Skeleton />;
+	const day = dayjs(targetTime).tz("Asia/Taipei");
+	const date = day.format("YYYY-MM-DD");
+	const data = await getSunriseSunsetTime(city, date);
+	const sunriseSunsetTime = data.records.locations.location[0].time[0];
 	const isDayOrNight = getIsDayOrNight(dayjs(targetTime), sunriseSunsetTime);
 	const weatherIcon = WEATHER_ICON[isDayOrNight][weather];
 
