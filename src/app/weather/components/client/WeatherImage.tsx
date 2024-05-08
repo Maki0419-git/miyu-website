@@ -36,10 +36,11 @@ export async function WeatherImage({
 	targetTime: string;
 }) {
 	const dayRemoveUTCOffset = targetTime.replace(/\+\d{2}:\d{2}$/, "");
-	const day = dayjs.tz(dayRemoveUTCOffset, "Asia/Taipei").format("YYYY-MM-DD");
-	const data = await getSunriseSunsetTime(city, day);
+	const day = dayjs.tz(dayRemoveUTCOffset, "Asia/Taipei");
+	const date = day.format("YYYY-MM-DD");
+	const data = await getSunriseSunsetTime(city, date);
 	const sunriseSunsetTime = data.records.locations.location[0].time[0];
-	const isDayOrNight = getIsDayOrNight(dayjs(targetTime), sunriseSunsetTime);
+	const isDayOrNight = getIsDayOrNight(day, sunriseSunsetTime);
 	const weatherIcon = WEATHER_ICON[isDayOrNight][weather];
 
 	return weatherIcon;
