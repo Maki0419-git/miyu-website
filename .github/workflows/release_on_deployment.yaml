@@ -4,6 +4,7 @@ on:
   deployment_status:
     branches:
       - main
+    types: [success]
 
 jobs:
   release:
