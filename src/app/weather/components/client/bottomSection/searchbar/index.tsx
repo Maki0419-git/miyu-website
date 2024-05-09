@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import { styled } from "@pigment-css/react";
-import Image from "next/image";
-import useCity from "../../../../hooks/useCity";
-import { useEffect, useRef, useState } from "react";
-import SuggestionList from "./SuggestionList";
-import useDebounceValue from "../../../../hooks/useDebounceValue";
-import { usePathname, useRouter } from "next/navigation";
+import { styled } from "@pigment-css/react"
+import Image from "next/image"
+import useCity from "../../../../hooks/useCity"
+import { useEffect, useRef, useState } from "react"
+import SuggestionList from "./SuggestionList"
+import useDebounceValue from "../../../../hooks/useDebounceValue"
+import { usePathname, useRouter } from "next/navigation"
 
 const Container = styled("div")({
 	height: "30vh",
-});
+})
 
 const SearchBarContainer = styled("form")({
 	position: "relative",
@@ -25,7 +25,7 @@ const SearchBarContainer = styled("form")({
 	"&:hover": {
 		boxShadow: "0 6px 8px rgba(0, 0, 0, 0.3)",
 	},
-});
+})
 
 const Input = styled("input")({
 	position: "absolute",
@@ -37,7 +37,7 @@ const Input = styled("input")({
 	outline: "none",
 	background: "transparent",
 	fontSize: "14px",
-});
+})
 
 const SearchButton = styled("button")({
 	position: "absolute",
@@ -57,83 +57,79 @@ const SearchButton = styled("button")({
 	"&:focus": {
 		background: "#f8f8f8",
 	},
-});
+})
 
 type SearchBarProps = {
-	handlePlaceChange: (place: string) => void;
-};
+	handlePlaceChange: (place: string) => void
+}
 
 export default function SearchBar({ handlePlaceChange }: SearchBarProps) {
-	const [inputValue, setInputValue] = useState<string>("");
-	const [query, setQuery] = useState<string>("");
-	const isQueryValueLocked = useRef(false);
-	const [selectedIndex, setSelectedIndex] = useState<number | undefined>(undefined);
-	const debouncedQuery = useDebounceValue<string>(query, 500);
-	const { cities } = useCity(debouncedQuery);
-	const router = useRouter();
-	const pathname = usePathname();
-	const suggestionListRef = useRef<HTMLUListElement>(null);
+	const [inputValue, setInputValue] = useState<string>("")
+	const [query, setQuery] = useState<string>("")
+	const isQueryValueLocked = useRef(false)
+	const [selectedIndex, setSelectedIndex] = useState<number | undefined>(undefined)
+	const debouncedQuery = useDebounceValue<string>(query, 500)
+	const { cities } = useCity(debouncedQuery)
+	const router = useRouter()
+	const pathname = usePathname()
+	const suggestionListRef = useRef<HTMLUListElement>(null)
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log("handleChange");
-		e.preventDefault();
-		setInputValue(e.target.value);
-		if (!isQueryValueLocked.current) setQuery(e.target.value);
-	};
+		e.preventDefault()
+		setInputValue(e.target.value)
+		if (!isQueryValueLocked.current) setQuery(e.target.value)
+	}
 
 	const handleCompositionStart = () => {
-		console.log("start");
-		isQueryValueLocked.current = true;
-	};
+		isQueryValueLocked.current = true
+	}
 
 	const handleCompositionEnd = () => {
-		isQueryValueLocked.current = false;
-		console.log("End");
-		setQuery(inputValue);
-	};
+		isQueryValueLocked.current = false
+		setQuery(inputValue)
+	}
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === "ArrowDown") {
-			event.preventDefault();
+			event.preventDefault()
 			if (selectedIndex === undefined || selectedIndex === cities.length - 1) {
-				setSelectedIndex(0);
+				setSelectedIndex(0)
 				if (suggestionListRef.current) {
-					suggestionListRef.current.scrollTo(0, 0);
+					suggestionListRef.current.scrollTo(0, 0)
 				}
 			} else {
-				setSelectedIndex(selectedIndex + 1);
+				setSelectedIndex(selectedIndex + 1)
 				if (suggestionListRef.current) {
-					console.log({ scrollTop: suggestionListRef.current.scrollTop });
-					suggestionListRef.current.scrollTop += 40;
+					suggestionListRef.current.scrollTop += 40
 				}
 			}
 		}
 		if (event.key === "ArrowUp") {
-			event.preventDefault();
+			event.preventDefault()
 			if (selectedIndex === undefined || selectedIndex === 0) {
-				setSelectedIndex(cities.length - 1);
+				setSelectedIndex(cities.length - 1)
 				if (suggestionListRef.current) {
-					suggestionListRef.current.scrollTo(0, suggestionListRef.current.scrollHeight);
+					suggestionListRef.current.scrollTo(0, suggestionListRef.current.scrollHeight)
 				}
 			} else {
-				setSelectedIndex(selectedIndex - 1);
+				setSelectedIndex(selectedIndex - 1)
 				if (suggestionListRef.current) {
-					suggestionListRef.current.scrollTop -= 40;
+					suggestionListRef.current.scrollTop -= 40
 				}
 			}
 		}
 		if (event.key === "Enter" && selectedIndex !== undefined) {
-			event.preventDefault();
-			router.push(`${pathname}?city=${cities[selectedIndex]}`);
-			handlePlaceChange(cities[selectedIndex]);
-			setInputValue("");
-			setQuery("");
+			event.preventDefault()
+			router.push(`${pathname}?city=${cities[selectedIndex]}`)
+			handlePlaceChange(cities[selectedIndex])
+			setInputValue("")
+			setQuery("")
 		}
-	};
+	}
 
 	// redefined the selectedIndex when the cities array changes
 	useEffect(() => {
-		setSelectedIndex(undefined);
-	}, [cities.length]);
+		setSelectedIndex(undefined)
+	}, [cities.length])
 
 	return (
 		<Container>
@@ -156,5 +152,5 @@ export default function SearchBar({ handlePlaceChange }: SearchBarProps) {
 				<SuggestionList suggestions={cities} selectedIndex={selectedIndex} ref={suggestionListRef} />
 			)}
 		</Container>
-	);
+	)
 }

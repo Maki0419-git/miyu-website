@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { styled } from "@pigment-css/react";
-import SearchBar from "./searchbar";
-import RecentPlace from "./RecentPlace";
-import useRecentPlace from "../../../hooks/useRecentPlace";
+import { styled } from "@pigment-css/react"
+import SearchBar from "./searchbar"
+import RecentPlace from "./RecentPlace"
+import useRecentPlace from "../../../hooks/useRecentPlace"
 
 const Container = styled("div")({
 	display: "flex",
@@ -14,16 +14,15 @@ const Container = styled("div")({
 	"@media (max-width: 1440px)": {
 		padding: "30px 40px",
 	},
-});
+})
 
 export function BottomSection() {
-	const { recentPlace, handlePlaceChange } = useRecentPlace();
-	console.log({ recentPlace });
+	const { recentPlace, handlePlaceChange } = useRecentPlace()
 
 	return (
 		<Container>
 			<SearchBar handlePlaceChange={handlePlaceChange} />
 			{recentPlace.length > 0 && <RecentPlace recentPlace={recentPlace} />}
 		</Container>
-	);
+	)
 }
