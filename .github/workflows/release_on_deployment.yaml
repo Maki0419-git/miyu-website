@@ -1,0 +1,24 @@
+name: Release on Deployment
+
+on:
+deployment_status:
+branches: - main
+types: [success]
+
+jobs:
+release:
+runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"tag_name": "v${{ github.run_number }}", "name": "Release v${{ github.run_number }}", "body": "Release triggered by successful deployment."}' \
+            https://api.github.com/repos/${{ github.repository }}/releases
