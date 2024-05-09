@@ -2,12 +2,10 @@ name: Release on Deployment
 
 on:
   deployment_status:
-    branches:
-      - main
-    states: ["success"]
 
 jobs:
   release:
+    if: ${{ github.event.deployment_status.state == 'success' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
 
     steps:
