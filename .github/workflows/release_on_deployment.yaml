@@ -1,13 +1,12 @@
 name: Release on Deployment
 
 on:
-deployment_status:
-branches: - main
-types: [success]
+  deployment_status:
+    branches: - main
 
 jobs:
-release:
-runs-on: ubuntu-latest
+  release:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
