@@ -1,6 +1,6 @@
-import { WeatherApiAlias } from "@/app/weather/types"
+import { UnsplashAPIAlias, WeatherApiAlias } from "@/app/weather/types"
 
-type apiAlias = WeatherApiAlias
+type apiAlias = WeatherApiAlias | UnsplashAPIAlias
 
 export default function errorHandler(apiAlias: apiAlias, status: Response["status"]) {
 	switch (status) {
