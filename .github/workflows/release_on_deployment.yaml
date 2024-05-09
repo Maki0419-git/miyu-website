@@ -4,14 +4,10 @@ on: [deployment_status]
 
 jobs:
   release:
-    # if: ${{ github.event.deployment_status.state == 'success' && github.event.deployment.ref == 'main' }}
+    if: ${{ github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production' }}
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print values
-        run: |
-          echo "Deployment status: ${{ github.event.deployment_status.state }}"
-          echo "env: ${{ github.event.deployment.environment }}"
       - name: Checkout code
         uses: actions/checkout@v2
 
