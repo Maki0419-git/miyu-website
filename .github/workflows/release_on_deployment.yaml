@@ -1,11 +1,10 @@
 name: Release on Deployment
 
-on:
-  deployment_status:
+on: [deployment_status]
 
 jobs:
   release:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.event.deployment_status.state == 'success' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
 
     steps:
