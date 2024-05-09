@@ -1,7 +1,7 @@
-import { Suspense } from "react";
-import { styled } from "@pigment-css/react";
-import { BottomSection } from "./components/client";
-import { CurrentWeather, ThirtySixHoursWeather } from "./components/server";
+import { Suspense } from "react"
+import { styled } from "@pigment-css/react"
+import { BottomSection } from "./components/client"
+import { CurrentWeather, ThirtySixHoursWeather } from "./components/server"
 
 const TopSection = styled("div")({
 	display: "flex",
@@ -20,15 +20,13 @@ const TopSection = styled("div")({
 		gap: "20px",
 		padding: "30px 40px",
 	},
-});
+})
 
 export default async function WeatherPage({
 	searchParams: { city = "臺北市" },
 }: {
-	searchParams: { [key: string]: string };
+	searchParams: { [key: string]: string }
 }) {
-	console.log({ city });
-
 	return (
 		<>
 			<TopSection>
@@ -41,5 +39,5 @@ export default async function WeatherPage({
 			</TopSection>
 			<BottomSection />
 		</>
-	);
+	)
 }

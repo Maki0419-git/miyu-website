@@ -1,8 +1,8 @@
-"use client";
-import dayjs from "dayjs";
-import { isPast } from "../../utils/isPast";
-import { styled } from "@pigment-css/react";
-import { isTomorrow } from "../../utils/isTomorrow";
+"use client"
+import dayjs from "dayjs"
+import { isPast } from "../../utils/isPast"
+import { styled } from "@pigment-css/react"
+import { isTomorrow } from "../../utils/isTomorrow"
 
 const Ribbon = styled("div")({
 	"&:before": {
@@ -29,15 +29,15 @@ const Ribbon = styled("div")({
 		fontFamily: "Roboto, sans-serif",
 		boxShadow: "4px 4px 15px rgba(26, 35, 126, 0.2)",
 	},
-});
+})
 
 export function WeatherCardTime({ dateTime }: { dateTime: string }) {
-	const time = dayjs(dateTime).format("hh:mm A");
+	const time = dayjs(dateTime).format("hh:mm A")
 
 	return (
 		<>
 			{isTomorrow(dayjs(dateTime)) && <Ribbon />}
 			<h3>{isPast(dayjs(dateTime)) ? "Now" : time}</h3>
 		</>
-	);
+	)
 }
