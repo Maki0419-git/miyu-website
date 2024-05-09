@@ -11,7 +11,7 @@ jobs:
       - name: Print values
         run: |
           echo "Deployment status: ${{ github.event.deployment_status.state }}"
-          echo "Ref: ${{ github.event.deployment.ref }}"
+          echo "env: ${{ github.event.deployment.environment }}"
       - name: Checkout code
         uses: actions/checkout@v2
 
