@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import { styled } from "@pigment-css/react";
-import Image from "next/image";
-import Link from "next/link";
+import { styled } from "@pigment-css/react"
+import Image from "next/image"
+import Link from "next/link"
 
 const Container = styled("div")({
 	fontSize: "1rem",
@@ -11,25 +11,25 @@ const Container = styled("div")({
 	display: "flex",
 	alignItems: "center",
 	justifyContent: "space-between",
-});
+})
 
 const LogoWrapper = styled("div")({
 	display: "flex",
 	alignItems: "center",
 	justifyContent: "center",
-});
+})
 
 const LogoImage = styled(Image)({
 	borderRadius: "50%",
 	marginRight: "10px",
-});
+})
 
 const PageWrapper = styled("div")({
 	display: "flex",
 	gap: "10px",
 	alignItems: "center",
 	justifyContent: "center",
-});
+})
 
 export default function NavBar() {
 	return (
@@ -43,5 +43,5 @@ export default function NavBar() {
 				<Link href="/about">about</Link>
 			</PageWrapper>
 		</Container>
-	);
+	)
 }

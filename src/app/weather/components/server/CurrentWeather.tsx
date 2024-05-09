@@ -1,9 +1,9 @@
-import { styled } from "@pigment-css/react";
-import { WEATHER_DETAIL } from "../../constant";
-import { getWeatherType } from "../../utils/getWeatherType";
-import Thermometer from "../../../../assets/weather/thermometer.svg";
-import { getCurrentWeather } from "../../action";
-import { CurrentWeatherTime, WeatherImage } from "../client";
+import { styled } from "@pigment-css/react"
+import { WEATHER_DETAIL } from "../../constant"
+import { getWeatherType } from "../../utils/getWeatherType"
+import Thermometer from "../../../../assets/weather/thermometer.svg"
+import { getCurrentWeather } from "../../action"
+import { CurrentWeatherTime, WeatherImage } from "../client"
 
 const Container = styled("div")({
 	flex: 3,
@@ -12,49 +12,46 @@ const Container = styled("div")({
 		margin: 0,
 		textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
 	},
-});
+})
 
 const WeatherInfo = styled("div")({
 	display: "flex",
 	gap: "10px",
 	margin: "20px 0",
-});
+})
 
 const Temperature = styled("div")({
 	display: "flex",
 	alignItems: "center",
 	gap: "10px",
 	fontSize: "1.5rem",
-});
+})
 
 const Divider = styled("div")({
 	borderLeft: "1px solid white",
 	margin: "0 10px",
-});
+})
 
 const WeatherDescription = styled("div")({
 	display: "flex",
 	alignItems: "center",
 	justifyContent: "center",
 	gap: "10px",
-});
+})
 
 type CurrentWeatherProps = {
-	city: string;
-};
+	city: string
+}
 
 export async function CurrentWeather({ city }: CurrentWeatherProps) {
-	const currentWeatherData = await getCurrentWeather([city]);
-	const targetStation = currentWeatherData.records.Station[0];
+	const currentWeatherData = await getCurrentWeather([city])
+	const targetStation = currentWeatherData.records.Station[0]
 	const {
 		ObsTime: { DateTime: dateTime },
 		GeoInfo: { CountyName: countyName },
 		StationName: station,
-	} = targetStation;
-	console.log({ currentWeatherDateTime: dateTime });
-	const { Weather: weather, AirTemperature: temperature } = targetStation.WeatherElement;
-
-	console.log({ weather });
+	} = targetStation
+	const { Weather: weather, AirTemperature: temperature } = targetStation.WeatherElement
 
 	return (
 		<Container>
@@ -73,5 +70,5 @@ export async function CurrentWeather({ city }: CurrentWeatherProps) {
 			</WeatherInfo>
 			<h3>測站：{station}</h3>
 		</Container>
-	);
+	)
 }

@@ -1,25 +1,25 @@
-"use client";
-import { keyframes, styled } from "@pigment-css/react";
-import { useEffect, useState, useTransition } from "react";
-import { getCurrentWeather } from "../../../action";
-import { CityCardType, getCityCardList } from "../../../utils/getCityCardList";
-import WeatherAnimation from "./WeatherAnimation";
-import { getWeatherType } from "../../../utils/getWeatherType";
-import { WEATHER_DETAIL } from "../../../constant";
-import { usePathname, useRouter } from "next/navigation";
+"use client"
+import { keyframes, styled } from "@pigment-css/react"
+import { useEffect, useState, useTransition } from "react"
+import { getCurrentWeather } from "../../../action"
+import { CityCardType, getCityCardList } from "../../../utils/getCityCardList"
+import WeatherAnimation from "./WeatherAnimation"
+import { getWeatherType } from "../../../utils/getWeatherType"
+import { WEATHER_DETAIL } from "../../../constant"
+import { usePathname, useRouter } from "next/navigation"
 
 const pulse = keyframes({
 	"0%": { backgroundColor: "#eee" },
 	"50%": { backgroundColor: "#f5f5f5" },
 	"100%": { backgroundColor: "#eee" },
-});
+})
 
 const Skeleton = styled("div")({
 	backgroundColor: "#eee",
 	animation: `${pulse} 1.5s infinite ease-in-out`,
 	width: "100%",
 	height: "100%",
-});
+})
 
 const Container = styled("div")({
 	width: "800px",
@@ -28,7 +28,7 @@ const Container = styled("div")({
 	flexDirection: "column",
 	padding: "0 20px",
 	gap: "10px",
-});
+})
 
 const CityCardContainer = styled("div")({
 	display: "flex",
@@ -37,7 +37,7 @@ const CityCardContainer = styled("div")({
 	gap: "20px",
 	overflowX: "auto",
 	padding: "10px 0",
-});
+})
 
 const CityCard = styled("div")<{ isSkeleton: Boolean }>({
 	position: "relative",
@@ -66,36 +66,35 @@ const CityCard = styled("div")<{ isSkeleton: Boolean }>({
 	"&:hover": {
 		transform: "scale(1.05)",
 	},
-});
+})
 
 const CityCardSkeleton = () => (
 	<CityCard isSkeleton={true}>
 		<Skeleton />
 	</CityCard>
-);
+)
 
 type RecentPlaceProps = {
-	recentPlace: string[];
-};
+	recentPlace: string[]
+}
 
 export default function RecentPlace({ recentPlace }: RecentPlaceProps) {
-	const [isPending, startTransition] = useTransition();
-	const [cityCardList, setCityCardList] = useState<CityCardType[]>([]);
-	const pathname = usePathname();
-	const router = useRouter();
+	const [isPending, startTransition] = useTransition()
+	const [cityCardList, setCityCardList] = useState<CityCardType[]>([])
+	const pathname = usePathname()
+	const router = useRouter()
 
 	const handleClick = (city: string) => {
-		router.push(`${pathname}?city=${city}`);
-	};
+		router.push(`${pathname}?city=${city}`)
+	}
 
 	useEffect(() => {
 		startTransition(async () => {
-			const data = await getCurrentWeather(recentPlace);
-			const records = data.records;
-			setCityCardList(getCityCardList(records, recentPlace));
-			console.log({ data });
-		});
-	}, [recentPlace]);
+			const data = await getCurrentWeather(recentPlace)
+			const records = data.records
+			setCityCardList(getCityCardList(records, recentPlace))
+		})
+	}, [recentPlace])
 
 	return (
 		<Container>
@@ -115,5 +114,5 @@ export default function RecentPlace({ recentPlace }: RecentPlaceProps) {
 				)}
 			</CityCardContainer>
 		</Container>
-	);
+	)
 }
