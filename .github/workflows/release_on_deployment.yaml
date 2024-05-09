@@ -2,9 +2,8 @@ name: Release on Deployment
 
 on:
   deployment_status:
-    branches:
-      - main
-    types: [Ready]
+    environments: ["Production"]
+    states: ["success", "failure"]
 
 jobs:
   release:
