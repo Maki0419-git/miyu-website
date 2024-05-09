@@ -2,6 +2,8 @@ import { Suspense } from "react"
 import { styled } from "@pigment-css/react"
 import { BottomSection } from "./components/client"
 import { CurrentWeather, ThirtySixHoursWeather } from "./components/server"
+import Image from "next/image"
+import { getCityImage } from "./action"
 
 const TopSection = styled("div")({
 	display: "flex",
@@ -9,17 +11,22 @@ const TopSection = styled("div")({
 	justifyContent: "space-between",
 	padding: "60px 80px",
 	height: "60vh",
-	backgroundImage:
-		"linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1561105111-d592363f0472?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1OTIxODF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTQwNTc1MTd8&ixlib=rb-4.0.3&q=80&w=2000')",
-	backgroundSize: "cover",
-	backgroundPosition: "center",
+	position: "relative",
 	backgroundColor: "#252746",
 	"@media (max-width: 1440px)": {
-		// flexDirection: "column",
-		// height: "70vh",
 		gap: "20px",
 		padding: "30px 40px",
 	},
+})
+
+const ImageMask = styled("div")({
+	position: "absolute",
+	width: "100%",
+	height: "100%",
+	zIndex: 0,
+	top: 0,
+	left: 0,
+	backgroundColor: "rgba(0, 0, 0, 0.3)",
 })
 
 export default async function WeatherPage({
@@ -27,9 +34,13 @@ export default async function WeatherPage({
 }: {
 	searchParams: { [key: string]: string }
 }) {
+	const cityImageData = await getCityImage(city)
+
 	return (
 		<>
 			<TopSection>
+				<Image src={cityImageData.url} alt="city image" fill={true} objectFit="cover" objectPosition="center" />
+				<ImageMask />
 				<Suspense fallback={<div>Loading...</div>}>
 					<CurrentWeather city={city} />
 				</Suspense>

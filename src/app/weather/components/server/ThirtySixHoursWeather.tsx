@@ -13,6 +13,7 @@ const Container = styled("div")({
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "flex-end",
+	zIndex: 1,
 	h5: {
 		color: "white",
 		textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
