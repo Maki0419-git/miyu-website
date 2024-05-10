@@ -1,8 +1,7 @@
 import { Suspense } from "react"
 import { styled } from "@pigment-css/react"
-import { BottomSection } from "./components/client"
+import { BottomSection, CityImage } from "./components/client"
 import { CurrentWeather, ThirtySixHoursWeather } from "./components/server"
-import Image from "next/image"
 import { getCityImage } from "./action"
 
 const TopSection = styled("div")({
@@ -39,7 +38,7 @@ export default async function WeatherPage({
 	return (
 		<>
 			<TopSection>
-				<Image src={cityImageData.url} alt="city image" fill={true} objectFit="cover" objectPosition="center" />
+				<CityImage src={cityImageData.url} />
 				<ImageMask />
 				<Suspense fallback={<div>Loading...</div>}>
 					<CurrentWeather city={city} />

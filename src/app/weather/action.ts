@@ -1,7 +1,7 @@
 "use server"
 
 import errorHandler from "@/utils/errorHandler"
-import { WeatherAPIResponse } from "./types"
+import { CityPictureAPIResponse, WeatherAPIResponse } from "./types"
 import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint"
 import { getCityInfo } from "./utils/getStationInfo"
 import { UNSPLASH_API_BASE_URL } from "./constant"
@@ -27,7 +27,7 @@ export async function getCurrentWeather(cityName: string[]): Promise<WeatherAPIR
 	}
 }
 
-export async function getCityImage(city: string) {
+export async function getCityImage(city: string): Promise<CityPictureAPIResponse> {
 	try {
 		const englishName = getCityInfo(city, "englishName")
 		const response = await fetch(`${UNSPLASH_API_BASE_URL}?query=${englishName}`, {
@@ -40,12 +40,29 @@ export async function getCityImage(city: string) {
 		}
 		const data = await response.json()
 		const requiredData = {
-			url: data.urls.raw,
+			url: data.urls.full,
 			id: data.id,
 			blurHash: data.blur_hash,
 			alternativeSlugs: data.alternative_slugs,
 		}
 		return requiredData
+	} catch (error) {
+		throw error
+	}
+}
+
+export async function getRecentPlaceData(recentPlace: string[]): Promise<{
+	currentWeatherData: WeatherAPIResponse<"CURRENT_WEATHER">
+	imageData: CityPictureAPIResponse[]
+}> {
+	try {
+		const generateCityImagePromise = () => recentPlace.map((city) => getCityImage(city))
+		const [currentWeatherData, ...imageData] = await Promise.all([
+			getCurrentWeather(recentPlace),
+			...generateCityImagePromise(),
+		])
+
+		return { currentWeatherData, imageData }
 	} catch (error) {
 		throw error
 	}

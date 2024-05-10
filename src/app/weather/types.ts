@@ -212,3 +212,10 @@ export interface SunriseSunsetTime {
 	SunSetAZ: string
 	EndCivilTwilightTime: string
 }
+
+export interface CityPictureAPIResponse {
+	url: string
+	id: string
+	blurHash: string
+	alternativeSlugs: string[]
+}
