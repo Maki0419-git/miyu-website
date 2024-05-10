@@ -8,6 +8,8 @@ import errorHandler from "@/utils/errorHandler"
 
 dayjs.extend(timezone)
 
+const generateDayjsInTaipei = (date: string) => dayjs(date).tz("Asia/Taipei", true)
+
 async function getSunriseSunsetTime(city: string, date: string): Promise<WeatherAPIResponse<"SUNRISE_SUNSET_TIME">> {
 	try {
 		const endpoint = getWeatherApiEndpoint("SUNRISE_SUNSET_TIME")
@@ -34,11 +36,11 @@ export async function WeatherImage({
 	city: string
 	targetTime: string
 }) {
-	const day = dayjs(targetTime).tz("Asia/Taipei")
-	const date = day.format("YYYY-MM-DD")
+	const dayWithoutTimezone = targetTime.replace(/\+\d{2}:\d{2}$/, "")
+	const date = generateDayjsInTaipei(dayWithoutTimezone).format("YYYY-MM-DD")
 	const data = await getSunriseSunsetTime(city, date)
 	const sunriseSunsetTime = data.records.locations.location[0].time[0]
-	const isDayOrNight = getIsDayOrNight(dayjs(targetTime), sunriseSunsetTime)
+	const isDayOrNight = getIsDayOrNight(dayWithoutTimezone, generateDayjsInTaipei, sunriseSunsetTime)
 	const weatherIcon = WEATHER_ICON[isDayOrNight][weather]
 
 	return weatherIcon
