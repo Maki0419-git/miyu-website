@@ -1,6 +1,7 @@
 import { WeatherCodeType, WeatherDetailType } from "./types"
 
 export const WEATHER_API_BASE_URL: string = "https://opendata.cwa.gov.tw/api/v1/rest/datastore"
+export const UNSPLASH_API_BASE_URL: string = "https://api.unsplash.com/photos/random"
 
 export const WEATHER_CODE: WeatherCodeType = {
 	THUNDER: [15, 16, 17, 18, 21, 22, 33, 34, 35, 36, 41],
