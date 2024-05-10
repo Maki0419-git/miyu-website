@@ -7,6 +7,7 @@ import WeatherAnimation from "./WeatherAnimation"
 import { getWeatherType } from "../../../utils/getWeatherType"
 import { WEATHER_DETAIL } from "../../../constant"
 import { usePathname, useRouter } from "next/navigation"
+import { CityImage } from "../CityImage"
 
 const pulse = keyframes({
 	"0%": { backgroundColor: "#eee" },
@@ -39,7 +40,7 @@ const CityCardContainer = styled("div")({
 	padding: "10px 0",
 })
 
-const CityCard = styled("div")<{ isSkeleton: Boolean }>({
+const CityCard = styled("div")({
 	position: "relative",
 	display: "flex",
 	flexDirection: "column",
@@ -52,16 +53,12 @@ const CityCard = styled("div")<{ isSkeleton: Boolean }>({
 	minWidth: "150px",
 	borderRadius: "8px",
 	border: "1px solid #e2dfdf",
-	backgroundPosition: "center",
-	backgroundImage: (props) =>
-		props.isSkeleton
-			? "none"
-			: "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3)),url('https://images.unsplash.com/photo-1574678863094-1cebd3031d75?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1OTIxODF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTM2MjYxMTZ8&ixlib=rb-4.0.3&q=80&w=1080')",
 	color: "white",
 	cursor: "pointer",
 	transition: "all 0.3s ease",
 	"h2, h3, h4": {
 		textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)",
+		zIndex: 1,
 	},
 	"&:hover": {
 		transform: "scale(1.05)",
@@ -69,7 +66,7 @@ const CityCard = styled("div")<{ isSkeleton: Boolean }>({
 })
 
 const CityCardSkeleton = () => (
-	<CityCard isSkeleton={true}>
+	<CityCard>
 		<Skeleton />
 	</CityCard>
 )
@@ -104,7 +101,8 @@ export default function RecentPlace({ recentPlace }: RecentPlaceProps) {
 					isPending ? (
 						<CityCardSkeleton key={city.cityName} />
 					) : (
-						<CityCard isSkeleton={false} key={city.cityName} onClick={() => handleClick(city.cityName)}>
+						<CityCard key={city.cityName} onClick={() => handleClick(city.cityName)}>
+							<CityImage src={city.url} maxSolution={640} />
 							<h3>{city.cityName}</h3>
 							<h2>{city.temperature}°C</h2>
 							<h4>{city.weather}</h4>
