@@ -4,6 +4,10 @@ export enum WeatherAPI {
 	SUNRISE_SUNSET_TIME = "A-B0062-001",
 }
 
+export enum UnsplashAPI {
+	RANDOM_CITY_PHOTO,
+}
+
 export type CityResponseType = Record<"cities", string[]>
 
 export enum Weather {
@@ -25,6 +29,7 @@ export type WeatherIconType = {
 }
 
 export type WeatherApiAlias = keyof typeof WeatherAPI
+export type UnsplashAPIAlias = keyof typeof UnsplashAPI
 type WeatherApiRecordTypes = {
 	[k in WeatherApiAlias]: k extends "CURRENT_WEATHER"
 		? CurrentWeatherRecords
@@ -206,4 +211,11 @@ export interface SunriseSunsetTime {
 	SunSetTime: string
 	SunSetAZ: string
 	EndCivilTwilightTime: string
+}
+
+export interface CityPictureAPIResponse {
+	url: string
+	id: string
+	blurHash: string
+	alternativeSlugs: string[]
 }

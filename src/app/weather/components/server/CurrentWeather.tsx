@@ -7,6 +7,7 @@ import { CurrentWeatherTime, WeatherImage } from "../client"
 
 const Container = styled("div")({
 	flex: 3,
+	zIndex: 1,
 	"h1, h2,h3": {
 		color: "white",
 		margin: 0,
