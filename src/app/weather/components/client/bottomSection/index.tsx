@@ -14,6 +14,10 @@ const Container = styled("div")({
 	"@media (max-width: 1440px)": {
 		padding: "30px 40px",
 	},
+	"@media (max-width: 1024px)": {
+		flexDirection: "column",
+		gap: "20px",
+	},
 })
 
 export function BottomSection() {

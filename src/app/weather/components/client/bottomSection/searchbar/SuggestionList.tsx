@@ -16,7 +16,7 @@ const Container = styled("div")({
 
 const List = styled("ul")({
 	listStyle: "none",
-	maxHeight: "200px",
+	maxHeight: "50px",
 	overflowY: "auto",
 	padding: 0,
 	margin: 0,

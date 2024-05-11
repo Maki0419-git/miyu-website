@@ -8,13 +8,15 @@ const TopSection = styled("div")({
 	display: "flex",
 	width: "100%",
 	justifyContent: "space-between",
-	padding: "60px 80px",
+	padding: "50px 80px",
 	height: "60vh",
 	position: "relative",
 	backgroundColor: "#252746",
-	"@media (max-width: 1440px)": {
+	"@media (max-width: 1024px)": {
 		gap: "20px",
 		padding: "30px 40px",
+		flexDirection: "column",
+		height: "85vh",
 	},
 })
 

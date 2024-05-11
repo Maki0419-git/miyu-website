@@ -10,6 +10,9 @@ import { usePathname, useRouter } from "next/navigation"
 
 const Container = styled("div")({
 	height: "30vh",
+	"@media (max-width: 1024px)": {
+		height: "20vh",
+	},
 })
 
 const SearchBarContainer = styled("form")({

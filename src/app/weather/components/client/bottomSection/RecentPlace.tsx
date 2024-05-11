@@ -54,6 +54,7 @@ const CityCard = styled("div")({
 	borderRadius: "8px",
 	border: "1px solid #e2dfdf",
 	color: "white",
+	backgroundColor: "#f5f5f5",
 	cursor: "pointer",
 	transition: "all 0.3s ease",
 	"h2, h3, h4": {

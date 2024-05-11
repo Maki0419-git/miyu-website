@@ -26,10 +26,7 @@ const WeatherCardContainer = styled("div")({
 	justifyContent: "flex-end",
 	gap: "30px",
 	padding: "0 20px",
-	height: "70%",
-	"@media (max-width: 1440px)": {
-		height: "80%",
-	},
+	height: "100%",
 })
 
 const WeatherCard = styled("div")({
