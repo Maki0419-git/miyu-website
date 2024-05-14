@@ -40,7 +40,7 @@ export default function NavBar() {
 			</LogoWrapper>
 			<PageWrapper>
 				<Link href="/weather">weather</Link>
-				<Link href="/about">about</Link>
+				<Link href="/js-playground">JS playground</Link>
 			</PageWrapper>
 		</Container>
 	)
