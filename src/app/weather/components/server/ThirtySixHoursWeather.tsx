@@ -19,6 +19,9 @@ const Container = styled("div")({
 		textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
 		margin: "10px 20px",
 	},
+	"@media (max-width: 1440px)": {
+		alignItems: "center",
+	},
 })
 
 const WeatherCardContainer = styled("div")({
@@ -28,7 +31,10 @@ const WeatherCardContainer = styled("div")({
 	padding: "0 20px",
 	height: "70%",
 	"@media (max-width: 1440px)": {
-		height: "80%",
+		height: "100%",
+		width: "90%",
+		justifyContent: "space-between",
+		padding: "0px",
 	},
 })
 
@@ -50,6 +56,13 @@ const WeatherCard = styled("div")({
 		width: "100px",
 		height: "100px",
 		margin: "10px 0 20px 0",
+	},
+	"@media (max-width: 1440px)": {
+		svg: {
+			width: "80px",
+			height: "80px",
+			margin: "10px 0 20px 0",
+		},
 	},
 })
 
@@ -78,6 +91,12 @@ const RainPossibility = styled("div")({
 	svg: {
 		width: "60px",
 		height: "60px",
+	},
+	"@media (max-width: 1440px)": {
+		svg: {
+			width: "40px",
+			height: "40px",
+		},
 	},
 })
 

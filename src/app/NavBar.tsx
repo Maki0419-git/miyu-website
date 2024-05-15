@@ -11,6 +11,9 @@ const Container = styled("div")({
 	display: "flex",
 	alignItems: "center",
 	justifyContent: "space-between",
+	backgroundColor: "#2EC4B6",
+	color: "#FFF",
+	height: "70px",
 })
 
 const LogoWrapper = styled("div")({
