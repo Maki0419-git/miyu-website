@@ -2,12 +2,13 @@
 
 import { styled } from "@pigment-css/react"
 import SearchBar from "./searchbar"
-import RecentPlace from "./RecentPlace"
 import useRecentPlace from "../../../hooks/useRecentPlace"
+import RecentPlace from "./RecentPlace"
 
 const Container = styled("div")({
 	display: "flex",
 	width: "100%",
+	height: "40%",
 	justifyContent: "space-between",
 	alignItems: "flex-start",
 	padding: "60px 80px",
