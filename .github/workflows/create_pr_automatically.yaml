@@ -30,23 +30,4 @@ jobs:
             -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/Maki0419-git/miyu-website/pulls \
-            -d '{"title":"${{ github.ref_name }}","body":"${{ steps.pr_template.outputs.body }}","head":"${{ github.ref_name }}","base":"stagging"}'
-        # uses: actions/github-script@v6
-        # with:
-        #   github-token: ${{ secrets.GITHUB_TOKEN }}
-        #   script: |
-        #     const { repo, owner } = context.repo;
-        #     const result = await github.rest.pulls.create({
-        #       title: '${{ github.ref_name }}',
-        #       owner,
-        #       repo,
-        #       head: '${{ github.ref_name }}',
-        #       base: 'stagging',
-        #       body: ${{ steps.pr_template.outputs.body }},
-        #     });
-        #     github.rest.issues.addLabels({
-        #       owner,
-        #       repo,
-        #       issue_number: result.data.number,
-        #       labels: ['feature', 'automated pr']
-        #     });
+            -d "{"title":"${{ github.ref_name }}","body":"${{ steps.pr_template.outputs.body }}","head":"${{ github.ref_name }}","base":"stagging"}"
