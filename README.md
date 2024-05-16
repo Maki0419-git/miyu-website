@@ -22,3 +22,9 @@ you can search the city by a search bar that has autosuggestion. The weather pag
 #### 🗒️ Note
 
 This is practice for RSC
+
+### 🤹 [JS playground page](https://miyu-website.vercel.app/js-playground)
+
+#### 👀 introduction
+
+Try to mock some functions by React.
