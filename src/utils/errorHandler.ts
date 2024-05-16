@@ -6,6 +6,8 @@ export default function errorHandler(apiAlias: apiAlias, status: Response["statu
 	switch (status) {
 		case 401:
 			throw new Error(`${apiAlias} Unauthorized`)
+		case 403:
+			throw new Error(`${apiAlias} Forbidden`)
 		case 404:
 			throw new Error(`${apiAlias} Not Found`)
 		case 500:
