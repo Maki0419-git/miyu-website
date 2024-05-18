@@ -1,4 +1,4 @@
-import { UnsplashAPIAlias, WeatherApiAlias } from "@/app/weather/types"
+import { UnsplashAPIAlias, WeatherApiAlias } from "@/app/(insert-ad-page)/weather/types"
 
 type apiAlias = WeatherApiAlias | UnsplashAPIAlias
 
