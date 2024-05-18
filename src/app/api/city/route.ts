@@ -1,4 +1,4 @@
-import { CityCountyData } from "@/app/weather/data/CityCountyData"
+import { CityCountyData } from "@/app/(insert-ad-page)/weather/data/CityCountyData"
 import { NextRequest } from "next/server"
 
 export async function GET(request: NextRequest) {

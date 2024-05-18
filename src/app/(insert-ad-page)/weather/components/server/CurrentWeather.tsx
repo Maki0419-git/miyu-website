@@ -1,7 +1,7 @@
 import { styled } from "@pigment-css/react"
 import { WEATHER_DETAIL } from "../../constant"
 import { getWeatherType } from "../../utils/getWeatherType"
-import Thermometer from "../../../../assets/weather/thermometer.svg"
+import Thermometer from "../../../../../assets/weather/thermometer.svg"
 import { CurrentWeatherTime, WeatherImage } from "../client"
 import { WeatherAPIResponse } from "../../types"
 import { getCityInfo } from "../../utils/getStationInfo"
