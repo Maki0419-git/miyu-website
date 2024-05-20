@@ -7,6 +7,7 @@ import { getCityImage } from "./action"
 const TopSection = styled("div")({
 	display: "flex",
 	width: "100%",
+	// minHeight: "40vh",
 	justifyContent: "space-between",
 	padding: "60px 80px",
 	position: "relative",
