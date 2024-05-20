@@ -39,7 +39,7 @@ export default async function WeatherPage({
 	return (
 		<>
 			<TopSection>
-				<CityImage src={cityImageData.url} />
+				<CityImage src={cityImageData.url} dataURL={cityImageData.dataURL} />
 				<ImageMask />
 				<Suspense fallback={<div>Loading...</div>}>
 					<CurrentWeather city={city} />

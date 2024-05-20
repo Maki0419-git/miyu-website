@@ -5,6 +5,7 @@ import { CityPictureAPIResponse, WeatherAPIResponse } from "./types"
 import { getWeatherApiEndpoint } from "./utils/getWeatherApiEndpoint"
 import { getCityInfo } from "./utils/getStationInfo"
 import { UNSPLASH_API_BASE_URL } from "./constant"
+import { blurHashToDataURL } from "@/utils/blurhashToDataURL"
 
 export async function getCurrentWeather(cityName: string[]): Promise<WeatherAPIResponse<"CURRENT_WEATHER">> {
 	try {
@@ -42,7 +43,7 @@ export async function getCityImage(city: string): Promise<CityPictureAPIResponse
 		const requiredData = {
 			url: data.urls.full,
 			id: data.id,
-			blurHash: data.blur_hash,
+			dataURL: blurHashToDataURL(data.blur_hash),
 			alternativeSlugs: data.alternative_slugs,
 		}
 		return requiredData

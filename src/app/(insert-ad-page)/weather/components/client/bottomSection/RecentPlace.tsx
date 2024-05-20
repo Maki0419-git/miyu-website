@@ -102,7 +102,7 @@ export default function RecentPlace({ recentPlace }: RecentPlaceProps) {
 						<CityCardSkeleton key={city.cityName} />
 					) : (
 						<CityCard key={city.cityName} onClick={() => handleClick(city.cityName)}>
-							<CityImage src={city.url} maxSolution={640} />
+							<CityImage src={city.url} maxSolution={640} dataURL={city.imgDataURL} />
 							<h3>{city.cityName}</h3>
 							<h2>{city.temperature}°C</h2>
 							<h4>{city.weather}</h4>
