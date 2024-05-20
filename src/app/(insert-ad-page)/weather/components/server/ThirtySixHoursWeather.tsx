@@ -51,6 +51,7 @@ const WeatherCard = styled("div")({
 	maxWidth: "300px",
 	width: "30%",
 	height: "100%",
+	minHeight: "300px",
 	"h2,h3,h4": { fontWeight: "normal", color: "white" },
 	svg: {
 		width: "100px",
