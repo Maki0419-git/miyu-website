@@ -29,7 +29,7 @@ const WeatherCardContainer = styled("div")({
 	justifyContent: "flex-end",
 	gap: "30px",
 	padding: "0 20px",
-	height: "70%",
+	// height: "70%",
 	"@media (max-width: 1440px)": {
 		height: "100%",
 		width: "90%",
@@ -50,7 +50,7 @@ const WeatherCard = styled("div")({
 	minWidth: "250px",
 	maxWidth: "300px",
 	width: "30%",
-	height: "100%",
+	minHeight: "300px",
 	"h2,h3,h4": { fontWeight: "normal", color: "white" },
 	svg: {
 		width: "100px",

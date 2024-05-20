@@ -9,7 +9,6 @@ const TopSection = styled("div")({
 	width: "100%",
 	justifyContent: "space-between",
 	padding: "60px 80px",
-	height: "60%",
 	position: "relative",
 	backgroundColor: "#252746",
 	"@media (max-width: 1440px)": {
