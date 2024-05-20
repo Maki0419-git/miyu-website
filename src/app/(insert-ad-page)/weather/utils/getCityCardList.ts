@@ -4,9 +4,9 @@ export type CityCardType = {
 	cityName: string
 	temperature: number
 	weather: string
-
 	url: string
 	id: string
+	imgDataURL?: string
 }
 
 type Props = {
@@ -23,9 +23,9 @@ export function getCityCardList({ currentWeatherRecords, imageData, recentPlace 
 			cityName: station.GeoInfo.CountyName,
 			temperature: station.WeatherElement.AirTemperature,
 			weather: station.WeatherElement.Weather,
-
 			url: imageData[cityCardIndex].url,
 			id: imageData[cityCardIndex].id,
+			imgDataURL: imageData[cityCardIndex]?.dataURL,
 		}
 	})
 

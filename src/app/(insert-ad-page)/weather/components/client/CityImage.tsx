@@ -2,7 +2,15 @@
 
 import Image, { ImageLoaderProps } from "next/image"
 
-export function CityImage({ src, maxSolution = 1080 }: { src: string; maxSolution?: number }) {
+export function CityImage({
+	src,
+	dataURL,
+	maxSolution = 1080,
+}: {
+	src: string
+	dataURL?: string
+	maxSolution?: number
+}) {
 	return (
 		<Image
 			src={src}
@@ -12,6 +20,8 @@ export function CityImage({ src, maxSolution = 1080 }: { src: string; maxSolutio
 				objectFit: "cover",
 				objectPosition: "center",
 			}}
+			placeholder="blur"
+			blurDataURL={dataURL}
 			loader={({ src, width }: ImageLoaderProps) => `${src}&w=${Math.min(width, maxSolution)}`}
 		/>
 	)

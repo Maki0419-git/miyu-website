@@ -216,6 +216,6 @@ export interface SunriseSunsetTime {
 export interface CityPictureAPIResponse {
 	url: string
 	id: string
-	blurHash: string
 	alternativeSlugs: string[]
+	dataURL?: string
 }
