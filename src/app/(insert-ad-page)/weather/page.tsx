@@ -2,7 +2,7 @@ import { Suspense } from "react"
 import { styled } from "@pigment-css/react"
 import { BottomSection, CityImage } from "./components/client"
 import { CurrentWeather, ThirtySixHoursWeather } from "./components/server"
-import { getCityImage } from "./action"
+import { getCityImage } from "./utils/getCityImage"
 
 const TopSection = styled("div")({
 	display: "flex",
