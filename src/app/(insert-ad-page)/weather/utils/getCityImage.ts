@@ -11,6 +11,7 @@ export async function getCityImage(city: string): Promise<CityPictureAPIResponse
 			headers: {
 				Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
 			},
+			next: { revalidate: 60 * 10 },
 		})
 		if (!response.ok) {
 			errorHandler("RANDOM_CITY_PHOTO", response.status)
