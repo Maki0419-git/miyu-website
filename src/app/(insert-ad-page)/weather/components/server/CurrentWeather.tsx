@@ -1,12 +1,9 @@
 import { styled } from "@pigment-css/react"
 import { WEATHER_DETAIL } from "../../constant"
 import { getWeatherType } from "../../utils/getWeatherType"
-import Thermometer from "../../../../assets/weather/thermometer.svg"
+import Thermometer from "../../../../../assets/weather/thermometer.svg"
 import { CurrentWeatherTime, WeatherImage } from "../client"
-import { WeatherAPIResponse } from "../../types"
-import { getCityInfo } from "../../utils/getStationInfo"
-import { getWeatherApiEndpoint } from "../../utils/getWeatherApiEndpoint"
-import errorHandler from "@/utils/errorHandler"
+import { getCurrentWeather } from "../../utils/getCurrentWeather"
 
 const Container = styled("div")({
 	flex: 3,
@@ -45,27 +42,6 @@ const WeatherDescription = styled("div")({
 
 type CurrentWeatherProps = {
 	city: string
-}
-
-export async function getCurrentWeather(cityName: string[]): Promise<WeatherAPIResponse<"CURRENT_WEATHER">> {
-	try {
-		const availableStations = cityName.map((city) => getCityInfo(city, "stationName"))
-		const endpoint = getWeatherApiEndpoint("CURRENT_WEATHER")
-		const response = await fetch(
-			`${endpoint}?StationName=${availableStations.join(",")}&Authorization=${process.env.WEATHER_API_KEY}`,
-			{ cache: "no-store" },
-		)
-
-		if (!response.ok) {
-			errorHandler("CURRENT_WEATHER", response.status)
-		}
-
-		const data = await response.json()
-
-		return data
-	} catch (error: any) {
-		throw error
-	}
 }
 
 export async function CurrentWeather({ city }: CurrentWeatherProps) {

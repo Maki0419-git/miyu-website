@@ -2,7 +2,7 @@ import errorHandler from "@/utils/errorHandler"
 import { getWeatherApiEndpoint } from "../../utils/getWeatherApiEndpoint"
 import { styled } from "@pigment-css/react"
 import { WeatherAPIResponse } from "../../types"
-import Humidity from "../../../../assets/weather/humidity.svg"
+import Humidity from "../../../../../assets/weather/humidity.svg"
 import createWeatherCardList from "../../utils/createWeatherCardList"
 import { WeatherCardTime, WeatherImage } from "../client"
 import { getWeatherType } from "../../utils/getWeatherType"
@@ -29,7 +29,7 @@ const WeatherCardContainer = styled("div")({
 	justifyContent: "flex-end",
 	gap: "30px",
 	padding: "0 20px",
-	height: "70%",
+	height: "100%",
 	"@media (max-width: 1440px)": {
 		height: "100%",
 		width: "90%",
@@ -51,6 +51,7 @@ const WeatherCard = styled("div")({
 	maxWidth: "300px",
 	width: "30%",
 	height: "100%",
+	minHeight: "350px",
 	"h2,h3,h4": { fontWeight: "normal", color: "white" },
 	svg: {
 		width: "100px",

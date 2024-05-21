@@ -2,14 +2,14 @@ import { Suspense } from "react"
 import { styled } from "@pigment-css/react"
 import { BottomSection, CityImage } from "./components/client"
 import { CurrentWeather, ThirtySixHoursWeather } from "./components/server"
-import { getCityImage } from "./action"
+import { getCityImage } from "./utils/getCityImage"
 
 const TopSection = styled("div")({
 	display: "flex",
 	width: "100%",
+	// minHeight: "40vh",
 	justifyContent: "space-between",
 	padding: "60px 80px",
-	height: "60%",
 	position: "relative",
 	backgroundColor: "#252746",
 	"@media (max-width: 1440px)": {
@@ -39,7 +39,7 @@ export default async function WeatherPage({
 	return (
 		<>
 			<TopSection>
-				<CityImage src={cityImageData.url} />
+				<CityImage src={cityImageData.url} dataURL={cityImageData.dataURL} />
 				<ImageMask />
 				<Suspense fallback={<div>Loading...</div>}>
 					<CurrentWeather city={city} />

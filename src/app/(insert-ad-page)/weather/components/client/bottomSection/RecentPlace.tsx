@@ -1,13 +1,13 @@
 "use client"
 import { keyframes, styled } from "@pigment-css/react"
 import { useEffect, useState, useTransition } from "react"
-import { getRecentPlaceData } from "../../../action"
 import { CityCardType, getCityCardList } from "../../../utils/getCityCardList"
 import WeatherAnimation from "./WeatherAnimation"
 import { getWeatherType } from "../../../utils/getWeatherType"
 import { WEATHER_DETAIL } from "../../../constant"
 import { usePathname, useRouter } from "next/navigation"
 import { CityImage } from "../CityImage"
+import { getRecentPlaceData } from "../../../utils/getRecentPlaceData"
 
 const pulse = keyframes({
 	"0%": { backgroundColor: "#eee" },
@@ -102,7 +102,7 @@ export default function RecentPlace({ recentPlace }: RecentPlaceProps) {
 						<CityCardSkeleton key={city.cityName} />
 					) : (
 						<CityCard key={city.cityName} onClick={() => handleClick(city.cityName)}>
-							<CityImage src={city.url} maxSolution={640} />
+							<CityImage src={city.url || ""} maxSolution={640} dataURL={city.imgDataURL} />
 							<h3>{city.cityName}</h3>
 							<h2>{city.temperature}°C</h2>
 							<h4>{city.weather}</h4>
