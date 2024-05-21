@@ -28,14 +28,25 @@ const getCityImage = async (city: string) => {
 
 export async function getRecentPlaceData(recentPlace: string[]): Promise<{
 	currentWeatherData: WeatherAPIResponse<"CURRENT_WEATHER">
-	imageData: CityPictureAPIResponse[]
+	imageData: (CityPictureAPIResponse | undefined)[]
 }> {
 	try {
 		const generateCityImagePromise = () => recentPlace.map(getCityImage)
-		const [currentWeatherData, ...imageData] = await Promise.all([
-			getCurrentWeather(recentPlace.join(",")),
-			...generateCityImagePromise(),
-		])
+
+		const [currentWeatherResult, ...cityImageResults] = await Promise.allSettled<
+			[Promise<WeatherAPIResponse<"CURRENT_WEATHER">>, ...Promise<CityPictureAPIResponse>[]]
+		>([getCurrentWeather(recentPlace.join(",")), ...generateCityImagePromise()])
+		const currentWeatherStatus = currentWeatherResult.status
+		if (currentWeatherStatus === "rejected") {
+			throw new Error(currentWeatherResult.reason)
+		}
+		const currentWeatherData = currentWeatherResult.value
+		const imageData = cityImageResults.map((result) => {
+			if (result.status === "fulfilled") {
+				return result.value
+			}
+			return undefined
+		})
 
 		return { currentWeatherData, imageData }
 	} catch (error) {
