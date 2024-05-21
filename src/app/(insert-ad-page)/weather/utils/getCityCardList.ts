@@ -4,14 +4,14 @@ export type CityCardType = {
 	cityName: string
 	temperature: number
 	weather: string
-	url: string
-	id: string
+	url?: string
+	id?: string
 	imgDataURL?: string
 }
 
 type Props = {
 	currentWeatherRecords: CurrentWeatherRecords
-	imageData: CityPictureAPIResponse[]
+	imageData: (CityPictureAPIResponse | undefined)[]
 	recentPlace: string[]
 }
 
@@ -23,8 +23,8 @@ export function getCityCardList({ currentWeatherRecords, imageData, recentPlace 
 			cityName: station.GeoInfo.CountyName,
 			temperature: station.WeatherElement.AirTemperature,
 			weather: station.WeatherElement.Weather,
-			url: imageData[cityCardIndex].url,
-			id: imageData[cityCardIndex].id,
+			url: imageData[cityCardIndex]?.url,
+			id: imageData[cityCardIndex]?.id,
 			imgDataURL: imageData[cityCardIndex]?.dataURL,
 		}
 	})
