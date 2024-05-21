@@ -9,7 +9,7 @@ export async function getCurrentWeather(cityName: string[]): Promise<WeatherAPIR
 		const endpoint = getWeatherApiEndpoint("CURRENT_WEATHER")
 		const response = await fetch(
 			`${endpoint}?StationName=${availableStations.join(",")}&Authorization=${process.env.WEATHER_API_KEY}`,
-			{ cache: "no-store" },
+			{ next: { revalidate: 60 * 10 } },
 		)
 
 		if (!response.ok) {

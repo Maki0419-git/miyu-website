@@ -2,8 +2,6 @@ import { getCityImage } from "@/app/(insert-ad-page)/weather/utils/getCityImage"
 import { CustomError } from "@/utils/errorHandler"
 import { NextRequest, NextResponse } from "next/server"
 
-export const revalidate = 60
-
 export async function GET(request: NextRequest) {
 	const searchParams = request.nextUrl.searchParams
 	const cityName = searchParams.get("cityName")
