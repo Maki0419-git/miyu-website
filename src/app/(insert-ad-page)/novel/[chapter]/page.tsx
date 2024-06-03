@@ -1,6 +1,7 @@
 import pool from "../../../../libs/mysql"
 import { styled } from "@pigment-css/react"
 import { RowDataPacket } from "mysql2"
+import { Article } from "./client"
 
 const Container = styled("div")({
 	padding: "20px 20px",
@@ -9,15 +10,6 @@ const Container = styled("div")({
 	gap: "20px",
 	height: "100%",
 	overflowY: "scroll",
-})
-
-const Article = styled("article")({
-	flex: 7,
-	margin: "20px",
-	lineHeight: "2",
-	p: {
-		margin: "20px 0",
-	},
 })
 
 const RightSection = styled("div")({
@@ -54,11 +46,7 @@ export default async function ChapterPage({ params }: { params: { chapter: strin
 
 	return (
 		<Container>
-			<Article>
-				<h1>{title}</h1>
-				{/* https://blog.logrocket.com/using-dangerouslysetinnerhtml-react-application/ */}
-				<div dangerouslySetInnerHTML={{ __html: `<p>${formattedContent}</p>` }} />
-			</Article>
+			<Article title={title} content={formattedContent} />
 			<RightSection />
 		</Container>
 	)
