@@ -4,7 +4,8 @@ export enum OpenAIAPI {
 
 export type OpenAIAPIAlias = keyof typeof OpenAIAPI
 
-export type OpenAIAPIResponseTypes = {
+export type VocabularyResponseType = {
+	vocabulary: string
 	hiragana: string
 	type: string
 	meaning: string

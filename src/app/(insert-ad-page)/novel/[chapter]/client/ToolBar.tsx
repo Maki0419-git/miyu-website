@@ -3,7 +3,7 @@
 import errorHandler from "@/utils/errorHandler"
 import { styled } from "@pigment-css/react"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { OpenAIAPIResponseTypes } from "../types"
+import { VocabularyResponseType } from "../types"
 
 const Container = styled("div")<{ top: number; left: number }>({
 	position: "absolute",
@@ -70,7 +70,7 @@ export function ToolBar({ containerRef }: { containerRef: React.RefObject<HTMLDi
 			if (response.status !== 200) {
 				errorHandler("CREATE_VOCABULARY", response.status)
 			}
-			const data: OpenAIAPIResponseTypes = await response.json()
+			const data: VocabularyResponseType = await response.json()
 			return data
 
 			// {
