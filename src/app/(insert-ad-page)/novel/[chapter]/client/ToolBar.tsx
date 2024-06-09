@@ -71,19 +71,8 @@ export function ToolBar({ containerRef }: { containerRef: React.RefObject<HTMLDi
 				errorHandler("CREATE_VOCABULARY", response.status)
 			}
 			const data: VocabularyResponseType = await response.json()
-			return data
 
-			// {
-			// 	"輝いている": {
-			// 		"hiragana": "かがやいている",
-			// 		"type": "動詞",
-			// 		"meaning": "閃耀、發光、顯示出活力或才能",
-			// 		"example": {
-			// 			"japanese": "星が輝いている。",
-			// 			"chinese": "星星在閃耀。"
-			// 		}
-			// 	}
-			// }
+			return data
 		} catch (error) {
 			throw error
 		}
