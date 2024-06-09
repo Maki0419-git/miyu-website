@@ -26,7 +26,17 @@ export async function POST(request: NextRequest) {
 		const completion: OpenAI.Chat.ChatCompletion = await openai.chat.completions.create(params)
 
 		const response = completion.choices[0].message.content
-		return NextResponse.json(response)
+		if (!response) {
+			throw new Error("Invalid response from OpenAI model")
+		}
+		let jsonResponse
+		try {
+			jsonResponse = JSON.parse(response)
+		} catch (error) {
+			throw new Error("Invalid response from model")
+		}
+
+		return NextResponse.json(jsonResponse)
 	} catch (error) {
 		return NextResponse.json({ error }, { status: 500 })
 	}
