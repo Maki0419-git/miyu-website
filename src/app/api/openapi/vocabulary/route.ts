@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 			messages: [
 				{
 					role: "system",
-					content: `你是一個日中辭典，將日文單字翻譯成繁體中文，並用 JSON 格式回答問題：{<單字>:{"hiragana":<平假名>,"type":<詞性>,"meaning":<意思>,"example":{"japanese":<日文例句>,"chinese":<中文例句>}}}，如果遇到句子，則按照此格式回答句子內的每一個單字`,
+					content: `你是一個日中辭典，將日文單字翻譯成繁體中文，並用 JSON 格式回答問題：{<單字>:{"hiragana":<平假名>,"type":<詞性>,"meaning":<意思>,"example":{"japanese":<15字以上日文例句>,"chinese":<15字以上中文例句>}}}，如果遇到句子，則按照此格式回答句子內的每一個單字在句子中的意思。`,
 				},
 				{
 					role: "user",
