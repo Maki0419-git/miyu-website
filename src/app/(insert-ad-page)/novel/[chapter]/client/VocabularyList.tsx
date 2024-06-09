@@ -28,7 +28,7 @@ const Card = styled("div")({
 	boxShadow: "0 0 5px rgba(0,0,0,0.3)",
 	color: "black",
 	padding: "10px 15px",
-	"h5,h5": {
+	"h5,h6": {
 		fontWeight: "normal",
 	},
 	"> h6:last-child": {
@@ -52,6 +52,33 @@ const Tag = styled("div")({
 	h6: {
 		fontWeight: "normal",
 	},
+})
+
+const Section = styled("div")({
+	display: "flex",
+	gap: "10px",
+	alignItems: "center",
+})
+
+const SubTitle = styled("h6")<{ type: string }>({
+	borderRadius: "2px",
+	color: "white",
+	padding: "3px 5px",
+	width: "fit-content",
+	variants: [
+		{
+			props: { type: "hiragana" },
+			style: { backgroundColor: "#e76f51" },
+		},
+		{
+			props: { type: "meaning" },
+			style: { backgroundColor: "#90be6d" },
+		},
+		{
+			props: { type: "example" },
+			style: { backgroundColor: "#2a9d8f" },
+		},
+	],
 })
 
 const Dialog = styled("dialog")({
@@ -84,8 +111,16 @@ export function VocabularyList({ vocabularies }: { vocabularies: VocabularyRespo
 								<h6>{vocabulary.type}</h6>
 							</Tag>
 						</Title>
-						<h5>{vocabulary.hiragana}</h5>
-						<h6>{vocabulary.meaning}</h6>
+						<Section>
+							<SubTitle type="hiragana">平假名</SubTitle>
+							<h5>{vocabulary.hiragana}</h5>
+						</Section>
+						<Section>
+							<SubTitle type="meaning">意思</SubTitle>
+							<h5>{vocabulary.meaning}</h5>
+						</Section>
+
+						<SubTitle type="example">例句</SubTitle>
 						<h6>{vocabulary.example.japanese}</h6>
 						<h6>{vocabulary.example.chinese}</h6>
 					</Card>
