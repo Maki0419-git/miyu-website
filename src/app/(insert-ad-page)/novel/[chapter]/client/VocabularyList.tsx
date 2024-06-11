@@ -1,8 +1,10 @@
 "use client"
-import { styled } from "@pigment-css/react"
-import { VocabularyResponseType } from "../types"
-import { useRef, useState } from "react"
-
+import { keyframes, styled } from "@pigment-css/react"
+import { Vocabulary } from "../types"
+import { useState } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faFeather } from "@fortawesome/free-solid-svg-icons"
+import { QuizDialog } from "./QuizDialog"
 const Container = styled("div")({
 	padding: "20px 20px",
 	width: "100%",
@@ -14,10 +16,12 @@ const Container = styled("div")({
 })
 
 const Card = styled("div")({
+	position: "relative",
 	display: "flex",
 	flexDirection: "column",
+	justifyContent: "space-around",
 	gap: "10px",
-	overflow: "hidden",
+	overflowX: "hidden",
 	width: "100%",
 	height: "100%",
 	minWidth: "150px",
@@ -31,9 +35,26 @@ const Card = styled("div")({
 	"h5,h6": {
 		fontWeight: "normal",
 	},
-	"> h6:last-child": {
-		color: "gray",
-	},
+})
+
+const animate = keyframes`
+	from {
+		transform: translateY(100%);
+	}
+	to {
+		transform: translateY(0);
+	}`
+
+const Mask = styled("div")({
+	position: "absolute",
+	top: 0,
+	left: 0,
+	width: "100%",
+	height: "100%",
+	transform: "translateY(0)",
+	background: "rgba(255, 255, 255, 0.8)",
+	backdropFilter: "blur(5px)",
+	animation: `${animate} 1s ease-in-out`,
 })
 
 const Title = styled("div")({
@@ -58,6 +79,10 @@ const Section = styled("div")({
 	display: "flex",
 	gap: "10px",
 	alignItems: "center",
+	"h6:last-child": {
+		color: "gray",
+		marginTop: "5px",
+	},
 })
 
 const SubTitle = styled("h6")<{ type: string }>({
@@ -68,67 +93,84 @@ const SubTitle = styled("h6")<{ type: string }>({
 	variants: [
 		{
 			props: { type: "hiragana" },
-			style: { backgroundColor: "#e76f51" },
+			style: { backgroundColor: "#ce4257" },
 		},
 		{
 			props: { type: "meaning" },
-			style: { backgroundColor: "#90be6d" },
+			style: { backgroundColor: "#720026" },
 		},
 		{
 			props: { type: "example" },
-			style: { backgroundColor: "#2a9d8f" },
+			style: { backgroundColor: "#e36414" },
 		},
 	],
 })
 
-const Dialog = styled("dialog")({
-	padding: "20px",
-	width: "40%",
+const ActionBar = styled("div")({
 	display: "flex",
-	flexDirection: "column",
-	gap: "20px",
-	height: "30%",
-	overflowY: "scroll",
-	"::backdrop": {
-		backgroundColor: "rgba(0, 0, 0, 0.5)",
-	},
+	alignItems: "center",
+	justifyContent: "space-between",
 })
 
-export function VocabularyList({ vocabularies }: { vocabularies: VocabularyResponseType[] }) {
-	const [modalOpen, setModalOpen] = useState(true)
-	const dialogRef = useRef<HTMLDialogElement>(null)
-	const [selectedVocabulary, setSelectedVocabulary] = useState<VocabularyResponseType | undefined>(undefined)
+const Quiz = styled("div")({
+	display: "flex",
+	gap: "5px",
+	alignItems: "center",
+	justifyContent: "center",
+	cursor: "pointer",
+	color: "#379188",
+})
+
+export function VocabularyList({ vocabularyList }: { vocabularyList: Vocabulary[] }) {
+	const [modalOpen, setModalOpen] = useState(false)
 
 	return (
 		<>
 			<Container>
-				<h2>Vocabulary List</h2>
-				{vocabularies.map((vocabulary) => (
+				<ActionBar>
+					<h2>單字列表</h2>
+					<Quiz onClick={() => setModalOpen(true)}>
+						<FontAwesomeIcon icon={faFeather} />
+						<h5>測驗</h5>
+					</Quiz>
+				</ActionBar>
+				{vocabularyList.map((vocabulary) => (
 					<Card key={vocabulary.vocabulary}>
+						{modalOpen && <Mask />}
 						<Title>
 							<h4>{vocabulary.vocabulary}</h4>
 							<Tag>
 								<h6>{vocabulary.type}</h6>
 							</Tag>
 						</Title>
-						<Section>
-							<SubTitle type="hiragana">平假名</SubTitle>
-							<h5>{vocabulary.hiragana}</h5>
-						</Section>
-						<Section>
-							<SubTitle type="meaning">意思</SubTitle>
-							<h5>{vocabulary.meaning}</h5>
-						</Section>
-
-						<SubTitle type="example">例句</SubTitle>
-						<h6>{vocabulary.example.japanese}</h6>
-						<h6>{vocabulary.example.chinese}</h6>
+						<CardContent vocabulary={vocabulary} />
 					</Card>
 				))}
 			</Container>
-			<Dialog open={modalOpen} ref={dialogRef}>
-				123
-			</Dialog>
+			{/* ref: https://medium.com/@dimterion/modals-with-html-dialog-element-in-javascript-and-react-fb23c885d62e */}
+			{modalOpen && <QuizDialog setModalOpen={setModalOpen} vocabularyList={vocabularyList} />}
+		</>
+	)
+}
+
+export function CardContent({ vocabulary }: { vocabulary: Vocabulary }) {
+	return (
+		<>
+			<Section>
+				<SubTitle type="hiragana">平假名</SubTitle>
+				<h5>{vocabulary.hiragana}</h5>
+			</Section>
+			<Section>
+				<SubTitle type="meaning">意思</SubTitle>
+				<h5>{vocabulary.meaning}</h5>
+			</Section>
+			<Section style={{ alignItems: "flex-start" }}>
+				<SubTitle type="example">例句</SubTitle>
+				<div>
+					<h6>{vocabulary.example.japanese}</h6>
+					<h6>{vocabulary.example.chinese}</h6>
+				</div>
+			</Section>
 		</>
 	)
 }
