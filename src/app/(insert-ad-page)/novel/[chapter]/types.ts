@@ -4,8 +4,9 @@ export enum OpenAIAPI {
 
 export type OpenAIAPIAlias = keyof typeof OpenAIAPI
 
-export type VocabularyResponseType = {
-	vocabulary: string
+export type VocabularyResponseType = Record<string, Info>
+
+export interface Info {
 	hiragana: string
 	type: string
 	meaning: string
@@ -15,4 +16,12 @@ export type VocabularyResponseType = {
 export interface Example {
 	japanese: string
 	chinese: string
+}
+
+export type Vocabulary = {
+	vocabulary: string
+	hiragana: string
+	type: string
+	meaning: string
+	example: Example
 }

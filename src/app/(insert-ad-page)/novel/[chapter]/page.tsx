@@ -2,6 +2,7 @@ import pool from "../../../../libs/mysql"
 import { styled } from "@pigment-css/react"
 import { RowDataPacket } from "mysql2"
 import { Article, VocabularyList } from "./client"
+import { Vocabulary } from "./types"
 
 const Container = styled("div")({
 	padding: "20px 20px",
@@ -43,75 +44,50 @@ export default async function ChapterPage({ params }: { params: { chapter: strin
 	const chapter = params.chapter
 	const { title, content } = await getChapter(chapter)
 	const formattedContent = content.replace(/\n/g, "<br/>")
+	const vocabularyJson = {
+		部屋: {
+			hiragana: "へや",
+			type: "名詞",
+			meaning: "房間",
+			example: {
+				japanese: "私の部屋はとても広いです。",
+				chinese: "我的房間非常寬敞。",
+			},
+		},
+		本: {
+			hiragana: "ほん",
+			type: "名詞",
+			meaning: "書",
+			example: {
+				japanese: "私は本を読むのが好きです。",
+				chinese: "我喜歡讀書。",
+			},
+		},
+		読む: {
+			hiragana: "よむ",
+			type: "動詞",
+			meaning: "閱讀",
+			example: {
+				japanese: "私は本を読むのが好きです。",
+				chinese: "我喜歡讀書。",
+			},
+		},
+	}
+
+	const vocabularyList = Object.entries(vocabularyJson).reduce((acc, [key, value]) => {
+		acc.push({
+			vocabulary: key,
+			...value,
+		})
+
+		return acc
+	}, [] as Vocabulary[])
 
 	return (
 		<Container>
 			<Article title={title} content={formattedContent} />
 			<RightSection>
-				<VocabularyList
-					vocabularies={[
-						{
-							vocabulary: "輝いている",
-							hiragana: "かがやいている",
-							type: "動詞",
-							meaning: "閃耀、發光、顯示出活力或才能",
-							example: {
-								japanese: "星が輝いている。",
-								chinese: "星星在閃耀。",
-							},
-						},
-						{
-							vocabulary: "さくらんぼ",
-							hiragana: "さくらんぼ",
-							type: "名詞",
-							meaning: "櫻桃",
-							example: {
-								japanese: "さくらんぼが美味しいです。",
-								chinese: "櫻桃很好吃。",
-							},
-						},
-						{
-							vocabulary: "おはようございます",
-							hiragana: "おはようございます",
-							type: "挨拶",
-							meaning: "早上好",
-							example: {
-								japanese: "おはようございます！",
-								chinese: "早上好！",
-							},
-						},
-						{
-							vocabulary: "ありがとう",
-							hiragana: "ありがとう",
-							type: "感謝",
-							meaning: "謝謝",
-							example: {
-								japanese: "ありがとう！",
-								chinese: "謝謝！",
-							},
-						},
-						{
-							vocabulary: "おやすみなさい",
-							hiragana: "おやすみなさい",
-							type: "挨拶",
-							meaning: "晚安",
-							example: {
-								japanese: "おやすみなさい！",
-								chinese: "晚安！",
-							},
-						},
-						{
-							vocabulary: "すみません",
-							hiragana: "すみません",
-							type: "謝罪",
-							meaning: "對不起",
-							example: {
-								japanese: "すみません！",
-								chinese: "對不起！",
-							},
-						},
-					]}
-				/>
+				<VocabularyList vocabularyList={vocabularyList} />
 			</RightSection>
 		</Container>
 	)
