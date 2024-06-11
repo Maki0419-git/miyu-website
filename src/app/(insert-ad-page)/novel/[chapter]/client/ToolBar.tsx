@@ -60,7 +60,7 @@ export function ToolBar({ containerRef }: { containerRef: React.RefObject<HTMLDi
 
 	const handleCreateVocabularyCard = useCallback(async () => {
 		try {
-			const response = await fetch("/api/openapi/vocabulary", {
+			const response = await fetch("/api/openAI/vocabulary", {
 				method: "POST",
 				body: JSON.stringify({ vocabulary: selectedText }),
 				headers: {
