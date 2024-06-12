@@ -1,10 +1,12 @@
 "use client"
 import { keyframes, styled } from "@pigment-css/react"
 import { Vocabulary } from "../types"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFeather } from "@fortawesome/free-solid-svg-icons"
 import { QuizDialog } from "./QuizDialog"
+import { VocabularyContext } from "./VocabularyProvider"
+import { Skeleton } from "./Skeleton"
 const Container = styled("div")({
 	padding: "20px 20px",
 	width: "100%",
@@ -13,6 +15,17 @@ const Container = styled("div")({
 	gap: "20px",
 	height: "100%",
 	overflowY: "scroll",
+})
+
+const Construction = styled("div")({
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+	height: "100%",
+	backgroundColor: "#ffedd5",
+	h4: {
+		color: "#FF9F1C",
+	},
 })
 
 const Card = styled("div")({
@@ -120,8 +133,9 @@ const Quiz = styled("div")({
 	color: "#379188",
 })
 
-export function VocabularyList({ vocabularyList }: { vocabularyList: Vocabulary[] }) {
+export function VocabularyList() {
 	const [modalOpen, setModalOpen] = useState(false)
+	const { vocabularies, isPending } = useContext(VocabularyContext)
 
 	return (
 		<>
@@ -133,7 +147,12 @@ export function VocabularyList({ vocabularyList }: { vocabularyList: Vocabulary[
 						<h5>測驗</h5>
 					</Quiz>
 				</ActionBar>
-				{vocabularyList.map((vocabulary) => (
+				{vocabularies.length === 0 && !isPending && (
+					<Construction>
+						<h4>選取不會的單字，增加至單字列表！</h4>
+					</Construction>
+				)}
+				{vocabularies.map((vocabulary) => (
 					<Card key={vocabulary.vocabulary}>
 						{modalOpen && <Mask />}
 						<Title>
@@ -145,9 +164,11 @@ export function VocabularyList({ vocabularyList }: { vocabularyList: Vocabulary[
 						<CardContent vocabulary={vocabulary} />
 					</Card>
 				))}
+				{isPending && <Skeleton />}
 			</Container>
+
 			{/* ref: https://medium.com/@dimterion/modals-with-html-dialog-element-in-javascript-and-react-fb23c885d62e */}
-			{modalOpen && <QuizDialog setModalOpen={setModalOpen} vocabularyList={vocabularyList} />}
+			{modalOpen && <QuizDialog setModalOpen={setModalOpen} vocabularyList={vocabularies} />}
 		</>
 	)
 }

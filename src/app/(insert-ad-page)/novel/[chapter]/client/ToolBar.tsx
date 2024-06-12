@@ -2,8 +2,9 @@
 
 import errorHandler from "@/utils/errorHandler"
 import { styled } from "@pigment-css/react"
-import { useCallback, useEffect, useRef, useState } from "react"
-import { VocabularyResponseType } from "../types"
+import { useCallback, useContext, useEffect, useRef, useState } from "react"
+import { Vocabulary, VocabularyResponseType } from "../types"
+import { VocabularyContext } from "./VocabularyProvider"
 
 const Container = styled("div")<{ top: number; left: number }>({
 	position: "absolute",
@@ -48,6 +49,7 @@ export function ToolBar({ containerRef }: { containerRef: React.RefObject<HTMLDi
 	const [selectedText, setSelectedText] = useState("")
 	const [position, setPosition] = useState({ top: 0, left: 0 })
 	const rangeRef = useRef<Range | undefined>(undefined)
+	const { setVocabularies, setIsPending } = useContext(VocabularyContext)
 
 	const handleHighlight = useCallback(() => {
 		const range = rangeRef.current
@@ -59,6 +61,7 @@ export function ToolBar({ containerRef }: { containerRef: React.RefObject<HTMLDi
 	}, [])
 
 	const handleCreateVocabularyCard = useCallback(async () => {
+		setIsPending(true)
 		try {
 			const response = await fetch("/api/openAI/vocabulary", {
 				method: "POST",
@@ -72,11 +75,23 @@ export function ToolBar({ containerRef }: { containerRef: React.RefObject<HTMLDi
 			}
 			const data: VocabularyResponseType = await response.json()
 
+			const vocabularyList = Object.entries(data).reduce((acc, [key, value]) => {
+				acc.push({
+					vocabulary: key,
+					...value,
+				})
+
+				return acc
+			}, [] as Vocabulary[])
+
+			setVocabularies((prev) => [...prev, ...vocabularyList])
+			setIsPending(false)
+
 			return data
 		} catch (error) {
 			throw error
 		}
-	}, [selectedText])
+	}, [selectedText, setVocabularies, setIsPending])
 
 	useEffect(() => {
 		const handleSelection = () => {
