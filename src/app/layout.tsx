@@ -2,7 +2,11 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "@pigment-css/react/styles.css"
 import "./globals.css"
+/** ref: https://docs.fontawesome.com/web/use-with/react/use-with */
+import { config } from "@fortawesome/fontawesome-svg-core"
+import "@fortawesome/fontawesome-svg-core/styles.css"
 import NavBar from "./NavBar"
+config.autoAddCss = false
 
 const inter = Inter({ subsets: ["latin"] })
 

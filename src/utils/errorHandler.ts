@@ -1,6 +1,7 @@
+import { OpenAIAPIAlias } from "@/app/(insert-ad-page)/novel/[chapter]/types"
 import { UnsplashAPIAlias, WeatherApiAlias } from "@/app/(insert-ad-page)/weather/types"
 
-type apiAlias = WeatherApiAlias | UnsplashAPIAlias
+type apiAlias = WeatherApiAlias | UnsplashAPIAlias | OpenAIAPIAlias
 
 export class CustomError extends Error {
 	constructor(

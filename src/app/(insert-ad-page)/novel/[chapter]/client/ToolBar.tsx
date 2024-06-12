@@ -1,7 +1,9 @@
 "use client"
 
+import errorHandler from "@/utils/errorHandler"
 import { styled } from "@pigment-css/react"
 import { useCallback, useEffect, useRef, useState } from "react"
+import { VocabularyResponseType } from "../types"
 
 const Container = styled("div")<{ top: number; left: number }>({
 	position: "absolute",
@@ -11,6 +13,7 @@ const Container = styled("div")<{ top: number; left: number }>({
 	fontSize: "12px",
 	color: "#FFBF69",
 	border: "1px solid #FFBF69",
+	fontWeight: "bold",
 	borderRadius: 5,
 	boxShadow: "0 0 3px rgba(0,0,0,0.3)",
 	"&:before": {
@@ -55,6 +58,26 @@ export function ToolBar({ containerRef }: { containerRef: React.RefObject<HTMLDi
 		}
 	}, [])
 
+	const handleCreateVocabularyCard = useCallback(async () => {
+		try {
+			const response = await fetch("/api/openAI/vocabulary", {
+				method: "POST",
+				body: JSON.stringify({ vocabulary: selectedText }),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+			if (response.status !== 200) {
+				errorHandler("CREATE_VOCABULARY", response.status)
+			}
+			const data: VocabularyResponseType = await response.json()
+
+			return data
+		} catch (error) {
+			throw error
+		}
+	}, [selectedText])
+
 	useEffect(() => {
 		const handleSelection = () => {
 			const selection = window.getSelection()
@@ -84,7 +107,7 @@ export function ToolBar({ containerRef }: { containerRef: React.RefObject<HTMLDi
 		selectedText && (
 			<Container top={position.top} left={position.left}>
 				<button onClick={handleHighlight}>highlight</button>
-				<button>vocabulary card</button>
+				<button onClick={handleCreateVocabularyCard}>vocabulary card</button>
 			</Container>
 		)
 	)
