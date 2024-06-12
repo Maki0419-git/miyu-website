@@ -1,6 +1,8 @@
 import pool from "../../../../libs/mysql"
 import { styled } from "@pigment-css/react"
 import { RowDataPacket } from "mysql2"
+import { Article, VocabularyList } from "./client"
+import { Vocabulary } from "./types"
 
 const Container = styled("div")({
 	padding: "20px 20px",
@@ -9,15 +11,6 @@ const Container = styled("div")({
 	gap: "20px",
 	height: "100%",
 	overflowY: "scroll",
-})
-
-const Article = styled("article")({
-	flex: 7,
-	margin: "20px",
-	lineHeight: "2",
-	p: {
-		margin: "20px 0",
-	},
 })
 
 const RightSection = styled("div")({
@@ -51,15 +44,51 @@ export default async function ChapterPage({ params }: { params: { chapter: strin
 	const chapter = params.chapter
 	const { title, content } = await getChapter(chapter)
 	const formattedContent = content.replace(/\n/g, "<br/>")
+	const vocabularyJson = {
+		部屋: {
+			hiragana: "へや",
+			type: "名詞",
+			meaning: "房間",
+			example: {
+				japanese: "私の部屋はとても広いです。",
+				chinese: "我的房間非常寬敞。",
+			},
+		},
+		本: {
+			hiragana: "ほん",
+			type: "名詞",
+			meaning: "書",
+			example: {
+				japanese: "私は本を読むのが好きです。",
+				chinese: "我喜歡讀書。",
+			},
+		},
+		読む: {
+			hiragana: "よむ",
+			type: "動詞",
+			meaning: "閱讀",
+			example: {
+				japanese: "私は本を読むのが好きです。",
+				chinese: "我喜歡讀書。",
+			},
+		},
+	}
+
+	const vocabularyList = Object.entries(vocabularyJson).reduce((acc, [key, value]) => {
+		acc.push({
+			vocabulary: key,
+			...value,
+		})
+
+		return acc
+	}, [] as Vocabulary[])
 
 	return (
 		<Container>
-			<Article>
-				<h1>{title}</h1>
-				{/* https://blog.logrocket.com/using-dangerouslysetinnerhtml-react-application/ */}
-				<div dangerouslySetInnerHTML={{ __html: `<p>${formattedContent}</p>` }} />
-			</Article>
-			<RightSection />
+			<Article title={title} content={formattedContent} />
+			<RightSection>
+				<VocabularyList vocabularyList={vocabularyList} />
+			</RightSection>
 		</Container>
 	)
 }
