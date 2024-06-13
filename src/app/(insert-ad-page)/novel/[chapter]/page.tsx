@@ -26,7 +26,7 @@ async function getChapter(chapter: string) {
 		/**
 		 ref: https://stackoverflow.com/questions/76309154/next-js-typeerror-failed-to-parse-url-from-when-targeting-api-route-relati
 		 **/
-		const endpoint = `https://${process.env.VERCEL_URL}` || "http://localhost:3000"
+		const endpoint = process.env.URL || "http://localhost:3000"
 		const res = await fetch(`${endpoint}/api/novel/chapter?id=${chapter}`)
 		const data: ChapterAPIResponse = await res.json()
 		return data
