@@ -1,11 +1,8 @@
 import { styled } from "@pigment-css/react"
-import { RowDataPacket } from "mysql2"
 import Image from "next/image"
 import heroImage from "../../assets/novel/novel.jpg"
-import { getDownloadURL, ref } from "firebase/storage"
-import { firebaseStorage } from "../../libs/firebase"
-import pool from "../../libs/mysql"
 import { RouteButton } from "./components/client"
+import { ChapterPreview, NovelAPIResponse } from "./types"
 
 const Hero = styled("div")({
 	position: "relative",
@@ -172,50 +169,20 @@ const Info = styled("div")({
 	},
 })
 
-interface Novel extends RowDataPacket {
-	id: number
-	book_name: string
-	description: string
-	create_date: Date
-	author: string
-}
-
-export interface ChapterPreview extends RowDataPacket {
-	id: number
-	title: string
-	content: string
-	image_file?: string
-	image_url?: string
-}
-
-const getNovels = async () => {
+const getNovel = async () => {
 	try {
-		const db = await pool.getConnection()
-		const novelQuery = "select * from novel where id = 1;"
-		const [novels] = await db.query<Novel[]>(novelQuery)
-		const chapterQuery = "select id,title,image_file from chapter where novel_id = 1;"
-		const [chapters] = await db.query<ChapterPreview[]>(chapterQuery)
-		const generateChaptersWithImgURL = async (chapters: ChapterPreview[]) => {
-			const promises = chapters.map(async (chapter) => {
-				const image_url = await getDownloadURL(ref(firebaseStorage, `novel/${chapter.image_file}` || ""))
-				return { image_url, ...chapter }
-			})
-			const urls = await Promise.all(promises)
-			return urls
-		}
-		const chaptersWithImgURL: ChapterPreview[] = await generateChaptersWithImgURL(chapters)
-		db.release()
-
-		return { novel: novels[0], chapters: chaptersWithImgURL }
-	} catch (error) {
-		throw error
+		const endpoint = process.env.URL || "http://localhost:3000"
+		const res = await fetch(`${endpoint}/api/novel`)
+		const data: NovelAPIResponse = await res.json()
+		return data
+	} catch (e) {
+		throw e
 	}
 }
 
 export default async function NovelPage() {
-	const { novel, chapters } = await getNovels()
+	const { novel, chapters } = await getNovel()
 
-	// console.log({ chapters })
 	return (
 		<div>
 			<Hero>
