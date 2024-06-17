@@ -2,7 +2,10 @@ import { styled } from "@pigment-css/react"
 import Image from "next/image"
 import heroImage from "../../assets/novel/novel.jpg"
 import { RouteButton } from "./components/client"
-import { ChapterPreview, NovelAPIResponse } from "./types"
+import { neon } from "@neondatabase/serverless"
+import { ChapterPreview, Novel } from "./types"
+import { getDownloadURL, ref } from "firebase/storage"
+import { firebaseStorage } from "../../libs/firebase"
 
 const Hero = styled("div")({
 	position: "relative",
@@ -171,12 +174,20 @@ const Info = styled("div")({
 
 const getNovel = async () => {
 	try {
-		const endpoint = process.env.URL || "http://localhost:3000"
-		console.log(`${endpoint}/api/novel`)
-		const res = await fetch(`${endpoint}/api/novel`)
-
-		const data: NovelAPIResponse = await res.json()
-		return data
+		const sql = neon(process.env.DATABASE_URL || "")
+		/** enhance: use generic to defined type instead of using assertion */
+		const novels = (await sql`select * from novel where id = 1;`) as Novel[]
+		const chapters = (await sql`select id,title,image_file from chapter where novel_id = 1;`) as ChapterPreview[]
+		const generateChaptersWithImgURL = async (chapters: ChapterPreview[]) => {
+			const promises = chapters.map(async (chapter) => {
+				const image_url = await getDownloadURL(ref(firebaseStorage, `novel/${chapter.image_file}` || ""))
+				return { image_url, ...chapter }
+			})
+			const urls = await Promise.all(promises)
+			return urls
+		}
+		const chaptersWithImgURL: ChapterPreview[] = await generateChaptersWithImgURL(chapters)
+		return { novel: novels[0], chapters: chaptersWithImgURL }
 	} catch (e) {
 		throw e
 	}

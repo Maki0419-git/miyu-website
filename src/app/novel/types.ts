@@ -17,12 +17,3 @@ export interface ChapterPreview {
 export interface Chapter extends ChapterPreview {
 	content: string
 }
-
-export interface ChapterAPIResponse {
-	chapter: Chapter
-}
-
-export interface NovelAPIResponse {
-	novel: Novel
-	chapters: ChapterPreview[]
-}
