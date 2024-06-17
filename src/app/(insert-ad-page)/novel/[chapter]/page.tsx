@@ -1,6 +1,7 @@
 import { styled } from "@pigment-css/react"
 import { Article, VocabularyList, VocabularyProvider } from "./client"
 import { ChapterAPIResponse } from "@/app/novel/types"
+import { getBaseUrl } from "@/utils/getBaseURL"
 
 const Container = styled("div")({
 	padding: "20px 20px",
@@ -26,8 +27,8 @@ async function getChapter(chapter: string) {
 		/**
 		 ref: https://stackoverflow.com/questions/76309154/next-js-typeerror-failed-to-parse-url-from-when-targeting-api-route-relati
 		 **/
-		const endpoint = process.env.URL || "http://localhost:3000"
-		const res = await fetch(`${endpoint}/api/novel/chapter?id=${chapter}`)
+		const baseURL = getBaseUrl()
+		const res = await fetch(`${baseURL}/api/novel/chapter?id=${chapter}`)
 		const data: ChapterAPIResponse = await res.json()
 		return data
 	} catch (e) {

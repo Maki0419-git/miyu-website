@@ -3,6 +3,7 @@ import Image from "next/image"
 import heroImage from "../../assets/novel/novel.jpg"
 import { RouteButton } from "./components/client"
 import { ChapterPreview, NovelAPIResponse } from "./types"
+import { getBaseUrl } from "@/utils/getBaseURL"
 
 const Hero = styled("div")({
 	position: "relative",
@@ -171,9 +172,9 @@ const Info = styled("div")({
 
 const getNovel = async () => {
 	try {
-		const endpoint = process.env.URL || "http://localhost:3000"
-		console.log(`${endpoint}/api/novel`)
-		const res = await fetch(`${endpoint}/api/novel`)
+		const baseURL = getBaseUrl()
+		console.log(`${baseURL}/api/novel`)
+		const res = await fetch(`${baseURL}/api/novel`)
 
 		const data: NovelAPIResponse = await res.json()
 		return data
