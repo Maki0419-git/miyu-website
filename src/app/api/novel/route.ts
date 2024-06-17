@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
 			try {
 				const promises = chapters.map(async (chapter) => {
 					const image_url = await getDownloadURL(ref(firebaseStorage, `novel/${chapter.image_file}` || ""))
+					console.log({ image_url })
 					return { image_url, ...chapter }
 				})
 				const urls = await Promise.all(promises)
@@ -24,6 +25,7 @@ export async function GET(request: NextRequest) {
 			}
 		}
 		const chaptersWithImgURL: ChapterPreview[] = await generateChaptersWithImgURL(chapters)
+		console.log({ novel: novels[0], chapters: chaptersWithImgURL })
 		return NextResponse.json({ novel: novels[0], chapters: chaptersWithImgURL })
 	} catch (error) {
 		console.log(error)
