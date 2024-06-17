@@ -10,12 +10,17 @@ export async function GET(request: NextRequest) {
 		const novels = await sql<Novel[]>`select * from novel where id = 1;`
 		const chapters = await sql<ChapterPreview[]>`select id,title,image_file from chapter where novel_id = 1;`
 		const generateChaptersWithImgURL = async (chapters: ChapterPreview[]) => {
-			const promises = chapters.map(async (chapter) => {
-				const image_url = await getDownloadURL(ref(firebaseStorage, `novel/${chapter.image_file}` || ""))
-				return { image_url, ...chapter }
-			})
-			const urls = await Promise.all(promises)
-			return urls
+			try {
+				const promises = chapters.map(async (chapter) => {
+					const image_url = await getDownloadURL(ref(firebaseStorage, `novel/${chapter.image_file}` || ""))
+					return { image_url, ...chapter }
+				})
+				const urls = await Promise.all(promises)
+				return urls
+			} catch (e) {
+				console.log("Error in generateChaptersWithImgURL", e)
+				throw e
+			}
 		}
 		const chaptersWithImgURL: ChapterPreview[] = await generateChaptersWithImgURL(chapters)
 		return NextResponse.json({ novel: novels[0], chapters: chaptersWithImgURL })

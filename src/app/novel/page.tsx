@@ -175,7 +175,6 @@ const getNovel = async () => {
 		const baseURL = getBaseUrl()
 		console.log(`${baseURL}/api/novel`)
 		const res = await fetch(`${baseURL}/api/novel`)
-		console.log(res)
 		if (!res.ok) {
 			throw new Error("Failed to fetch")
 		}
