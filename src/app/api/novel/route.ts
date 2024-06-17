@@ -9,6 +9,7 @@ export async function GET(request: NextRequest) {
 		const sql = postgres(process.env.DATABASE_URL || "")
 		const novels = await sql<Novel[]>`select * from novel where id = 1;`
 		const chapters = await sql<ChapterPreview[]>`select id,title,image_file from chapter where novel_id = 1;`
+		console.log({ novels, chapters })
 		const generateChaptersWithImgURL = async (chapters: ChapterPreview[]) => {
 			try {
 				const promises = chapters.map(async (chapter) => {
