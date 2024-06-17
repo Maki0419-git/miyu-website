@@ -1,7 +1,6 @@
-import pool from "../../../../libs/mysql"
 import { styled } from "@pigment-css/react"
-import { RowDataPacket } from "mysql2"
 import { Article, VocabularyList, VocabularyProvider } from "./client"
+import { ChapterAPIResponse } from "@/app/novel/types"
 
 const Container = styled("div")({
 	padding: "20px 20px",
@@ -22,28 +21,26 @@ const RightSection = styled("div")({
 	height: "1000px",
 })
 
-export interface Chapter extends RowDataPacket {
-	id: number
-	novel_id: number
-	title: string
-	content: string
-	image_file?: string
-	image_url?: string
-}
-
 async function getChapter(chapter: string) {
-	const db = await pool.getConnection()
-	const query = `select * from chapter where id = ${chapter};`
-	const [chapters] = await db.query<Chapter[]>(query)
-	const { title, content } = chapters[0]
-
-	return { title, content }
+	try {
+		/**
+		 ref: https://stackoverflow.com/questions/76309154/next-js-typeerror-failed-to-parse-url-from-when-targeting-api-route-relati
+		 **/
+		const endpoint = process.env.URL || "http://localhost:3000"
+		const res = await fetch(`${endpoint}/api/novel/chapter?id=${chapter}`)
+		const data: ChapterAPIResponse = await res.json()
+		return data
+	} catch (e) {
+		throw e
+	}
 }
 
 export default async function ChapterPage({ params }: { params: { chapter: string } }) {
 	const chapter = params.chapter
-	const { title, content } = await getChapter(chapter)
-	const formattedContent = content.replace(/\n/g, "<br/>")
+	const {
+		chapter: { title, content },
+	} = await getChapter(chapter)
+	const formattedContent = content.replace(/\\n/g, "<br/>")
 
 	return (
 		<VocabularyProvider>
