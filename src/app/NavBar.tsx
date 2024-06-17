@@ -44,6 +44,7 @@ export default function NavBar() {
 			<PageWrapper>
 				<Link href="/weather">weather</Link>
 				<Link href="/js-playground">JS playground</Link>
+				<Link href="/novel">novel</Link>
 			</PageWrapper>
 		</Container>
 	)
