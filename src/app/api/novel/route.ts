@@ -20,6 +20,7 @@ export async function GET(request: NextRequest) {
 		const chaptersWithImgURL: ChapterPreview[] = await generateChaptersWithImgURL(chapters)
 		return NextResponse.json({ novel: novels[0], chapters: chaptersWithImgURL })
 	} catch (error) {
+		console.log(error)
 		return NextResponse.json({ error }, { status: 500 })
 	}
 }
