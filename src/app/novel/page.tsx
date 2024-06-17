@@ -172,7 +172,9 @@ const Info = styled("div")({
 const getNovel = async () => {
 	try {
 		const endpoint = process.env.URL || "http://localhost:3000"
+		console.log(`${endpoint}/api/novel`)
 		const res = await fetch(`${endpoint}/api/novel`)
+
 		const data: NovelAPIResponse = await res.json()
 		return data
 	} catch (e) {
