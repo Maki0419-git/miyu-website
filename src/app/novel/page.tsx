@@ -175,6 +175,7 @@ const getNovel = async () => {
 		const baseURL = getBaseUrl()
 		console.log(`${baseURL}/api/novel`)
 		const res = await fetch(`${baseURL}/api/novel`)
+		console.log(res)
 
 		const data: NovelAPIResponse = await res.json()
 		return data
