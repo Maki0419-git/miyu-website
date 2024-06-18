@@ -213,7 +213,7 @@ export default async function NovelPage() {
 							{chapters.map((chapter: ChapterPreview) => {
 								return (
 									<ChapterCard key={chapter.id}>
-										<Image src={chapter.image_url || ""} alt="hero" fill={true} />
+										<Image src={chapter.image_url || ""} alt="hero" fill={true} priority />
 										<ChapterIndex>{chapter.id < 10 ? `0${chapter.id}` : chapter.id}</ChapterIndex>
 										<Info>
 											<h2>{chapter.title}</h2>
