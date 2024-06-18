@@ -25,6 +25,8 @@ const LogoWrapper = styled("div")({
 const LogoImage = styled(Image)({
 	borderRadius: "50%",
 	marginRight: "10px",
+	objectFit: "cover",
+	objectPosition: "center",
 })
 
 const PageWrapper = styled("div")({
@@ -38,7 +40,7 @@ export default function NavBar() {
 	return (
 		<Container>
 			<LogoWrapper>
-				<LogoImage src="https://picsum.photos/200" alt="Next.js Logo" width={50} height={50} priority />
+				<LogoImage src="/landing_photo.png" alt="Miyu Logo" width={50} height={50} priority />
 				<Link href="/">Miyu website</Link>
 			</LogoWrapper>
 			<PageWrapper>
