@@ -7,6 +7,8 @@ import { ChapterPreview, Novel } from "./types"
 import { getDownloadURL, ref } from "firebase/storage"
 import { firebaseStorage } from "../../libs/firebase"
 
+export const revalidate = 3600
+
 const Hero = styled("div")({
 	position: "relative",
 	padding: "20px 40px",
