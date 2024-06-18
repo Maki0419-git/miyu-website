@@ -225,7 +225,7 @@ export default async function NovelPage() {
 						</ChapterList>
 					</Chapter>
 				</Content>
-				<Image alt="hero" src={heroImage} fill={true} />
+				<Image priority={true} alt="hero" src={heroImage} fill={true} />
 				<ImageMask />
 			</Hero>
 		</div>

@@ -1,6 +1,7 @@
 import { keyframes, styled } from "@pigment-css/react"
 import Image from "next/image"
 import { Permanent_Marker, Concert_One } from "next/font/google"
+import Head from "next/head"
 
 const permanentMarker = Permanent_Marker({
 	weight: "400",
@@ -50,24 +51,30 @@ const Content = styled("div")({
 
 export default function Home() {
 	return (
-		<Container>
-			<Content>
-				<Image
-					src="/landing_photo.png"
-					alt="logo"
-					width={250}
-					height={250}
-					style={{
-						objectFit: "cover",
-						objectPosition: "50% 100%",
-						borderRadius: "50%",
-						border: "2px solid white",
-						boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
-					}}
-				/>
-				<h2 className={permanentMarker.className}>- Asaka Miyu -</h2>
-				<h3 className={concertOne.className}>Web Developer / Traveler / Otaku</h3>
-			</Content>
-		</Container>
+		<>
+			<Head>
+				<link rel="preload" as="image" href="/landing_bg.png" />
+			</Head>
+			<Container>
+				<Content>
+					<Image
+						priority={true}
+						src="/landing_photo.png"
+						alt="logo"
+						width={250}
+						height={250}
+						style={{
+							objectFit: "cover",
+							objectPosition: "50% 100%",
+							borderRadius: "50%",
+							border: "2px solid white",
+							boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+						}}
+					/>
+					<h2 className={permanentMarker.className}>- Asaka Miyu -</h2>
+					<h3 className={concertOne.className}>Web Developer / Traveler / Otaku</h3>
+				</Content>
+			</Container>
+		</>
 	)
 }
