@@ -177,7 +177,8 @@ const getNovel = async () => {
 		const sql = neon(process.env.DATABASE_URL || "")
 		/** enhance: use generic to defined type instead of using assertion */
 		const novels = (await sql`select * from novel where id = 1;`) as Novel[]
-		const chapters = (await sql`select id,title,image_file from chapter where novel_id = 1;`) as ChapterPreview[]
+		const chapters =
+			(await sql`select id,title,image_file from chapter where novel_id = 1 order by id;`) as ChapterPreview[]
 		const generateChaptersWithImgURL = async (chapters: ChapterPreview[]) => {
 			const promises = chapters.map(async (chapter) => {
 				const image_url = await getDownloadURL(ref(firebaseStorage, `novel/${chapter.image_file}` || ""))
