@@ -53,6 +53,7 @@ export default function Home() {
 		<Container>
 			<Content>
 				<Image
+					priority={true}
 					src="/landing_photo.png"
 					alt="logo"
 					width={250}
