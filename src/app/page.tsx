@@ -1,7 +1,8 @@
 import { keyframes, styled } from "@pigment-css/react"
 import Image from "next/image"
 import { Permanent_Marker, Kiwi_Maru } from "next/font/google"
-import { ImageCarousel } from "./components/client"
+import { FadeUpSection, ImageCarousel } from "./components/client"
+import { Quotes } from "./components/server"
 
 const permanentMarker = Permanent_Marker({
 	weight: "400",
@@ -34,7 +35,8 @@ const HeroContainer = styled("main")({
 
 const SectionContainer = styled("div")({
 	width: "100%",
-	padding: "2rem 6rem",
+	minHeight: "30vh",
+	padding: "2rem 15rem",
 	border: "2px solid black",
 	backgroundColor: "white",
 })
@@ -90,23 +92,30 @@ export default function Home() {
 					<h3 className={kiwiMaru.className}>Web Developer / Traveler / Otaku</h3>
 				</HeroContent>
 			</HeroContainer>
-			<SectionContainer className={kiwiMaru.className}>
-				<SectionTitle>おすすめのアニメ</SectionTitle>
-				<SectionDescription>
-					Irure deserunt veniam aute dolor magna sunt. In voluptate consectetur labore exercitation officia incididunt
-					veniam aute eu laboris culpa irure incididunt non. Labore mollit ea et magna culpa nostrud pariatur occaecat
-					aute pariatur ea cupidatat excepteur.
-				</SectionDescription>
-				<ImageCarousel />
-			</SectionContainer>
-			<SectionContainer className={kiwiMaru.className}>
-				<SectionTitle>ココロに響く名台詞！</SectionTitle>
-				<SectionDescription>
-					Irure deserunt veniam aute dolor magna sunt. In voluptate consectetur labore exercitation officia incididunt
-					veniam aute eu laboris culpa irure incididunt non. Labore mollit ea et magna culpa nostrud pariatur occaecat
-					aute pariatur ea cupidatat excepteur.
-				</SectionDescription>
-			</SectionContainer>
+			<FadeUpSection>
+				<SectionContainer className={kiwiMaru.className}>
+					<SectionTitle>おすすめのアニメ</SectionTitle>
+					<SectionDescription>
+						Irure deserunt veniam aute dolor magna sunt. In voluptate consectetur labore exercitation officia incididunt
+						veniam aute eu laboris culpa irure incididunt non. Labore mollit ea et magna culpa nostrud pariatur occaecat
+						aute pariatur ea cupidatat excepteur.
+					</SectionDescription>
+					<ImageCarousel />
+				</SectionContainer>
+			</FadeUpSection>
+			<FadeUpSection>
+				<SectionContainer className={kiwiMaru.className}>
+					<SectionTitle>ココロに響く名台詞！</SectionTitle>
+					<SectionDescription>
+						Irure deserunt veniam aute dolor magna sunt. In voluptate consectetur labore exercitation officia incididunt
+						veniam aute eu laboris culpa irure incididunt non. Labore mollit ea et magna culpa nostrud pariatur occaecat
+						aute pariatur ea cupidatat excepteur.
+					</SectionDescription>
+					<FadeUpSection>
+						<Quotes />
+					</FadeUpSection>
+				</SectionContainer>
+			</FadeUpSection>
 		</>
 	)
 }
