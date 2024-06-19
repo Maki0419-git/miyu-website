@@ -1,6 +1,6 @@
 import { keyframes, styled } from "@pigment-css/react"
 import Image from "next/image"
-import { Permanent_Marker, Darumadrop_One } from "next/font/google"
+import { Permanent_Marker, Kiwi_Maru } from "next/font/google"
 import { ImageCarousel } from "./components/client"
 
 const permanentMarker = Permanent_Marker({
@@ -9,7 +9,7 @@ const permanentMarker = Permanent_Marker({
 	display: "swap",
 })
 
-const darumadropOne = Darumadrop_One({
+const kiwiMaru = Kiwi_Maru({
 	weight: "400",
 	subsets: ["latin"],
 	display: "swap",
@@ -32,7 +32,7 @@ const HeroContainer = styled("main")({
 	alignItems: "center",
 })
 
-const AnimateContainer = styled("div")({
+const SectionContainer = styled("div")({
 	width: "100%",
 	padding: "2rem 6rem",
 	border: "2px solid black",
@@ -87,10 +87,10 @@ export default function Home() {
 						}}
 					/>
 					<h2 className={permanentMarker.className}>- Asaka Miyu -</h2>
-					<h3 className={darumadropOne.className}>Web Developer / Traveler / Otaku</h3>
+					<h3 className={kiwiMaru.className}>Web Developer / Traveler / Otaku</h3>
 				</HeroContent>
 			</HeroContainer>
-			<AnimateContainer className={darumadropOne.className}>
+			<SectionContainer className={kiwiMaru.className}>
 				<SectionTitle>おすすめのアニメ</SectionTitle>
 				<SectionDescription>
 					Irure deserunt veniam aute dolor magna sunt. In voluptate consectetur labore exercitation officia incididunt
@@ -98,7 +98,15 @@ export default function Home() {
 					aute pariatur ea cupidatat excepteur.
 				</SectionDescription>
 				<ImageCarousel />
-			</AnimateContainer>
+			</SectionContainer>
+			<SectionContainer className={kiwiMaru.className}>
+				<SectionTitle>ココロに響く名台詞！</SectionTitle>
+				<SectionDescription>
+					Irure deserunt veniam aute dolor magna sunt. In voluptate consectetur labore exercitation officia incididunt
+					veniam aute eu laboris culpa irure incididunt non. Labore mollit ea et magna culpa nostrud pariatur occaecat
+					aute pariatur ea cupidatat excepteur.
+				</SectionDescription>
+			</SectionContainer>
 		</>
 	)
 }
