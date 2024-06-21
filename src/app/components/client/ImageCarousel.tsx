@@ -3,7 +3,7 @@ import { styled } from "@pigment-css/react"
 import { ImageCard } from "./ImageCard"
 import { useEffect, useRef, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons"
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 
 const Container = styled("div")({
 	position: "relative",
@@ -15,22 +15,17 @@ const ImageCardsContainer = styled("div")({
 	overflow: "hidden",
 })
 
-const ScrollButton = styled("button")({
+const ScrollButtonContainer = styled("div")({
 	position: "absolute",
-	bottom: "50%",
-	margin: "1rem",
-	transform: "translateY(100%)",
+	bottom: "-2rem",
+	right: "0",
+})
+
+const ScrollButton = styled("button")({
 	border: "none",
-	background: "none",
+	background: "transparent",
 	cursor: "pointer",
-})
-
-const ScrollButtonRight = styled(ScrollButton)({
-	right: "-5rem",
-})
-
-const ScrollButtonLeft = styled(ScrollButton)({
-	left: "-5rem",
+	margin: "0 1rem",
 })
 
 export function ImageCarousel() {
@@ -85,14 +80,14 @@ export function ImageCarousel() {
 				))}
 			</ImageCardsContainer>
 			{isOverflowing && (
-				<>
-					<ScrollButtonRight onClick={handleClickRight}>
-						<FontAwesomeIcon icon={faCircleChevronRight} size="3x" color="#2EC4B6" />
-					</ScrollButtonRight>
-					<ScrollButtonLeft onClick={handleClickLeft}>
-						<FontAwesomeIcon icon={faCircleChevronLeft} size="3x" color="#2EC4B6" />
-					</ScrollButtonLeft>
-				</>
+				<ScrollButtonContainer>
+					<ScrollButton onClick={handleClickLeft}>
+						<FontAwesomeIcon icon={faArrowLeft} size="xl" color="gray" />
+					</ScrollButton>
+					<ScrollButton onClick={handleClickRight}>
+						<FontAwesomeIcon icon={faArrowRight} size="xl" color="gray" />
+					</ScrollButton>
+				</ScrollButtonContainer>
 			)}
 		</Container>
 	)

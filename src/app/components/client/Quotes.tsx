@@ -7,7 +7,7 @@ const Container = styled("div")({
 	width: "100%",
 	display: "flex",
 	flexDirection: "column",
-	gap: "5rem",
+	gap: "2rem",
 })
 
 const Quote = styled("div")({
@@ -19,7 +19,12 @@ const Quote = styled("div")({
 	boxShadow: "0 0 15px rgba(0,0,0,0.3)",
 	display: "flex",
 	alignItems: "center",
-	gap: "10px",
+	gap: "1rem",
+
+	"@media (max-width: 425px)": {
+		minWidth: "100%",
+		maxWidth: "100%",
+	},
 })
 
 const QuoteText = styled("div")({

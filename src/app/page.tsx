@@ -36,8 +36,10 @@ const SectionContainer = styled("div")({
 	width: "100%",
 	minHeight: "30vh",
 	padding: "2rem 15rem",
-	border: "2px solid black",
-	backgroundColor: "white",
+
+	"@media (max-width: 425px)": {
+		padding: "2rem 1rem",
+	},
 })
 
 const SectionTitle = styled("h2")({
@@ -49,6 +51,10 @@ const SectionDescription = styled("p")({
 	width: "70%",
 	margin: "2rem 0",
 	color: "gray",
+
+	"@media (max-width: 425px)": {
+		width: "100%",
+	},
 })
 
 const HeroContent = styled("div")({
