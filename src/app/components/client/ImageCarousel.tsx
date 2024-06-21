@@ -73,7 +73,7 @@ export function ImageCarousel() {
 						href="example.com"
 						alt="alt"
 						title="Test"
-						description="Excepteur dolor laborum eu do non ea ad veniam et qui."
+						description="Excepteur dolor laborum eu do non ea ad veniam et qui.Excepteur dolor laborum eu do non ea ad veniam et qui.Excepteur dolor laborum eu do non ea ad veniam et qui.Excepteur dolor laborum eu do non ea ad veniam et qui.Excepteur dolor laborum eu do non ea ad veniam et qui.Excepteur dolor laborum eu do non ea ad veniam et qui."
 						aspectRatio={3 / 4}
 						minWidth={300}
 					/>

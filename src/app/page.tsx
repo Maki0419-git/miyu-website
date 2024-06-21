@@ -94,7 +94,7 @@ export default function Home() {
 						}}
 					/>
 					<h2 className={permanentMarker.className}>- Asaka Miyu -</h2>
-					<h3 className={kiwiMaru.className}>Web Developer / Traveler / Otaku</h3>
+					<h3 className={permanentMarker.className}>Web Developer / Traveler / Otaku</h3>
 				</HeroContent>
 			</HeroContainer>
 			<FadeUpSection>

@@ -2,6 +2,7 @@
 import { styled } from "@pigment-css/react"
 import Image, { ImageProps } from "next/image"
 import Link from "next/link"
+import { useCallback, useState } from "react"
 
 const Container = styled("div")<{ aspectRatio: number; minWidth?: number }>({
 	position: "relative",
@@ -24,22 +25,36 @@ const Mask = styled("div")({
 	borderRadius: "8px",
 })
 
-const BottomSection = styled("div")({
+const BottomSection = styled("div")<{ showDescription: boolean }>({
 	position: "absolute",
 	bottom: 0,
 	left: 0,
 	width: "100%",
 	color: "white",
 	padding: "1rem 1rem",
-	h3: {
-		textDecoration: "underline",
-		textDecorationColor: "#FF9F1C",
-		textDecorationThickness: "4px",
-		fontSize: "1.5rem",
-	},
-	p: {
-		margin: "1rem 0",
-	},
+	overflowY: "scroll",
+	background: (props) =>
+		props.showDescription
+			? "radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0,0,0,0.6) 50%, rgba(0, 0, 0, 0) 100%)"
+			: "transparent",
+	transition: "all 0.3s",
+	transform: (props) => (props.showDescription ? "translateY(0)" : "translateY(calc(100% - 4rem))"),
+})
+
+const AnimatedTitle = styled("h3")({
+	textDecoration: "underline",
+	textDecorationColor: "#FF9F1C",
+	textDecorationThickness: "4px",
+	fontSize: "1.5rem",
+	transition: "transform 0.3s",
+	position: "sticky",
+	top: 0,
+})
+
+const AnimatedDescription = styled("p")({
+	margin: "1rem 0",
+	maxHeight: "10rem",
+	overflowY: "scroll",
 })
 
 type ImageCardProps = ImageProps & {
@@ -47,15 +62,21 @@ type ImageCardProps = ImageProps & {
 	src: string
 	alt: string
 	aspectRatio: number
+	description: string
 	minWidth?: number
 	href: string
 	blurDataURL?: string
-	description?: string
 }
 
 export function ImageCard({ src, title, description, href, alt, blurDataURL, minWidth, aspectRatio }: ImageCardProps) {
+	const [showDescription, setShowDescription] = useState(false)
+
+	const onMouseEnter = useCallback(() => setShowDescription(true), [])
+
+	const onMouseLeave = useCallback(() => setShowDescription(false), [])
+
 	return (
-		<Container aspectRatio={aspectRatio} minWidth={minWidth}>
+		<Container aspectRatio={aspectRatio} minWidth={minWidth} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
 			<Link href={href}>
 				<Image
 					src={src}
@@ -70,9 +91,9 @@ export function ImageCard({ src, title, description, href, alt, blurDataURL, min
 					{...(blurDataURL ? { blurDataURL, placeholder: "blur" } : {})}
 				/>
 				<Mask />
-				<BottomSection>
-					<h3>{title}</h3>
-					{description && <p>{description}</p>}
+				<BottomSection showDescription={showDescription}>
+					<AnimatedTitle>{title}</AnimatedTitle>
+					<AnimatedDescription>{description}</AnimatedDescription>
 				</BottomSection>
 			</Link>
 		</Container>
