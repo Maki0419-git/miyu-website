@@ -1,5 +1,7 @@
+"use client"
 import { styled } from "@pigment-css/react"
 import Image from "next/image"
+import { FadeUpSection } from "./FadeUpSection"
 
 const Container = styled("div")({
 	width: "100%",
@@ -8,9 +10,9 @@ const Container = styled("div")({
 	gap: "5rem",
 })
 
-const Quote = styled("div")<{ alignSelf: string }>({
-	alignSelf: (props) => props.alignSelf,
-	width: "80%",
+const Quote = styled("div")({
+	minWidth: "50%",
+	maxWidth: "70%",
 	padding: "1rem",
 	borderRadius: "1rem",
 	backgroundColor: "#f9f9f9",
@@ -71,22 +73,27 @@ export function Quotes() {
 	return (
 		<Container>
 			{quotes.map(({ quote, author }, index) => (
-				<Quote key={index} alignSelf={index % 2 ? "flex-end" : "flex-start"}>
-					<Image
-						src="https://picsum.photos/200"
-						alt="logo"
-						width={100}
-						height={100}
-						style={{
-							borderRadius: "50%",
-						}}
-					/>
-					<QuoteText>
-						<QuoteMark>“</QuoteMark>
-						<QuoteContent>{quote}</QuoteContent>
-						<QuoteAuthor>— {author}</QuoteAuthor>
-					</QuoteText>
-				</Quote>
+				<FadeUpSection
+					key={index}
+					customizeStyles={{ display: "flex", justifyContent: index % 2 ? "flex-end" : "flex-start" }}
+				>
+					<Quote>
+						<Image
+							src="https://picsum.photos/200"
+							alt="logo"
+							width={100}
+							height={100}
+							style={{
+								borderRadius: "50%",
+							}}
+						/>
+						<QuoteText>
+							<QuoteMark>“</QuoteMark>
+							<QuoteContent>{quote}</QuoteContent>
+							<QuoteAuthor>— {author}</QuoteAuthor>
+						</QuoteText>
+					</Quote>
+				</FadeUpSection>
 			))}
 		</Container>
 	)
