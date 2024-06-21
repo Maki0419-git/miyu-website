@@ -1,8 +1,7 @@
 import { keyframes, styled } from "@pigment-css/react"
 import Image from "next/image"
 import { Permanent_Marker, Kiwi_Maru } from "next/font/google"
-import { FadeUpSection, ImageCarousel } from "./components/client"
-import { Quotes } from "./components/server"
+import { FadeUpSection, ImageCarousel, Quotes } from "./components/client"
 
 const permanentMarker = Permanent_Marker({
 	weight: "400",
@@ -46,8 +45,8 @@ const SectionTitle = styled("h2")({
 })
 
 const SectionDescription = styled("p")({
-	fontSize: "1.5rem",
-	width: "50%",
+	fontSize: "1.3rem",
+	width: "70%",
 	margin: "2rem 0",
 	color: "gray",
 })
@@ -96,9 +95,7 @@ export default function Home() {
 				<SectionContainer className={kiwiMaru.className}>
 					<SectionTitle>おすすめのアニメ</SectionTitle>
 					<SectionDescription>
-						Irure deserunt veniam aute dolor magna sunt. In voluptate consectetur labore exercitation officia incididunt
-						veniam aute eu laboris culpa irure incididunt non. Labore mollit ea et magna culpa nostrud pariatur occaecat
-						aute pariatur ea cupidatat excepteur.
+						特に好きなアニメについて紹介したいと思います。以下に挙げる作品は、ストーリー、キャラクター、ビジュアル、音楽など、全ての面で素晴らしいと感じたものばかりです。これらのアニメは、見る人に深い感動や楽しさを提供してくれることでしょう。
 					</SectionDescription>
 					<ImageCarousel />
 				</SectionContainer>
@@ -107,13 +104,9 @@ export default function Home() {
 				<SectionContainer className={kiwiMaru.className}>
 					<SectionTitle>ココロに響く名台詞！</SectionTitle>
 					<SectionDescription>
-						Irure deserunt veniam aute dolor magna sunt. In voluptate consectetur labore exercitation officia incididunt
-						veniam aute eu laboris culpa irure incididunt non. Labore mollit ea et magna culpa nostrud pariatur occaecat
-						aute pariatur ea cupidatat excepteur.
+						アニメの中には、視聴者の心に深く刻まれる名台詞が数多く存在します。これらの台詞は、キャラクターの思いや物語のテーマを象徴し、時には人生の教訓を与えてくれることもあります。以下に、特に心に響いた名台詞をいくつかご紹介します。
 					</SectionDescription>
-					<FadeUpSection>
-						<Quotes />
-					</FadeUpSection>
+					<Quotes />
 				</SectionContainer>
 			</FadeUpSection>
 		</>
