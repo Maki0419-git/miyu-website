@@ -28,7 +28,30 @@ const ScrollButton = styled("button")({
 	margin: "0 1rem",
 })
 
-export function ImageCarousel() {
+const ASPECT_RATIO = 3 / 4
+const MIN_WIDTH = 300
+
+export type ImageData = {
+	src: string
+	title: string
+	description: string
+	alt: string
+	href?: string
+}
+
+type ImageCarouselProps = {
+	data: ImageData[]
+	options?: {
+		aspectRatio?: number
+		minWidth?: number
+	}
+}
+
+export function ImageCarousel({
+	data,
+	options = { aspectRatio: ASPECT_RATIO, minWidth: MIN_WIDTH },
+}: ImageCarouselProps) {
+	const { aspectRatio = ASPECT_RATIO, minWidth = MIN_WIDTH } = options
 	const [isOverflowing, setIsOverflowing] = useState(false)
 	const ref = useRef<HTMLDivElement>(null)
 
@@ -66,16 +89,16 @@ export function ImageCarousel() {
 	return (
 		<Container>
 			<ImageCardsContainer ref={ref}>
-				{new Array(5).fill(0).map((_, index) => (
+				{data.map(({ src, href, alt, title, description }, index) => (
 					<ImageCard
 						key={index}
-						src="https://picsum.photos/640"
-						href="example.com"
-						alt="alt"
-						title="Test"
-						description="Excepteur dolor laborum eu do non ea ad veniam et qui.Excepteur dolor laborum eu do non ea ad veniam et qui.Excepteur dolor laborum eu do non ea ad veniam et qui.Excepteur dolor laborum eu do non ea ad veniam et qui.Excepteur dolor laborum eu do non ea ad veniam et qui.Excepteur dolor laborum eu do non ea ad veniam et qui."
-						aspectRatio={3 / 4}
-						minWidth={300}
+						src={src}
+						href={href || ""}
+						alt={alt}
+						title={title}
+						description={description}
+						aspectRatio={aspectRatio}
+						minWidth={minWidth}
 					/>
 				))}
 			</ImageCardsContainer>
