@@ -1,7 +1,8 @@
 import { keyframes, styled } from "@pigment-css/react"
 import Image from "next/image"
 import { Permanent_Marker, Kiwi_Maru } from "next/font/google"
-import { FadeUpSection, ImageCarousel, Quotes } from "./components/client"
+import { FadeUpSection, Quotes } from "./components/client"
+import { RecommendAnime } from "./components/server"
 
 const permanentMarker = Permanent_Marker({
 	weight: "400",
@@ -103,7 +104,7 @@ export default function Home() {
 					<SectionDescription>
 						特に好きなアニメについて紹介したいと思います。以下に挙げる作品は、ストーリー、キャラクター、ビジュアル、音楽など、全ての面で素晴らしいと感じたものばかりです。これらのアニメは、見る人に深い感動や楽しさを提供してくれることでしょう。
 					</SectionDescription>
-					<ImageCarousel />
+					<RecommendAnime />
 				</SectionContainer>
 			</FadeUpSection>
 			<FadeUpSection>
