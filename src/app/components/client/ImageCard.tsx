@@ -2,7 +2,7 @@
 import { styled } from "@pigment-css/react"
 import Image, { ImageProps } from "next/image"
 import Link from "next/link"
-import { useCallback, useState } from "react"
+import React, { useCallback, useState } from "react"
 
 const Container = styled("div")<{ aspectRatio: number; minWidth?: number }>({
 	position: "relative",
@@ -63,39 +63,52 @@ type ImageCardProps = ImageProps & {
 	alt: string
 	aspectRatio: number
 	description: string
-	minWidth?: number
 	href: string
+	unOptimized?: boolean
+	minWidth?: number
 	blurDataURL?: string
 }
 
-export function ImageCard({ src, title, description, href, alt, blurDataURL, minWidth, aspectRatio }: ImageCardProps) {
-	const [showDescription, setShowDescription] = useState(false)
+// eslint-disable-next-line react/display-name
+export const ImageCard = React.forwardRef<HTMLDivElement, ImageCardProps>(
+	({ src, title, description, href, alt, blurDataURL, minWidth, aspectRatio, unOptimized }: ImageCardProps, ref) => {
+		const [showDescription, setShowDescription] = useState(false)
 
-	const onMouseEnter = useCallback(() => setShowDescription(true), [])
+		const onMouseEnter = useCallback(() => setShowDescription(true), [])
 
-	const onMouseLeave = useCallback(() => setShowDescription(false), [])
+		const onMouseLeave = useCallback(() => setShowDescription(false), [])
 
-	return (
-		<Container aspectRatio={aspectRatio} minWidth={minWidth} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-			<Link href={href}>
-				<Image
-					src={src}
-					alt={alt}
-					fill
-					priority
-					style={{
-						position: "absolute",
-						objectFit: "cover",
-						objectPosition: "center",
-					}}
-					{...(blurDataURL ? { blurDataURL, placeholder: "blur" } : {})}
-				/>
-				<Mask />
-				<BottomSection showDescription={showDescription}>
-					<AnimatedTitle>{title}</AnimatedTitle>
-					<AnimatedDescription>{description}</AnimatedDescription>
-				</BottomSection>
-			</Link>
-		</Container>
-	)
-}
+		return (
+			<Container
+				aspectRatio={aspectRatio}
+				minWidth={minWidth}
+				onMouseEnter={onMouseEnter}
+				onMouseLeave={onMouseLeave}
+				ref={ref}
+			>
+				<Link href={href}>
+					<Image
+						src={src}
+						alt={alt}
+						fill
+						priority
+						unoptimized={unOptimized}
+						style={{
+							position: "absolute",
+							objectFit: "cover",
+							objectPosition: "center",
+						}}
+						{...(blurDataURL ? { blurDataURL, placeholder: "blur" } : {})}
+					/>
+					<Mask />
+					<BottomSection showDescription={showDescription}>
+						<AnimatedTitle>{title}</AnimatedTitle>
+						<AnimatedDescription>{description}</AnimatedDescription>
+					</BottomSection>
+				</Link>
+			</Container>
+		)
+	},
+)
+
+// ImageCard.displayName = "ImageCard"
