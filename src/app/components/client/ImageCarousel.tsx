@@ -113,7 +113,7 @@ export function ImageCarousel({
 					entries.forEach(async (entry) => {
 						if (entry.isIntersecting) {
 							setPending(true)
-							const newImageData = await fetchMoreData(imageData[imageData.length - 1].id, 5)
+							const newImageData = await fetchMoreData(imageData.length, 5)
 							setPending(false)
 							if (newImageData.length > 0) {
 								setImageData((prev) => [...prev, ...newImageData])

@@ -22,7 +22,7 @@ export type AnimeAPIAlias = keyof typeof AnimeAPI
 export async function getRecommendAnime(offset = 0, limit = 5): Promise<AnimeWithImgAPIResponse> {
 	try {
 		const sql = neon(process.env.DATABASE_URL || "")
-		const recommendAnime = (await sql`select * from anime limit ${limit} offset ${offset};`) as Anime[]
+		const recommendAnime = (await sql`select * from anime offset ${offset} limit ${limit};`) as Anime[]
 		const generateAnimeWithImgInfo = async (recommendAnime: Anime[]) => {
 			const promises = recommendAnime.map(async (anime) => {
 				const src = await getDownloadURL(ref(firebaseStorage, `anime/${anime.id}.jpeg` || ""))
