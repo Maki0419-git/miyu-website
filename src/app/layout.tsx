@@ -22,12 +22,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body
-				className={inter.className}
-				style={{
-					backgroundColor: "#CBF3F0",
-				}}
-			>
+			<body className={inter.className}>
 				<NavBar />
 				{children}
 			</body>

@@ -23,6 +23,7 @@
 		"@fortawesome/react-fontawesome": "^0.2.0",
 		"@neondatabase/serverless": "^0.9.3",
 		"@pigment-css/react": "^0.0.2",
+		"@react-spring/web": "^9.7.3",
 		"@sentry/nextjs": "^7.105.0",
 		"blurhash": "^2.0.5",
 		"dayjs": "^1.11.10",
