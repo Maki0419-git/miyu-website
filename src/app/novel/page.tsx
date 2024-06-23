@@ -177,7 +177,8 @@ const getNovel = async () => {
 		const sql = neon(process.env.DATABASE_URL || "")
 		/** enhance: use generic to defined type instead of using assertion */
 		const novels = (await sql`select * from novel where id = 1;`) as Novel[]
-		const chapters = (await sql`select id,title,image_file from chapter where novel_id = 1;`) as ChapterPreview[]
+		const chapters =
+			(await sql`select id,title,image_file from chapter where novel_id = 1 order by id;`) as ChapterPreview[]
 		const generateChaptersWithImgURL = async (chapters: ChapterPreview[]) => {
 			const promises = chapters.map(async (chapter) => {
 				const image_url = await getDownloadURL(ref(firebaseStorage, `novel/${chapter.image_file}` || ""))
@@ -212,7 +213,7 @@ export default async function NovelPage() {
 							{chapters.map((chapter: ChapterPreview) => {
 								return (
 									<ChapterCard key={chapter.id}>
-										<Image src={chapter.image_url || ""} alt="hero" fill={true} />
+										<Image src={chapter.image_url || ""} alt="hero" fill={true} priority />
 										<ChapterIndex>{chapter.id < 10 ? `0${chapter.id}` : chapter.id}</ChapterIndex>
 										<Info>
 											<h2>{chapter.title}</h2>
@@ -224,7 +225,7 @@ export default async function NovelPage() {
 						</ChapterList>
 					</Chapter>
 				</Content>
-				<Image alt="hero" src={heroImage} fill={true} />
+				<Image priority={true} alt="hero" src={heroImage} fill={true} />
 				<ImageMask />
 			</Hero>
 		</div>

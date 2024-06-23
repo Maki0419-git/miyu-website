@@ -1,7 +1,8 @@
 import { OpenAIAPIAlias } from "@/app/(insert-ad-page)/novel/[chapter]/types"
 import { UnsplashAPIAlias, WeatherApiAlias } from "@/app/(insert-ad-page)/weather/types"
+import { AnimeAPIAlias } from "@/app/utils/anime/getRecommendAnime"
 
-type apiAlias = WeatherApiAlias | UnsplashAPIAlias | OpenAIAPIAlias
+type apiAlias = WeatherApiAlias | UnsplashAPIAlias | OpenAIAPIAlias | AnimeAPIAlias
 
 export class CustomError extends Error {
 	constructor(
