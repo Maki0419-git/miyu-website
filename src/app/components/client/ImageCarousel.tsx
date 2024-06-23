@@ -3,7 +3,7 @@ import { styled } from "@pigment-css/react"
 import { useEffect, useRef, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons"
-import { ImageCard } from "./ImageCard"
+import { ImageCard, ImageCardSkeleton } from "./ImageCard"
 
 const Container = styled("div")({
 	position: "relative",
@@ -69,6 +69,7 @@ export function ImageCarousel({
 	options = { aspectRatio: ASPECT_RATIO, minWidth: MIN_WIDTH, unOptimized: false, lazyLoad: false },
 }: ImageCarouselProps) {
 	const [imageData, setImageData] = useState<ImageData[]>(data)
+	const [pending, setPending] = useState(false)
 	const {
 		aspectRatio = ASPECT_RATIO,
 		minWidth = MIN_WIDTH,
@@ -111,7 +112,9 @@ export function ImageCarousel({
 				(entries, observer) => {
 					entries.forEach(async (entry) => {
 						if (entry.isIntersecting) {
+							setPending(true)
 							const newImageData = await fetchMoreData(imageData[imageData.length - 1].id, 5)
+							setPending(false)
 							if (newImageData.length > 0) {
 								setImageData((prev) => [...prev, ...newImageData])
 							}
@@ -161,6 +164,7 @@ export function ImageCarousel({
 						}}
 					/>
 				))}
+				{pending && <ImageCardSkeleton aspectRatio={aspectRatio} minWidth={minWidth} />}
 			</ImageCardsContainer>
 			{isOverflowing && (
 				<ScrollButtonContainer>

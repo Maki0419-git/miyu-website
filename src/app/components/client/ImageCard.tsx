@@ -1,10 +1,10 @@
 "use client"
-import { styled } from "@pigment-css/react"
+import { keyframes, styled } from "@pigment-css/react"
 import Image, { ImageProps } from "next/image"
 import Link from "next/link"
 import React, { useCallback, useState } from "react"
 
-const Container = styled("div")<{ aspectRatio: number; minWidth?: number }>({
+const Container = styled("div")<{ aspectRatio: number; minWidth: number }>({
 	position: "relative",
 	borderRadius: "8px",
 	width: "100%",
@@ -13,6 +13,22 @@ const Container = styled("div")<{ aspectRatio: number; minWidth?: number }>({
 	overflow: "hidden",
 	minWidth: (props) => props.minWidth || "auto",
 	aspectRatio: (props) => props.aspectRatio,
+})
+
+const pulse = keyframes`
+    0% {
+        background-color: #d5d5d5;
+    }
+    50% {
+        background-color: #f0f0f0;
+    }
+    100% {
+        background-color: #d5d5d5;
+    }
+`
+
+export const ImageCardSkeleton = styled(Container)({
+	animation: `${pulse} 2s infinite ease-in-out`,
 })
 
 const Mask = styled("div")({
@@ -64,8 +80,8 @@ type ImageCardProps = ImageProps & {
 	aspectRatio: number
 	description: string
 	href: string
+	minWidth: number
 	unOptimized?: boolean
-	minWidth?: number
 	blurDataURL?: string
 }
 
