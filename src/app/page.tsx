@@ -1,8 +1,9 @@
 import { keyframes, styled } from "@pigment-css/react"
 import Image from "next/image"
 import { Permanent_Marker, Kiwi_Maru } from "next/font/google"
-import { FadeUpSection, Quotes } from "./components/client"
+import { FadeUpSection } from "./components/client"
 import { RecommendAnime } from "./components/server"
+import { Suspense } from "react"
 
 const permanentMarker = Permanent_Marker({
 	weight: "400",
@@ -98,16 +99,18 @@ export default function Home() {
 					<h3 className={permanentMarker.className}>Web Developer / Traveler / Otaku</h3>
 				</HeroContent>
 			</HeroContainer>
-			<FadeUpSection>
-				<SectionContainer className={kiwiMaru.className}>
-					<SectionTitle>おすすめのアニメ</SectionTitle>
-					<SectionDescription>
-						特に好きなアニメについて紹介したいと思います。以下に挙げる作品は、ストーリー、キャラクター、ビジュアル、音楽など、全ての面で素晴らしいと感じたものばかりです。これらのアニメは、見る人に深い感動や楽しさを提供してくれることでしょう。
-					</SectionDescription>
-					<RecommendAnime />
-				</SectionContainer>
-			</FadeUpSection>
-			<FadeUpSection>
+			<Suspense fallback={<div>Loading...</div>}>
+				<FadeUpSection>
+					<SectionContainer className={kiwiMaru.className}>
+						<SectionTitle>おすすめのアニメ</SectionTitle>
+						<SectionDescription>
+							特に好きなアニメについて紹介したいと思います。以下に挙げる作品は、ストーリー、キャラクター、ビジュアル、音楽など、全ての面で素晴らしいと感じたものばかりです。これらのアニメは、見る人に深い感動や楽しさを提供してくれることでしょう。
+						</SectionDescription>
+						<RecommendAnime />
+					</SectionContainer>
+				</FadeUpSection>
+			</Suspense>
+			{/* <FadeUpSection>
 				<SectionContainer className={kiwiMaru.className}>
 					<SectionTitle>ココロに響く名台詞！</SectionTitle>
 					<SectionDescription>
@@ -115,7 +118,7 @@ export default function Home() {
 					</SectionDescription>
 					<Quotes />
 				</SectionContainer>
-			</FadeUpSection>
+			</FadeUpSection> */}
 		</>
 	)
 }
