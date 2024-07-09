@@ -7,6 +7,8 @@ import { ChapterPreview, Novel } from "./types"
 import { getDownloadURL, ref } from "firebase/storage"
 import { firebaseStorage } from "../../libs/firebase"
 
+export const dynamic = "force-dynamic"
+
 const Hero = styled("div")({
 	position: "relative",
 	padding: "20px 40px",
