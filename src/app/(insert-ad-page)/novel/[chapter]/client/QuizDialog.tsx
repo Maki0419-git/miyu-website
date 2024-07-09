@@ -23,6 +23,7 @@ const Dialog = styled("dialog")({
 
 const Content = styled("div")({
 	flex: 8,
+	padding: "30px",
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "center",
@@ -67,7 +68,7 @@ const AnswerContainer = styled("div")({
 const ActionBar = styled("div")({
 	display: "flex",
 	flex: 2,
-	alignItems: "center",
+	alignItems: "flex-end",
 	justifyContent: "space-around",
 	width: "100%",
 	height: "100%",
@@ -77,7 +78,7 @@ const Action = styled("button")<{ reaction: "known" | "unknown" | "giveUp" }>({
 	width: "100%",
 	outline: "none",
 	border: "none",
-	padding: "10px 20px",
+	padding: "15px 20px",
 	color: "#FFF",
 	cursor: "pointer",
 	transition: "all 0.3s",
