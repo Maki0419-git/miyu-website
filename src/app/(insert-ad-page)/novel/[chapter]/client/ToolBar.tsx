@@ -102,8 +102,9 @@ export function ToolBar({ containerRef }: { containerRef: React.RefObject<HTMLDi
 				const range = selection?.getRangeAt(0)
 				rangeRef.current = range
 				const rect = range?.getBoundingClientRect()
+				const scrollY = window.scrollY
 				if (rect) {
-					setPosition({ top: rect.top - 40, left: rect.left })
+					setPosition({ top: rect.top + scrollY - 40, left: rect.left })
 				}
 			} else {
 				setSelectedText("")
