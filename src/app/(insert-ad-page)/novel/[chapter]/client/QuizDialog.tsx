@@ -10,8 +10,8 @@ const Dialog = styled("dialog")({
 	top: "50%",
 	left: "50%",
 	transform: "translate(-50%, -50%)",
-	width: "25%",
-	height: "30%",
+	minWidth: "25%",
+	minHeight: "30%",
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "center",
@@ -49,7 +49,6 @@ const AnswerContainer = styled("div")({
 	alignItems: "flex-start",
 	opacity: 0,
 	maxHeight: 0,
-	overflowY: "scroll",
 	transition: "max-height 1s ease-out",
 	"&.visible": {
 		maxHeight: "500px",
@@ -76,7 +75,6 @@ const ActionBar = styled("div")({
 
 const Action = styled("button")<{ reaction: "known" | "unknown" | "giveUp" }>({
 	width: "100%",
-	height: "100%",
 	outline: "none",
 	border: "none",
 	padding: "10px 20px",
