@@ -1,21 +1,37 @@
 import { Suspense } from "react"
 import { styled } from "@pigment-css/react"
-import { BottomSection, CityImage } from "./components/client"
 import { CurrentWeather, ThirtySixHoursWeather } from "./components/server"
 import { getCityImage } from "./utils/getCityImage"
+import { BottomSection, CityImage } from "./components/client"
 
 const TopSection = styled("div")({
 	display: "flex",
 	width: "100%",
-	// minHeight: "40vh",
+	height: "500px",
 	justifyContent: "space-between",
 	padding: "60px 80px",
 	position: "relative",
 	backgroundColor: "#252746",
 	"@media (max-width: 1440px)": {
 		flexDirection: "column",
-		gap: "20px",
 		padding: "10px 20px",
+		"@media (max-width: 1440px)": {
+			h1: {
+				fontSize: "24px",
+			},
+			h2: {
+				fontSize: "16px",
+			},
+			h3: {
+				fontSize: "14px",
+			},
+			h4: {
+				fontSize: "12px",
+			},
+			h5: {
+				fontSize: "10px",
+			},
+		},
 	},
 })
 

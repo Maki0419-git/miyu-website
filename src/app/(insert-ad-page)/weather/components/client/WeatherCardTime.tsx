@@ -29,6 +29,12 @@ const Ribbon = styled("div")({
 		fontFamily: "Roboto, sans-serif",
 		boxShadow: "4px 4px 15px rgba(26, 35, 126, 0.2)",
 	},
+	"@media (max-width: 1440px)": {
+		"&:after": {
+			fontSize: "14px",
+			width: "3rem",
+		},
+	},
 })
 
 export function WeatherCardTime({ dateTime }: { dateTime: string }) {
