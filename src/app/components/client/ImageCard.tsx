@@ -2,7 +2,7 @@
 import { keyframes, styled } from "@pigment-css/react"
 import Image, { ImageProps } from "next/image"
 import Link from "next/link"
-import React, { useCallback, useState } from "react"
+import React from "react"
 
 const Container = styled("div")<{ aspectRatio: number; minWidth: number }>({
 	position: "relative",
@@ -31,48 +31,6 @@ export const ImageCardSkeleton = styled(Container)({
 	animation: `${pulse} 2s infinite ease-in-out`,
 })
 
-const Mask = styled("div")({
-	position: "absolute",
-	top: 0,
-	left: 0,
-	width: "100%",
-	height: "100%",
-	background: "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0,0,0,0.3) 80%, rgba(0, 0, 0, 0.9) 100%)",
-	borderRadius: "8px",
-})
-
-const BottomSection = styled("div")<{ showDescription: boolean }>({
-	position: "absolute",
-	bottom: 0,
-	left: 0,
-	width: "100%",
-	color: "white",
-	padding: "1rem 1rem",
-	overflowY: "scroll",
-	background: (props) =>
-		props.showDescription
-			? "radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0,0,0,0.6) 50%, rgba(0, 0, 0, 0) 100%)"
-			: "transparent",
-	transition: "all 0.3s",
-	transform: (props) => (props.showDescription ? "translateY(0)" : "translateY(calc(100% - 4rem))"),
-})
-
-const AnimatedTitle = styled("h3")({
-	textDecoration: "underline",
-	textDecorationColor: "#FF9F1C",
-	textDecorationThickness: "4px",
-	fontSize: "1.5rem",
-	transition: "transform 0.3s",
-	position: "sticky",
-	top: 0,
-})
-
-const AnimatedDescription = styled("p")({
-	margin: "1rem 0",
-	maxHeight: "10rem",
-	overflowY: "scroll",
-})
-
 type ImageCardProps = ImageProps & {
 	title: string
 	src: string
@@ -81,27 +39,23 @@ type ImageCardProps = ImageProps & {
 	description: string
 	href: string
 	minWidth: number
+	children?: React.ReactNode
+	eventListeners?: {
+		onMouseEnter?: (event: React.MouseEvent<HTMLDivElement>) => void
+		onMouseLeave?: (event: React.MouseEvent<HTMLDivElement>) => void
+	}
 	unOptimized?: boolean
 	blurDataURL?: string
 }
 
 // eslint-disable-next-line react/display-name
 export const ImageCard = React.forwardRef<HTMLDivElement, ImageCardProps>(
-	({ src, title, description, href, alt, blurDataURL, minWidth, aspectRatio, unOptimized }: ImageCardProps, ref) => {
-		const [showDescription, setShowDescription] = useState(false)
-
-		const onMouseEnter = useCallback(() => setShowDescription(true), [])
-
-		const onMouseLeave = useCallback(() => setShowDescription(false), [])
-
+	(
+		{ src, eventListeners, href, alt, blurDataURL, minWidth, aspectRatio, unOptimized, children }: ImageCardProps,
+		ref,
+	) => {
 		return (
-			<Container
-				aspectRatio={aspectRatio}
-				minWidth={minWidth}
-				onMouseEnter={onMouseEnter}
-				onMouseLeave={onMouseLeave}
-				ref={ref}
-			>
+			<Container aspectRatio={aspectRatio} minWidth={minWidth} {...eventListeners} ref={ref}>
 				<Link href={href}>
 					<Image
 						src={src}
@@ -116,11 +70,7 @@ export const ImageCard = React.forwardRef<HTMLDivElement, ImageCardProps>(
 						}}
 						{...(blurDataURL ? { blurDataURL, placeholder: "blur" } : {})}
 					/>
-					<Mask />
-					<BottomSection showDescription={showDescription}>
-						<AnimatedTitle>{title}</AnimatedTitle>
-						<AnimatedDescription>{description}</AnimatedDescription>
-					</BottomSection>
+					{children}
 				</Link>
 			</Container>
 		)
