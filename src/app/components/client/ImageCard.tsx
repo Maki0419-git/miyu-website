@@ -36,7 +36,6 @@ type ImageCardProps = ImageProps & {
 	src: string
 	alt: string
 	aspectRatio: number
-	description: string
 	href: string
 	minWidth: number
 	children?: React.ReactNode
