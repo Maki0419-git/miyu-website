@@ -1,8 +1,8 @@
 import { keyframes, styled } from "@pigment-css/react"
 import Image from "next/image"
 import { Permanent_Marker, Kiwi_Maru } from "next/font/google"
-import { FadeUpSection } from "./components/client"
-import { RecommendAnime } from "./components/server"
+import { FadeUpSection, Quotes } from "./components/client"
+import { RecommendAnime, RecommendNovel } from "./components/server"
 import { Suspense } from "react"
 
 const permanentMarker = Permanent_Marker({
@@ -34,11 +34,11 @@ const HeroContainer = styled("main")({
 	alignItems: "center",
 })
 
-const SectionContainer = styled("div")({
+const SectionContainer = styled("div")<{ bgColor?: string }>({
 	width: "100%",
 	minHeight: "30vh",
 	padding: "2rem 15rem",
-
+	backgroundColor: (props) => props.bgColor,
 	"@media (max-width: 425px)": {
 		padding: "2rem 1rem",
 	},
@@ -110,7 +110,7 @@ export default function Home() {
 					</SectionContainer>
 				</FadeUpSection>
 			</Suspense>
-			{/* <FadeUpSection>
+			<FadeUpSection>
 				<SectionContainer className={kiwiMaru.className}>
 					<SectionTitle>ココロに響く名台詞！</SectionTitle>
 					<SectionDescription>
@@ -118,7 +118,16 @@ export default function Home() {
 					</SectionDescription>
 					<Quotes />
 				</SectionContainer>
-			</FadeUpSection> */}
+			</FadeUpSection>
+			<FadeUpSection>
+				<SectionContainer className={kiwiMaru.className} bgColor="#F5F5F5">
+					<SectionTitle>記事たち</SectionTitle>
+					<SectionDescription>
+						このサイトでは、アニメや旅行、プログラミングなど、私が興味を持つ様々なテーマについて書いています。これらの記事は、私自身の経験や考えを元に書かれており、読者の皆さんに少しでも楽しんでいただけることを願っています。
+					</SectionDescription>
+					<RecommendNovel />
+				</SectionContainer>
+			</FadeUpSection>
 		</>
 	)
 }

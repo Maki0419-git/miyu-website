@@ -11,6 +11,7 @@ export class CustomError extends Error {
 	) {
 		super(message)
 		this.name = "CustomError"
+		this.statusCode = statusCode
 	}
 }
 

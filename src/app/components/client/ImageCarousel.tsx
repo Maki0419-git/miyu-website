@@ -1,6 +1,6 @@
 "use client"
 import { styled } from "@pigment-css/react"
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { ImageCard, ImageCardSkeleton } from "./ImageCard"
@@ -36,13 +36,18 @@ export type ImageData = {
 	id: number
 	src: string
 	title: string
-	description: string
 	alt: string
+	description?: string
 	href?: string
 }
 
 type BaseImageCarouselProps = {
 	data: ImageData[]
+	customizedCardContent?: (data: ImageData) => React.ReactNode
+	eventListeners?: {
+		onMouseEnter?: (event: React.MouseEvent<HTMLDivElement>) => void
+		onMouseLeave?: (event: React.MouseEvent<HTMLDivElement>) => void
+	}
 	options?: {
 		aspectRatio?: number
 		minWidth?: number
@@ -63,9 +68,14 @@ type NonLazyLoadOptions = {
 type ImageCarouselProps = BaseImageCarouselProps & {
 	options: BaseImageCarouselProps["options"] & (LazyLoadOptions | NonLazyLoadOptions)
 }
-
+/**
+ *
+ * @props customizedCardContent : describe ImageCard customized content
+ */
 export function ImageCarousel({
 	data,
+	customizedCardContent,
+	eventListeners,
 	options = { aspectRatio: ASPECT_RATIO, minWidth: MIN_WIDTH, unOptimized: false, lazyLoad: false },
 }: ImageCarouselProps) {
 	const [imageData, setImageData] = useState<ImageData[]>(data)
@@ -146,24 +156,29 @@ export function ImageCarousel({
 	return (
 		<Container>
 			<ImageCardsContainer ref={ref}>
-				{imageData.map(({ src, href, alt, title, description, id }, index) => (
-					<ImageCard
-						key={id}
-						src={src}
-						href={href || ""}
-						alt={alt}
-						title={title}
-						description={description}
-						aspectRatio={aspectRatio}
-						minWidth={minWidth}
-						unOptimized={unOptimized}
-						ref={(element) => {
-							if (element && index === imageData.length - 1 && lazyLoad) {
-								targetRef.current = element
-							}
-						}}
-					/>
-				))}
+				{imageData.map((data, index) => {
+					const { id, src, href, alt, title } = data
+					return (
+						<ImageCard
+							key={id}
+							src={src}
+							href={href || ""}
+							alt={alt}
+							title={title}
+							aspectRatio={aspectRatio}
+							minWidth={minWidth}
+							unOptimized={unOptimized}
+							eventListeners={eventListeners}
+							ref={(element) => {
+								if (element && index === imageData.length - 1 && lazyLoad) {
+									targetRef.current = element
+								}
+							}}
+						>
+							{customizedCardContent?.(data)}
+						</ImageCard>
+					)
+				})}
 				{pending && <ImageCardSkeleton aspectRatio={aspectRatio} minWidth={minWidth} />}
 			</ImageCardsContainer>
 			{isOverflowing && (

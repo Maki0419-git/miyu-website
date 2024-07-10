@@ -172,7 +172,7 @@ const Info = styled("div")({
 	},
 })
 
-const getNovel = async () => {
+export const getNovel = async () => {
 	try {
 		const sql = neon(process.env.DATABASE_URL || "")
 		/** enhance: use generic to defined type instead of using assertion */
