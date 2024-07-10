@@ -17,10 +17,6 @@ const BottomSection = styled("div")({
 	background: "transparent",
 	transform: "translateY(calc(100% - 4rem))",
 	transition: "all 0.3s",
-	"&:hover": {
-		transform: "translateY(0)",
-		background: "radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0,0,0,0.6) 50%, rgba(0, 0, 0, 0) 100%)",
-	},
 })
 
 const AnimatedTitle = styled("h3")({
@@ -47,6 +43,14 @@ const Mask = styled("div")({
 	height: "100%",
 	background: "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0,0,0,0.3) 80%, rgba(0, 0, 0, 0.9) 100%)",
 	borderRadius: "8px",
+	border: "1px solid #FF9F1C",
+
+	"&:hover": {
+		[`${BottomSection}`]: {
+			transform: "translateY(0)",
+			background: "radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0,0,0,0.6) 50%, rgba(0, 0, 0, 0) 100%)",
+		},
+	},
 })
 
 export function AnimeImageCarousel({ data }: { data: ImageData[] }) {
@@ -72,11 +76,12 @@ export function AnimeImageCarousel({ data }: { data: ImageData[] }) {
 			options={{ unOptimized: true, lazyLoad: true, fetchMoreData }}
 			customizedCardContent={({ title, description }) => (
 				<>
-					<Mask />
-					<BottomSection>
-						<AnimatedTitle>{title}</AnimatedTitle>
-						<AnimatedDescription>{description}</AnimatedDescription>
-					</BottomSection>
+					<Mask>
+						<BottomSection>
+							<AnimatedTitle>{title}</AnimatedTitle>
+							<AnimatedDescription>{description}</AnimatedDescription>
+						</BottomSection>
+					</Mask>
 				</>
 			)}
 		/>
