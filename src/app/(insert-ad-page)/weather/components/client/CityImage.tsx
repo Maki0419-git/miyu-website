@@ -20,9 +20,16 @@ export function CityImage({
 				objectFit: "cover",
 				objectPosition: "center",
 			}}
-			placeholder="blur"
+			placeholder={dataURL ? "blur" : undefined}
 			blurDataURL={dataURL}
-			loader={({ src, width }: ImageLoaderProps) => `${src}&w=${Math.min(width, maxSolution)}`}
+			loader={({ src, width }: ImageLoaderProps) => {
+				const url = new URL(src)
+				if (url.hostname === "picsum.photos") {
+					return src
+				} else {
+					return `${src}&w=${Math.min(width, maxSolution)}`
+				}
+			}}
 		/>
 	)
 }
