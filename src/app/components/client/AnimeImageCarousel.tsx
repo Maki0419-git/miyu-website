@@ -75,14 +75,12 @@ export function AnimeImageCarousel({ data }: { data: ImageData[] }) {
 			data={data}
 			options={{ unOptimized: true, lazyLoad: true, fetchMoreData }}
 			customizedCardContent={({ title, description }) => (
-				<>
-					<Mask>
-						<BottomSection>
-							<AnimatedTitle>{title}</AnimatedTitle>
-							<AnimatedDescription>{description}</AnimatedDescription>
-						</BottomSection>
-					</Mask>
-				</>
+				<Mask>
+					<BottomSection>
+						<AnimatedTitle>{title}</AnimatedTitle>
+						<AnimatedDescription>{description}</AnimatedDescription>
+					</BottomSection>
+				</Mask>
 			)}
 		/>
 	)
