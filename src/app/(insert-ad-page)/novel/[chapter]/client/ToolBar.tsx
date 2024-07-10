@@ -5,6 +5,7 @@ import { styled } from "@pigment-css/react"
 import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import { Vocabulary, VocabularyResponseType } from "../types"
 import { VocabularyContext } from "./VocabularyProvider"
+import { generateFakeVocabulary } from "../utils/generateFakeVocabulary"
 
 const Container = styled("div")<{ top: number; left: number }>({
 	position: "absolute",
@@ -61,35 +62,38 @@ export function ToolBar({ containerRef }: { containerRef: React.RefObject<HTMLDi
 	}, [])
 
 	const handleCreateVocabularyCard = useCallback(async () => {
+		let vocabularyList: Vocabulary[]
 		setIsPending(true)
 		try {
-			const response = await fetch("/api/openAI/vocabulary", {
-				method: "POST",
-				body: JSON.stringify({ vocabulary: selectedText }),
-				headers: {
-					"Content-Type": "application/json",
-				},
-			})
-			if (response.status !== 200) {
-				errorHandler("CREATE_VOCABULARY", response.status)
-			}
-			const data: VocabularyResponseType = await response.json()
-
-			const vocabularyList = Object.entries(data).reduce((acc, [key, value]) => {
-				acc.push({
-					vocabulary: key,
-					...value,
+			if (process.env.NODE_ENV === "development") {
+				vocabularyList = generateFakeVocabulary()
+			} else {
+				const response = await fetch("/api/openAI/vocabulary", {
+					method: "POST",
+					body: JSON.stringify({ vocabulary: selectedText }),
+					headers: {
+						"Content-Type": "application/json",
+					},
 				})
+				if (response.status !== 200) {
+					errorHandler("CREATE_VOCABULARY", response.status)
+				}
+				const data: VocabularyResponseType = await response.json()
 
-				return acc
-			}, [] as Vocabulary[])
+				vocabularyList = Object.entries(data).reduce((acc, [key, value]) => {
+					acc.push({
+						vocabulary: key,
+						...value,
+					})
 
+					return acc
+				}, [] as Vocabulary[])
+			}
 			setVocabularies((prev) => [...prev, ...vocabularyList])
-			setIsPending(false)
-
-			return data
 		} catch (error) {
 			throw error
+		} finally {
+			setIsPending(false)
 		}
 	}, [selectedText, setVocabularies, setIsPending])
 
