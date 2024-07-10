@@ -36,8 +36,8 @@ export type ImageData = {
 	id: number
 	src: string
 	title: string
-	description: string
 	alt: string
+	description?: string
 	href?: string
 }
 
@@ -157,7 +157,7 @@ export function ImageCarousel({
 		<Container>
 			<ImageCardsContainer ref={ref}>
 				{imageData.map((data, index) => {
-					const { id, src, href, alt, title, description } = data
+					const { id, src, href, alt, title } = data
 					return (
 						<ImageCard
 							key={id}
@@ -165,7 +165,6 @@ export function ImageCarousel({
 							href={href || ""}
 							alt={alt}
 							title={title}
-							description={description}
 							aspectRatio={aspectRatio}
 							minWidth={minWidth}
 							unOptimized={unOptimized}
