@@ -53,43 +53,50 @@ const quotes = [
 		quote:
 			"「“負け”は弱さの証明ですか？　君達にとって“負け”は試練なんじゃないですか？　地に這いつくばった後、また立って歩けるのかという　君達がそこの這いつくばったままならば　それこそが弱さの証明です」",
 		author: "武田一鉄",
+		src: "/animeQuote/takeda.png",
 	},
 	{
 		quote: "「ー才能は開花させるもの　ーセンスは磨くもの！！！」",
 		author: "及川徹",
+		src: "/animeQuote/oikawa.png",
 	},
 	{
 		quote: "「”楽”じゃなく、”楽しい”を考える」",
 		author: "木兎光太郎",
+		src: "/animeQuote/bokuto.png",
 	},
 	{
 		quote:
 			"「俺から見たら、みんなが才能を持っている。でもそれは、努力によって作れたもので。俺はその表面だけを見て、才能と言ってるだけ。」",
 		author: "赤羽業",
+		src: "/animeQuote/karuma.png",
 	},
 	{
 		quote:
 			"「君達は、強くなりすぎたのかもしれない。身に付けた力に酔い、弱い者の立場に立って考える事を忘れてしまった。」",
-		author: "殺せんせー",
+		author: "殺せんせい",
+		src: "/animeQuote/korosennsei.png",
 	},
 ]
 
 export function Quotes() {
 	return (
 		<Container>
-			{quotes.map(({ quote, author }, index) => (
+			{quotes.map(({ quote, author, src }, index) => (
 				<FadeUpSection
 					key={index}
 					customizeStyles={{ display: "flex", justifyContent: index % 2 ? "flex-end" : "flex-start" }}
 				>
 					<Quote>
 						<Image
-							src="https://picsum.photos/200"
-							alt="logo"
+							src={src}
+							alt={author}
 							width={100}
 							height={100}
 							style={{
 								borderRadius: "50%",
+								objectFit: "cover",
+								objectPosition: "50% 50%",
 							}}
 						/>
 						<QuoteText>

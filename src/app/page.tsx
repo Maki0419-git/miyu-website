@@ -1,7 +1,7 @@
 import { keyframes, styled } from "@pigment-css/react"
 import Image from "next/image"
 import { Permanent_Marker, Kiwi_Maru } from "next/font/google"
-import { FadeUpSection } from "./components/client"
+import { FadeUpSection, Quotes } from "./components/client"
 import { RecommendAnime } from "./components/server"
 import { Suspense } from "react"
 
@@ -110,7 +110,7 @@ export default function Home() {
 					</SectionContainer>
 				</FadeUpSection>
 			</Suspense>
-			{/* <FadeUpSection>
+			<FadeUpSection>
 				<SectionContainer className={kiwiMaru.className}>
 					<SectionTitle>ココロに響く名台詞！</SectionTitle>
 					<SectionDescription>
@@ -118,7 +118,7 @@ export default function Home() {
 					</SectionDescription>
 					<Quotes />
 				</SectionContainer>
-			</FadeUpSection> */}
+			</FadeUpSection>
 		</>
 	)
 }
