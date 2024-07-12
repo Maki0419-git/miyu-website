@@ -7,6 +7,8 @@ import { faFeather, faFloppyDisk } from "@fortawesome/free-solid-svg-icons"
 import { QuizDialog } from "./QuizDialog"
 import { VocabularyContext } from "./VocabularyProvider"
 import { Skeleton } from "./Skeleton"
+import addVocabulary from "../server/action/addVocabulary"
+// import { useRouter } from "next/router"
 const Container = styled("div")({
 	padding: "20px 20px",
 	width: "100%",
@@ -153,6 +155,10 @@ const SaveButton = styled("button")({
 export function VocabularyList() {
 	const [modalOpen, setModalOpen] = useState(false)
 	const { vocabularies, isPending } = useContext(VocabularyContext)
+	// const router = useRouter()
+	const handleAddVocabulary = () => {
+		addVocabulary(vocabularies, `novel-1`)
+	}
 
 	return (
 		<>
@@ -181,7 +187,9 @@ export function VocabularyList() {
 						<CardContent vocabulary={vocabulary} />
 					</Card>
 				))}
-				{vocabularies.length !== 0 && !isPending && <SaveButton>+ 儲存至單字庫</SaveButton>}
+				{vocabularies.length !== 0 && !isPending && (
+					<SaveButton onClick={handleAddVocabulary}>+ 儲存至單字庫</SaveButton>
+				)}
 				{isPending && <Skeleton />}
 			</Container>
 
