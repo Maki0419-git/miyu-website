@@ -18,8 +18,10 @@ const RightSection = styled("div")({
 	flexDirection: "column",
 	alignItems: "center",
 	gap: "10px",
-	borderLeft: "1px solid #e2dfdf",
-	height: "1000px",
+	backgroundColor: "#ffedd5",
+	borderRadius: "8px",
+	margin: "20px",
+	height: "calc(100vh - 150px)",
 })
 
 async function getChapter(chapter: string) {

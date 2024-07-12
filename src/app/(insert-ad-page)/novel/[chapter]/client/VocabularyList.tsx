@@ -3,7 +3,7 @@ import { keyframes, styled } from "@pigment-css/react"
 import { Vocabulary } from "../types"
 import { useContext, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFeather } from "@fortawesome/free-solid-svg-icons"
+import { faFeather, faFloppyDisk } from "@fortawesome/free-solid-svg-icons"
 import { QuizDialog } from "./QuizDialog"
 import { VocabularyContext } from "./VocabularyProvider"
 import { Skeleton } from "./Skeleton"
@@ -15,6 +15,7 @@ const Container = styled("div")({
 	gap: "20px",
 	height: "100%",
 	overflowY: "scroll",
+	scrollbarColor: "#fac681 #fac681",
 })
 
 const Construction = styled("div")({
@@ -24,7 +25,7 @@ const Construction = styled("div")({
 	height: "100%",
 	backgroundColor: "#ffedd5",
 	h4: {
-		color: "#FF9F1C",
+		color: "#d46d07",
 	},
 })
 
@@ -33,6 +34,7 @@ const Card = styled("div")({
 	display: "flex",
 	flexDirection: "column",
 	justifyContent: "space-around",
+	flexShrink: 0,
 	gap: "10px",
 	overflowX: "hidden",
 	width: "100%",
@@ -41,6 +43,7 @@ const Card = styled("div")({
 	borderRadius: "8px",
 	border: "1px solid #e2dfdf",
 	borderLeft: "8px solid #FFBF69",
+	backgroundColor: "white",
 	boxShadow: "0 0 5px rgba(0,0,0,0.3)",
 	color: "black",
 	padding: "10px 15px",
@@ -122,15 +125,29 @@ const ActionBar = styled("div")({
 	display: "flex",
 	alignItems: "center",
 	justifyContent: "space-between",
+	h2: {
+		color: "#d46d07",
+	},
 })
 
-const Quiz = styled("div")({
+const Action = styled("div")({
 	display: "flex",
-	gap: "5px",
 	alignItems: "center",
 	justifyContent: "center",
 	cursor: "pointer",
-	color: "#379188",
+	gap: "10px",
+	color: "#d46d07",
+})
+
+const SaveButton = styled("button")({
+	backgroundColor: "transparent",
+	border: "2px dashed #d18b47",
+	color: "#d18b47",
+	padding: "10px 20px",
+	borderRadius: "12px",
+	cursor: "pointer",
+	outline: "none",
+	fontSize: "14px",
 })
 
 export function VocabularyList() {
@@ -142,10 +159,10 @@ export function VocabularyList() {
 			<Container>
 				<ActionBar>
 					<h2>單字列表</h2>
-					<Quiz onClick={() => setModalOpen(true)}>
-						<FontAwesomeIcon icon={faFeather} />
-						<h5>測驗</h5>
-					</Quiz>
+					<Action>
+						<FontAwesomeIcon icon={faFloppyDisk} />
+						<FontAwesomeIcon icon={faFeather} onClick={() => setModalOpen(true)} />
+					</Action>
 				</ActionBar>
 				{vocabularies.length === 0 && !isPending && (
 					<Construction>
@@ -164,6 +181,7 @@ export function VocabularyList() {
 						<CardContent vocabulary={vocabulary} />
 					</Card>
 				))}
+				{vocabularies.length !== 0 && !isPending && <SaveButton>+ 儲存至單字庫</SaveButton>}
 				{isPending && <Skeleton />}
 			</Container>
 
