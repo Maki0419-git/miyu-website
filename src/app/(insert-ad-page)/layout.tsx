@@ -5,7 +5,7 @@ const ContentWrapper = styled("div")({
 	margin: "0 auto",
 	backgroundColor: "#FFF",
 	minHeight: "calc(100vh - 70px)",
-	"@media (max-width: 1024px)": {
+	"@media (max-width: 1440px)": {
 		width: "100%",
 	},
 })

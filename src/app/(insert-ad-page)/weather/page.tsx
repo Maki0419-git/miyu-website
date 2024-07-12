@@ -12,10 +12,10 @@ const TopSection = styled("div")({
 	padding: "60px 80px",
 	position: "relative",
 	backgroundColor: "#252746",
-	"@media (max-width: 1440px)": {
+	"@media (max-width: 1024px)": {
 		flexDirection: "column",
 		padding: "10px 20px",
-		"@media (max-width: 1440px)": {
+		"@media (max-width: 1024px)": {
 			h1: {
 				fontSize: "24px",
 			},
